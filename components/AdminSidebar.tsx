@@ -1,27 +1,63 @@
-// components/AdminSidebar.tsx
-import React from 'react';
+import Link from "next/link";
+import { RiDashboardLine, RiShoppingBasket2Line, RiShoppingCartLine, RiLogoutBoxLine   } from "react-icons/ri";
+import { TbLayersDifference } from "react-icons/tb";
 
-const AdminSidebar: React.FC = () => {
-  const navItems = ['Dashboard', 'Products', 'Categories','Orders', 'Logout'];
 
+const Sidebar = () => {
   return (
-    <aside className="h-screen w-64 p-4 shadow-xl">
-      {/* Logo / Title */}
-      <div className="text-2xl font-semibold mb-6 pl-3">Shop Admin</div>
-
-      {/* Navigation Links */}
-      <nav className="flex flex-col space-y-4">
-        {navItems.map((item) => (
-          <button
-            key={item}
-            className="text-left px-3 py-2 rounded-md text-md font-medium hover:bg-gray-200"
-          >
-            {item}
-          </button>
-        ))}
+    <div className="h-screen w-64 shadow-xl">
+      <div className="text-2xl font-semibold ml-2 mt-3 p-3">Shop Admin</div>
+      <nav>
+        <ul className="space-y-4 p-4">
+          <li>
+            <Link
+              href="/admin"
+              className="flex items-center p-2 hover:bg-gray-200 rounded hover:font-semibold gap-3"
+            >
+              <RiDashboardLine />
+              <span>Dashboard</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/admin/product"
+              className="flex items-center p-2 hover:bg-gray-200 rounded hover:font-semibold gap-3"
+            >
+              <RiShoppingBasket2Line />
+              Products
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/admin/category"
+              className="flex items-center p-2 hover:bg-gray-200 rounded hover:font-semibold gap-3"
+            >
+              <TbLayersDifference />
+              Categories
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/admin/order"
+              className="flex items-center p-2 hover:bg-gray-200 rounded hover:font-semibold gap-3"
+            >
+              <RiShoppingCartLine />
+              Orders
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/admin/logout"
+              className="flex items-center p-2 hover:bg-gray-200 rounded hover:font-semibold gap-3"
+            >
+              <RiLogoutBoxLine />
+              Logout
+            </Link>
+          </li>
+        </ul>
       </nav>
-    </aside>
+    </div>
   );
 };
 
-export default AdminSidebar;
+export default Sidebar;
