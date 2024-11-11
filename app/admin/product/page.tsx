@@ -1,20 +1,18 @@
 "use client";
 import React, { useState } from 'react';
+import { DialogDemo } from '@/components/ProductDialog';
 import { FaEdit, FaTrashAlt, FaSearch } from 'react-icons/fa';
 
-const Products = () => {
-    const [searchTerm, setSearchTerm] = useState('');
+type Product = {
+    name: string;
+    category: string;
+};
 
-    const products = [
+const Products: React.FC = () => {
+    const [searchTerm, setSearchTerm] = useState<string>('');
+
+    const products: Product[] = [
         { name: 'Iphone 14 Pro Black', category: 'Smartphone' },
-        { name: 'Iphone 14 Black', category: 'Smartphone' },
-        { name: 'Samsung Galaxy S22', category: 'Smartphone' },
-        { name: 'Sony VH1000XM4', category: 'Headphones' },
-        { name: 'Apple AirPods', category: 'Headphones' },
-        { name: 'Macbook 14 Pro', category: 'Laptop' },
-        { name: 'ASUS Rog Gaming Laptop', category: 'Laptop' },
-        { name: 'MSI Laptop LED', category: 'Laptop' },
-        { name: 'Xiaomi Redmi Note 11', category: 'Smartphone' },
         { name: 'Iphone 14 Black', category: 'Smartphone' },
         { name: 'Samsung Galaxy S22', category: 'Smartphone' },
         { name: 'Sony VH1000XM4', category: 'Headphones' },
@@ -34,9 +32,8 @@ const Products = () => {
         <div>
             <div className="flex flex-row justify-between items-center p-3">
                 <div className="text-2xl ml-2">Products</div>
-                <button className="mt-1 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:border-black shadow-md">
-                    Add Product
-                </button>
+                <DialogDemo />
+                {/* <Button variant="outline" className="mt-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded focus:border-black shadow-md">Add Product</Button> */}
             </div>
             <div className="p-4 w-full">
                 <div className="relative">
@@ -93,6 +90,6 @@ const Products = () => {
             </div>
         </div>
     );
-}
+};
 
 export default Products;
