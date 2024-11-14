@@ -12,11 +12,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FiPlus, FiTrash2 } from "react-icons/fi";
+import { FaEdit } from "react-icons/fa";
 
 import SelectCategory from "@/components/Categorieselect";
 import { BrandSelect } from "@/components/Categorieselect";
 
-export function DialogDemo() {
+export function UpdateProduct() {
   const [images, setImages] = useState<File[]>([]);
 
   // Handler to add selected images to the state
@@ -37,16 +38,17 @@ export function DialogDemo() {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="mt-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded focus:border-black shadow-md"
+          className="flex items-center px-3 py-1 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300"
         >
-          Add Product
+            <FaEdit/>
+            Edit
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle className="font-semibold">Add New Product</DialogTitle>
+          <DialogTitle className="font-semibold">Edit Product</DialogTitle>
           <DialogDescription>
-            Enter the product details below and click save to add the product.
+          Update the product details below click save to update the product.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -114,11 +116,11 @@ export function DialogDemo() {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Add Product</Button>
+          <Button type="submit">Save Changes</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 }
 
-export default DialogDemo;
+export default UpdateProduct;
