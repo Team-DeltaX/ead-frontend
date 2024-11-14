@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { DialogDemo } from '@/components/ProductDialog';
 import { FaEdit, FaTrashAlt, FaSearch } from 'react-icons/fa';
+import UpdateProduct from '@/components/UpdateProduct';
 
 type Product = {
     name: string;
@@ -65,10 +66,7 @@ const Products: React.FC = () => {
                                         <td className="px-4 py-2">{product.category}</td>
                                         <td className="px-4 py-2 text-right">
                                             <div className="flex justify-end space-x-2">
-                                                <button className="flex items-center px-3 py-1 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300">
-                                                    <FaEdit className="mr-1" />
-                                                    Edit
-                                                </button>
+                                                <UpdateProduct />
                                                 <button className="flex items-center px-3 py-1 text-sm font-medium text-white bg-red-500 rounded hover:bg-red-600">
                                                     <FaTrashAlt className="mr-1" />
                                                     

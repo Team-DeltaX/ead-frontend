@@ -1,4 +1,6 @@
 import React from 'react'
+import NavBar from '@/components/NavBar';
+import Footer from '@/components/footer';
 
 const layout = ({
     children,
@@ -7,7 +9,9 @@ const layout = ({
   }>) => {
     return (
       <div className="w-full">
+        <div><NavBar/></div>
         <div className="w-full h-[90%]">{children}</div>
+        <div className=''><Footer/></div>
       </div>
     );
   };
