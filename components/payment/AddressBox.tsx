@@ -4,7 +4,7 @@ import { MdCheckBox } from "react-icons/md";
 
 function AddressBox() {
   return (
-    <div className="flex justify-between p-4 bg-gray-200 w-[1000] rounded-md h-28">
+    <div className="flex justify-between p-4 bg-gray-200 w-[300] md:w-[1000] rounded-md h-28">
       {/*selector and address*/}
       <div className="flex">
         {/*selector*/}

@@ -12,7 +12,7 @@ function NewAddressDialog() {
           <DialogTrigger asChild>
           <button><CirclePlus></CirclePlus></button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="w-[300px] sm:w-[425px]">
             <DialogHeader>
               <DialogTitle>Add new Address</DialogTitle>
               <DialogDescription>
