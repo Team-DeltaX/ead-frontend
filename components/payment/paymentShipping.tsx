@@ -9,13 +9,13 @@ interface PaymentAddressProps {
 
 const PaymentShipping: React.FC<PaymentAddressProps> = ({ activeComponent, setActiveComponent }) => {
   return (
-    <div  className="flex items-center justify-center  w-[1200px] mx-auto mt-10 space-x-4 ">
+    <div  className="flex items-center justify-center w-[300px]  sm:w-[1200px] mx-auto mt-10 space-x-4 ">
       <div className='px-10'>
       <h2 className='font-bold pb-4'>Shipment method</h2>
       {/*mapping shipping methods*/}
       <div className='flex flex-col gap-3'>
         {/*regularly shipment*/}
-        <div className="flex justify-between p-4 bg-gray-100 w-[1000] rounded-md h-15">
+        <div className="flex justify-between p-4 bg-gray-100 w-[300px] sm:w-[1000] rounded-md h-15">
       {/*selector and address*/}
       <div className="flex">
         {/*selector*/}
@@ -48,7 +48,7 @@ const PaymentShipping: React.FC<PaymentAddressProps> = ({ activeComponent, setAc
       </div>
     </div>
      {/*price shipment*/}
-     <div className="flex justify-between p-4 bg-gray-100 w-[1000] rounded-md h-15">
+     <div className="flex justify-between p-4 w-[300px] bg-gray-100 sm:w-[1000] rounded-md h-15">
       {/*selector and address*/}
       <div className="flex">
         {/*selector*/}
@@ -84,7 +84,7 @@ const PaymentShipping: React.FC<PaymentAddressProps> = ({ activeComponent, setAc
       </div>
      
       {/*back/nextbutton*/}
-      <div className='flex gap-6 justify-end'>
+      <div className='flex gap-6 justify-end mt-4'>
         <Button className='px-10 py-6 border border-black text-lg hover:bg-white hover:text-black bg-white text-black' onClick={()=>{setActiveComponent(activeComponent-1)}}>Back</Button>
         <Button className='px-10 py-6  text-lg hover:bg-black hover:text-white bg-black text-white border-b-2' onClick={()=>{setActiveComponent(activeComponent + 1)}}>Next</Button>
 
