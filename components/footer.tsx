@@ -1,6 +1,8 @@
+"use client";
 import React from "react";
 import logo from "../app/assets/Logo2.png";
 import Image from "next/image";
+import { FaArrowUp } from "react-icons/fa6";
 
 const footer = () => {
   return (
@@ -48,8 +50,10 @@ const footer = () => {
 
         {/* text column5 */}
         <div className="text-[10px] sm:text-[10px] md:text-[12px] lg:text-[14px]  justify-items-end">
-          <button className="bg-white rounded-full hover:bg-black-600  flex justify-center items-center w-8 h-8">
-            <i className="fas fa-arrow-up text-black"></i>
+          <button className="bg-white rounded-full   flex justify-center items-center w-8 h-8"
+           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+          <FaArrowUp className="text-black"/>
+           
           </button>
         </div>
       </div>
