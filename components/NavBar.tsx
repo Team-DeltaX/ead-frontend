@@ -17,7 +17,8 @@ const NavBar = () => {
   return (
     <div className="h-16 flex  items-center xl:px-32 lg:px-32 md:px-18 px-5 justify-items-center">
       <div>
-        <Image src={logo} alt="Logo"  className="opacity-50 " />
+        <Image src={logo} alt="Logo"  className="opacity-50 " width={100}
+                height={100}/>
       </div>
       <div className="ml-auto relative w-40 md:w-64">
         <div className="relative">
