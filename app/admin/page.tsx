@@ -49,13 +49,14 @@ const Dashboard: React.FC = () => {
 
       <div className="grid grid-cols-2 gap-4">
         <div className="bg-white shadow-lg border border-gray-200 rounded-2xl p-6 text-center transition-transform hover:scale-105">
-          <h3 className="text-gray-500 font-semibold uppercase">Total Revenue</h3>
-          <p className="text-4xl font-semibold text-gray-800 mt-2">$1,000,000</p>
-        </div>
-        <div className="bg-white shadow-lg border border-gray-200 rounded-2xl p-6 text-center transition-transform hover:scale-105">
-          <h3 className="text-gray-500 font-semibold uppercase">Total Orders</h3>
+          <h3 className="text-gray-500 font-semibold ">Total Orders</h3>
           <p className="text-4xl font-semibold text-gray-800 mt-2">5,000</p>
         </div>
+        <div className="bg-white shadow-lg border border-gray-200 rounded-2xl p-6 text-center transition-transform hover:scale-105">
+          <h3 className="text-gray-500 font-semibold ">Total Revenue</h3>
+          <p className="text-4xl font-semibold text-gray-800 mt-2">$1,000,000</p>
+        </div>
+        
       </div>
     </div>
   );
