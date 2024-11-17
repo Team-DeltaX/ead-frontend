@@ -30,13 +30,12 @@ const Products: React.FC = () => {
     );
 
     return (
-        <div>
-            <div className="flex flex-row justify-between items-center p-3">
+        <div className="bg-gray-100 min-h-screen">
+            <div className="flex flex-row justify-between items-center p-3 bg-gray-100">
                 <div className="text-2xl ml-2">Products</div>
                 <DialogDemo />
-                {/* <Button variant="outline" className="mt-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded focus:border-black shadow-md">Add Product</Button> */}
             </div>
-            <div className="p-4 w-full">
+            <div className="p-4 w-full bg-gray-100">
                 <div className="relative">
                     <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
                     <input
@@ -51,7 +50,7 @@ const Products: React.FC = () => {
             <div className="p-4">
                 <div className="overflow-y-auto h-[calc(100vh-200px)] border border-gray-300 rounded-xl shadow-lg">
                     <table className="w-full text-left">
-                        <thead className="sticky top-0 bg-gray-100 shadow-sm">
+                        <thead className="sticky top-0 bg-gray-200 shadow-sm">
                             <tr>
                                 <th className="px-6 py-3 text-gray-600 font-semibold">Product Name</th>
                                 <th className="px-4 py-2 text-gray-600 font-semibold">Category</th>
@@ -69,7 +68,6 @@ const Products: React.FC = () => {
                                                 <UpdateProduct />
                                                 <button className="flex items-center px-3 py-1 text-sm font-medium text-white bg-red-500 rounded hover:bg-red-600">
                                                     <FaTrashAlt className="mr-1" />
-                                                    
                                                 </button>
                                             </div>
                                         </td>
