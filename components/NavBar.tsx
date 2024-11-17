@@ -55,14 +55,14 @@ const NavBar = () => {
         <nav>
           <ul className=" flex opacity-50 md:gap-10 gap-5 items-center">
             <li>
-              <button>
+              <Link href="/user/cart">
                 <IoCartOutline className="md:h-[24px] md:w-[24px] h-[20px] w-[20px]" />
-              </button>
+              </Link>
             </li>
             <li>
-              <button>
+              <Link href="/user/login">
                 <FiUser className="md:h-[20px] md:w-[20px] h-[16px] w-[16px]" />
-              </button>
+              </Link>
             </li>
           </ul>
         </nav>
