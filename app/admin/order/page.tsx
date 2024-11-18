@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import { OrderStatusSelect } from "@/components/Categorieselect";
 
 interface Order {
   date: string;
@@ -9,10 +11,10 @@ interface Order {
     address: string;
   };
   products: string[];
-  status: "Processing" | "Shipped" | "Delivered"; // New property for order status
+  status: "Processing" | "Shipped" | "Delivered";
 }
 
-const orders: Order[] = [
+const initialOrders: Order[] = [
   {
     date: "4/8/2023, 4:41:16 PM",
     paid: false,
@@ -22,7 +24,7 @@ const orders: Order[] = [
       address: "Stockholm 12345 Sweden, Test 123",
     },
     products: ["Xiaomi Redmi Note 11 x1", "MSI Laptop LED x3", "ASUS Rog Gaming Laptop x2"],
-    status: "Processing", // Sample status
+    status: "Processing",
   },
   {
     date: "4/8/2023, 4:37:39 PM",
@@ -33,7 +35,7 @@ const orders: Order[] = [
       address: "Stockholm 12345 Sweden, Test 123",
     },
     products: ["MSI Laptop LED x4", "Xiaomi Redmi Note 11 x1", "ASUS Rog Gaming Laptop x2"],
-    status: "Shipped", // Sample status
+    status: "Shipped",
   },
   {
     date: "4/7/2023, 2:49:42 PM",
@@ -44,18 +46,27 @@ const orders: Order[] = [
       address: "Stockholm 12345 Sweden, Test 123",
     },
     products: ["Xiaomi Redmi Note 11 x1", "ASUS Rog Gaming Laptop x2"],
-    status: "Delivered", // Sample status
+    status: "Delivered",
   },
 ];
 
 const OrdersTable: React.FC = () => {
+  const [orders, setOrders] = useState<Order[]>(initialOrders);
+
+  const handleStatusChange = (index: number, newStatus: Order["status"]) => {
+    const updatedOrders = orders.map((order, i) =>
+      i === index ? { ...order, status: newStatus } : order
+    );
+    setOrders(updatedOrders);
+  };
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-2xl ml-2 mb-4">Orders</h1>
       <div className="overflow-x-auto rounded-xl">
         <table className="min-w-full bg-white border border-gray-200 rounded-xl">
           <thead>
-            <tr className="bg-gray-200 text-gray-400  text-1lg leading-normal">
+            <tr className="bg-gray-200 text-gray-400 text-lg leading-normal">
               <th className="py-3 px-6 text-left">Date</th>
               <th className="py-3 px-6 text-left">Paid</th>
               <th className="py-3 px-6 text-left">Recipient</th>
@@ -91,17 +102,7 @@ const OrdersTable: React.FC = () => {
                   </ul>
                 </td>
                 <td className="py-3 px-6">
-                  <span
-                    className={`px-3 py-1 rounded-full font-semibold ${
-                      order.status === "Processing"
-                        ? "bg-yellow-100 text-yellow-600"
-                        : order.status === "Shipped"
-                        ? "bg-blue-100 text-blue-600"
-                        : "bg-green-100 text-green-600"
-                    }`}
-                  >
-                    {order.status}
-                  </span>
+                  <OrderStatusSelect />
                 </td>
               </tr>
             ))}

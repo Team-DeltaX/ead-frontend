@@ -31,7 +31,8 @@ const  SelectCategory = () => {
 
 export default SelectCategory
 
-const BrandSelect = () => {
+const 
+BrandSelect = () => {
     return (
         <Select>
         <SelectTrigger className="w-[180px]">
@@ -51,3 +52,21 @@ const BrandSelect = () => {
     }
 
 export { BrandSelect }
+
+const OrderStatusSelect = () => {
+    return (
+        <Select>
+        <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Processing" />
+        </SelectTrigger>
+        <SelectContent>
+            <SelectGroup>
+            <SelectItem value="processing">Processing</SelectItem>
+            <SelectItem value="shipped">Shipped</SelectItem>
+            <SelectItem value="delivered">Delivered</SelectItem>
+            </SelectGroup>
+        </SelectContent>
+        </Select>
+    )
+    }
+export { OrderStatusSelect }
