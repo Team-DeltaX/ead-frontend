@@ -17,7 +17,7 @@ export function AddCategory() {
       <DialogTrigger asChild>
       <Button
           variant="outline"
-          className="mt-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded focus:border-black shadow-md"
+          className="font-semibold mt-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded focus:border-black"
         >
           Add Category
         </Button>

@@ -37,7 +37,7 @@ export function DialogDemo() {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="mt-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded focus:border-black shadow-md"
+          className="font-semibold mt-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded focus:border-black"
         >
           Add Product
         </Button>
@@ -59,10 +59,10 @@ export function DialogDemo() {
             <Label htmlFor="category" className="text-right">Category</Label>
             <SelectCategory />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
+          {/* <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="brand" className="text-right">Brand</Label>
             <BrandSelect />
-          </div>
+          </div> */}
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="price" className="text-right">Price</Label>
             <Input id="price" placeholder="Enter price" type="number" className="col-span-3" />

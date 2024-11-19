@@ -57,11 +57,11 @@ const OrderStatusSelect = () => {
     return (
         <Select>
         <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Processing" />
+            <SelectValue placeholder="processing" />
         </SelectTrigger>
         <SelectContent>
             <SelectGroup>
-            <SelectItem value="processing">Processing</SelectItem>
+            <SelectItem value="processing" className="text-blue-400">Processing</SelectItem>
             <SelectItem value="shipped">Shipped</SelectItem>
             <SelectItem value="delivered">Delivered</SelectItem>
             </SelectGroup>
