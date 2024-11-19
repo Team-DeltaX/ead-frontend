@@ -12,12 +12,65 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FiPlus, FiTrash2 } from "react-icons/fi";
-
 import SelectCategory from "@/components/Categorieselect";
-import { BrandSelect } from "@/components/Categorieselect";
+import {productService} from "@/services/product.service";
+import {Category, Product} from "@/services/product.service";
 
 export function DialogDemo() {
+  const [productName, setProductName] = useState("");
+  const [category, setCategory] = useState<Category | null>(null);
+  const [price, setPrice] = useState<number>(0);
+  const [quantity, setQuantity] = useState<number>(0);
+  const [description, setDescription] = useState("");
   const [images, setImages] = useState<File[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    console.log(productName, category, price, quantity, description);
+    if (!productName || !category || !price || !quantity || !description) {
+      alert("Please fill all fields!");
+      return;
+    }
+
+    const formData : Product = {
+      productName: productName,
+      category: category,
+      productPrice: price,
+      productQuantity: quantity,
+      productDescription: description
+
+    }
+    // images.forEach((image, index) => {
+    //   formData.append(`images[${index}]`, image);
+    // });
+
+    setLoading(true);
+    try {
+      const response = await productService.createProduct({
+        productName,
+        category,
+        productPrice: price,
+        productQuantity: quantity,
+        productDescription: description
+      });
+
+      alert("Product added successfully!");
+      console.log("Response:", response.data);
+
+      // Clear the form
+      setProductName("");
+      setCategory(null);
+      setPrice(0);
+      setQuantity(0);
+      setDescription("");
+      setImages([]);
+    } catch (error) {
+      console.error("Error adding product:", error);
+      alert("Error adding product. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Handler to add selected images to the state
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,27 +106,24 @@ export function DialogDemo() {
           {/* Product Details Inputs */}
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">Product Name</Label>
-            <Input id="name" placeholder="Enter product name" className="col-span-3" />
+            <Input onChange={(e) => setProductName(e.target.value)} id="name" placeholder="Enter product name" className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="category" className="text-right">Category</Label>
-            <SelectCategory />
+            <SelectCategory selectedCategory={category} setSelectedCategory={setCategory} />
           </div>
-          {/* <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="brand" className="text-right">Brand</Label>
-            <BrandSelect />
-          </div> */}
+          
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="price" className="text-right">Price</Label>
-            <Input id="price" placeholder="Enter price" type="number" className="col-span-3" />
+            <Input onChange={(e) => setPrice(Number(e.target.value))} id="price" placeholder="Enter price" type="number" className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="quantity" className="text-right">Quantity</Label>
-            <Input id="quantity" placeholder="Enter quantity" type="number" className="col-span-3" />
+            <Input onChange={(e) => setQuantity(Number(e.target.value))} id="quantity" placeholder="Enter quantity" type="number" className="col-span-3" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="description" className="text-right">Description</Label>
-            <Input id="description" placeholder="Enter product description" className="col-span-3" />
+            <Input onChange={(e) => setDescription(e.target.value)} id="description" placeholder="Enter product description" className="col-span-3" />
           </div>
 
           {/* Image Upload Section */}
@@ -97,7 +147,7 @@ export function DialogDemo() {
                 </div>
               ))}
               {/* Add Image Button */}
-              <label className="flex items-center justify-center w-24 h-24 border-2 border-dashed border-gray-400 rounded cursor-pointer">
+              <label className="flex items-center justify-center w-24 h-24 border-2  border-dashed border-gray-400 rounded cursor-pointer">
                 <input
                   type="file"
                   accept="image/*"
@@ -114,7 +164,7 @@ export function DialogDemo() {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Add Product</Button>
+          <Button type="submit" onClick={handleSubmit}>Add Product</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

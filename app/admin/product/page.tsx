@@ -5,6 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import UpdateProduct from "@/components/UpdateProduct";
 import { AddCategory } from "@/components/AddCategory";
 import { productService } from "@/services/product.service";
+
 import { Product } from "@/services/product.service";
 
 const Products: React.FC = () => {
@@ -17,7 +18,6 @@ const Products: React.FC = () => {
       try {
         setIsLoading(true);
         const response = await productService.getAllProducts();
-        console.log(response, "sdfsdf");
         setProducts(response.data);
         setError(null);
       } catch (err) {
@@ -62,7 +62,7 @@ const Products: React.FC = () => {
                 <tr>
                   <th className="px-6 py-3 text-gray-600 font-semibold">Product Name</th>
                   <th className="px-4 py-2 text-gray-600 font-semibold">Category</th>
-                  <th className="px-4 py-2 text-gray-600 font-semibold">Price (Rs.)</th>
+                  <th className="px-4 py-2 text-gray-600 font-semibold">Price Rs.</th>
                   <th className="px-4 py-2 text-gray-600 font-semibold">Quantity</th>
                   <th className="px-4 py-2 text-gray-600 font-semibold text-right"></th>
                 </tr>
