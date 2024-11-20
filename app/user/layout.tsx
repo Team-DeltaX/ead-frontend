@@ -1,4 +1,6 @@
 import React from 'react'
+import NavBar from '@/components/NavBar';
+import Footer from '@/components/footer';
 
 const layout = ({
     children,
@@ -6,8 +8,10 @@ const layout = ({
     children: React.ReactNode;
   }>) => {
     return (
-      <div className="w-full">
-        <div className="w-full h-[90%]">{children}</div>
+      <div className="w-full min-h-screen flex flex-col justify-between">
+        <div><NavBar/></div>
+        <div className="w-full">{children}</div>
+        <div className=''><Footer/></div>
       </div>
     );
   };
