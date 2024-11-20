@@ -61,10 +61,10 @@ export function UpdateProduct() {
             <Label htmlFor="category" className="text-right">Category</Label>
             <SelectCategory />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
+          {/* <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="brand" className="text-right">Brand</Label>
             <BrandSelect />
-          </div>
+          </div> */}
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="price" className="text-right">Price</Label>
             <Input id="price" placeholder="Enter price" type="number" className="col-span-3" />
