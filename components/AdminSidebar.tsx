@@ -1,18 +1,26 @@
+"use client";
 import Link from "next/link";
-import { RiDashboardLine, RiShoppingBasket2Line, RiShoppingCartLine, RiLogoutBoxLine   } from "react-icons/ri";
+import { usePathname } from "next/navigation";
+import { RiDashboardLine, RiShoppingBasket2Line, RiShoppingCartLine, RiLogoutBoxLine } from "react-icons/ri";
 import { TbLayersDifference } from "react-icons/tb";
 
-
 const Sidebar = () => {
+  const pathname = usePathname();
+
+  // Helper function to check if the link is active
+  const isActive = (path : string) => pathname === path;
+
   return (
-    <div className="h-screen w-64 shadow-xl">
+    <div className="h-screen w-64 shadow-lg">
       <div className="text-2xl font-semibold ml-2 mt-3 p-3">Shop Admin</div>
       <nav>
         <ul className="space-y-4 p-4">
           <li>
             <Link
               href="/admin"
-              className="flex items-center p-2 hover:bg-gray-200 rounded hover:font-semibold gap-3"
+              className={`flex items-center p-2 rounded gap-3 ${
+                isActive("/admin") ? "bg-gray-200 font-semibold" : "hover:font-semibold"
+              }`}
             >
               <RiDashboardLine />
               <span>Dashboard</span>
@@ -21,37 +29,45 @@ const Sidebar = () => {
           <li>
             <Link
               href="/admin/product"
-              className="flex items-center p-2 hover:bg-gray-200 rounded hover:font-semibold gap-3"
+              className={`flex items-center p-2 rounded gap-3 ${
+                isActive("/admin/product") ? "bg-gray-200 font-semibold" : "hover:font-semibold"
+              }`}
             >
               <RiShoppingBasket2Line />
-              Products
+              <span>Products</span>
             </Link>
           </li>
           <li>
             <Link
               href="/admin/category"
-              className="flex items-center p-2 hover:bg-gray-200 rounded hover:font-semibold gap-3"
+              className={`flex items-center p-2 rounded gap-3 ${
+                isActive("/admin/category") ? "bg-gray-200 font-semibold" : " hover:font-semibold"
+              }`}
             >
               <TbLayersDifference />
-              Categories
+              <span>Categories</span>
             </Link>
           </li>
           <li>
             <Link
               href="/admin/order"
-              className="flex items-center p-2 hover:bg-gray-200 rounded hover:font-semibold gap-3"
+              className={`flex items-center p-2 rounded gap-3 ${
+                isActive("/admin/order") ? "bg-gray-200 font-semibold" : " hover:font-semibold"
+              }`}
             >
               <RiShoppingCartLine />
-              Orders
+              <span>Orders</span>
             </Link>
           </li>
           <li>
             <Link
               href="/admin/logout"
-              className="flex items-center p-2 hover:bg-gray-200 rounded hover:font-semibold gap-3"
+              className={`flex items-center p-2 rounded gap-3 ${
+                isActive("/admin/logout") ? "bg-gray-200 font-semibold" : " hover:font-semibold"
+              }`}
             >
               <RiLogoutBoxLine />
-              Logout
+              <span>Logout</span>
             </Link>
           </li>
         </ul>
