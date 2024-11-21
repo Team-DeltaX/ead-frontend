@@ -37,7 +37,7 @@ const Sidebar = () => {
               <span>Products</span>
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               href="/admin/category"
               className={`flex items-center p-2 rounded gap-3 ${
@@ -47,7 +47,7 @@ const Sidebar = () => {
               <TbLayersDifference />
               <span>Categories</span>
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link
               href="/admin/order"

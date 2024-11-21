@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,48 +8,58 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Category } from "@/services/product.service"
-import { categoryService } from "@/services/product.service"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Category } from "@/services/product.service";
+import { categoryService } from "@/services/product.service";
+import { toast } from "react-hot-toast";
 
 export function AddCategory() {
-
   const [categoryName, setCategoryName] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false); // Dialog open state
+
+  // Validation logic
+  const validateInput = () => {
+    if (!categoryName.trim()) {
+      setError("Category name is required.");
+      return false;
+    }
+    if (categoryName.length < 3) {
+      setError("Category name must be at least 3 characters long.");
+      return false;
+    }
+    setError("");
+    return true;
+  };
 
   const handleSubmit = async () => {
-    if (!categoryName) {
-      alert("Please fill all fields!");
-      return;
-    }
-    const formData : Category = {
-      name: categoryName
-    }
+    if (!validateInput()) return; // Stop if validation fails
+
+    const formData: Category = {
+      name: categoryName,
+    };
     setLoading(true);
     try {
-      const response = await categoryService.createCategory({
-        name: categoryName
-      });
+      const response = await categoryService.createCategory(formData);
 
-      alert("Categoy added successfully!");
-      console.log("Response:", response.data);
+      toast.success("Category added successfully!");
 
       setCategoryName("");
+      setIsDialogOpen(false); // Close the dialog
     } catch (error) {
-      console.error("Error adding category:", error);
-      alert("Error adding product. Please try again.");
+      toast.error("Error adding category. Please try again.");
     } finally {
       setLoading(false);
     }
-  }
-    
+  };
 
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-      <Button
+        <Button
           variant="outline"
           className="font-semibold mt-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded focus:border-black"
         >
@@ -68,18 +78,29 @@ export function AddCategory() {
             <Label htmlFor="name" className="text-right">
               Name
             </Label>
-            <Input
-              id="name"
-              className="col-span-3"
-              onChange={(e) => setCategoryName(e.target.value)}
-              placeholder="Enter a category name"
-            />
+            <div className="col-span-3">
+              <Input
+                id="name"
+                value={categoryName}
+                className={`w-full ${error ? "border-red-500" : ""}`}
+                onChange={(e) => setCategoryName(e.target.value)}
+                placeholder="Enter a category name"
+              />
+              {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+            </div>
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={handleSubmit}>Save changes</Button>
+          <Button
+            type="submit"
+            onClick={handleSubmit}
+            disabled={loading}
+            className={loading ? "opacity-50 cursor-not-allowed" : ""}
+          >
+            {loading ? "Saving..." : "Save changes"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

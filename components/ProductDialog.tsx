@@ -15,6 +15,7 @@ import { FiPlus, FiTrash2 } from "react-icons/fi";
 import SelectCategory from "@/components/Categorieselect";
 import {productService} from "@/services/product.service";
 import {Category, Product} from "@/services/product.service";
+import { AlertDialogComponent } from "./Alert";
 
 export function DialogDemo() {
   const [productName, setProductName] = useState("");
@@ -72,6 +73,7 @@ export function DialogDemo() {
     }
   };
 
+  
   // Handler to add selected images to the state
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -164,7 +166,10 @@ export function DialogDemo() {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={handleSubmit}>Add Product</Button>
+          <AlertDialogComponent handleOk={handleSubmit}>
+            
+          <Button>Add Product</Button>
+          </AlertDialogComponent>
         </DialogFooter>
       </DialogContent>
     </Dialog>
