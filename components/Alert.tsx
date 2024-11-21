@@ -11,11 +11,17 @@ import {
   } from "@/components/ui/alert-dialog"
   import { Button } from "@/components/ui/button"
   
-  export function AlertDialogDemo() {
+  export function AlertDialogComponent({
+    children,
+    handleOk
+  }:{
+    children: React.ReactNode
+    handleOk: () => void
+  }) {
     return (
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="outline">Show Dialog</Button>
+          {children}
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -27,7 +33,7 @@ import {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction>Continue</AlertDialogAction>
+            <AlertDialogAction onClick={handleOk}>Continue</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

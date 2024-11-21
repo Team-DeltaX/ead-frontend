@@ -76,28 +76,6 @@ const SelectCategory = ({
 export default SelectCategory;
 
 
-// const 
-// BrandSelect = () => {
-//     return (
-//         <Select>
-//         <SelectTrigger className="w-[180px]">
-//             <SelectValue placeholder="Select a brand" />
-//         </SelectTrigger>
-//         <SelectContent>
-//             <SelectGroup>
-//             <SelectItem value="apple">Apple</SelectItem>
-//             <SelectItem value="samsung">Samsung</SelectItem>
-//             <SelectItem value="dell">Dell</SelectItem>
-//             <SelectItem value="hp">HP</SelectItem>
-//             <SelectItem value="sony">Sony</SelectItem>
-//             </SelectGroup>
-//         </SelectContent>
-//         </Select>
-//     )
-//     }
-
-// export { BrandSelect }
-
 const OrderStatusSelect = () => {
   return (
       <Select>

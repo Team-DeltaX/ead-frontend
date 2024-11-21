@@ -5,7 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import UpdateProduct from "@/components/UpdateProduct";
 import { AddCategory } from "@/components/AddCategory";
 import { productService } from "@/services/product.service";
-
+import Categorycard from "@/components/Categorycard";
 import { Product } from "@/services/product.service";
 
 const Products: React.FC = () => {
@@ -61,8 +61,8 @@ const Products: React.FC = () => {
               <thead className="sticky top-0 bg-gray-200 shadow-sm">
                 <tr>
                   <th className="px-6 py-3 text-gray-600 font-semibold">Product Name</th>
-                  <th className="px-4 py-2 text-gray-600 font-semibold">Category</th>
-                  <th className="px-4 py-2 text-gray-600 font-semibold">Price Rs.</th>
+                  <th className="px-4 py-2 text-gray-600 font-semibold"><Categorycard /></th>
+                  <th className="px-4 py-2 text-gray-600 font-semibold">Price / Rs.</th>
                   <th className="px-4 py-2 text-gray-600 font-semibold">Quantity</th>
                   <th className="px-4 py-2 text-gray-600 font-semibold text-right"></th>
                 </tr>
