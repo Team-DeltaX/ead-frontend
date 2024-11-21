@@ -19,7 +19,7 @@ export const ProductCard = ({ product }) => {
           className="mt-2 px-4 py-1 bg-black text-white rounded-lg hover:bg-gray-800"
           onClick={()=>{
             
-            router.push(`/product/${product.id}`);
+            router.push(`/${product.id}`);
 
           }}
         >

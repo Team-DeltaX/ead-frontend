@@ -1,16 +1,14 @@
 "use client";
 import React from "react";
-import Iphone from "../../assets/sliderimages/Iphone.png";
-import Watch from "../../assets/sliderimages/applewatch.png";
-import Ipad from "../../assets/sliderimages/Ipad.png";
-import Macbook from "../../assets/sliderimages/Macbook.png";
+import Iphone from "@/app/assets/sliderimages/Iphone.png";
+import Watch from "@/app/assets/sliderimages/applewatch.png";
+import Ipad from "@/app/assets/sliderimages/Ipad.png";
+import Macbook from "@/app/assets/sliderimages/Macbook.png";
 import Image from "next/image";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { CiMobile4, CiLaptop, CiCamera, CiHeadphones } from "react-icons/ci";

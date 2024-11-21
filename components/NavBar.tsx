@@ -37,13 +37,16 @@ const NavBar = () => {
         <nav>
           <ul className=" flex opacity-50 gap-10 font-SFPro">
             <li >
-              <Link href="/user/home" className="">Home</Link>
+              <Link href="/user" className="">Home</Link>
             </li>
             <li>
               <Link href="/user/about">About</Link>
             </li>
             <li>
               <Link href="/user/contact">Contact Us</Link>
+            </li>
+            <li>
+              <Link href="/user/product">Product</Link>
             </li>
             <li>
               <Link href="/user/blog">Blog</Link>

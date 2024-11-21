@@ -74,7 +74,7 @@ const products = [
   },
 ];
 
-const page = ({ params }) => {
+const Page = ({ params }) => {
   const router = useRouter();
   const { prodid } = React.use(params);
 
@@ -187,7 +187,7 @@ const page = ({ params }) => {
   )
 }
 
-export default page
+export default Page
 
 
 

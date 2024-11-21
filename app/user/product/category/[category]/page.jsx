@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { ProductCard } from "./ProductCard";
+import { ProductCard } from "../../../../../components/ProductCard";
 import { FaFilter } from "react-icons/fa";
+// import { useRouter } from "next/router";
 
 const products = [
   {
@@ -13,7 +14,8 @@ const products = [
     storage: "256GB",
     batteryCapacity: "4323mAh",
     description: "The ultimate iPhone experience with unparalleled features.",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
   },
   {
     id: 2,
@@ -23,7 +25,8 @@ const products = [
     storage: "128GB",
     batteryCapacity: "5000mAh",
     description: "The pinnacle of Samsung innovation with stunning features.",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdeSoJWzJ7Mu85-gpfgV7hHqNiKE0dQnQq5A&s",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdeSoJWzJ7Mu85-gpfgV7hHqNiKE0dQnQq5A&s",
   },
   {
     id: 3,
@@ -33,7 +36,8 @@ const products = [
     storage: "128GB",
     batteryCapacity: "5000mAh",
     description: "The pinnacle of Samsung innovation with stunning features.",
-    image: "https://s.alicdn.com/@sc04/kf/H4467cbfe96cb42639c74d4aa9aa5b199f.jpg_300x300.jpg",
+    image:
+      "https://s.alicdn.com/@sc04/kf/H4467cbfe96cb42639c74d4aa9aa5b199f.jpg_300x300.jpg",
   },
   {
     id: 4,
@@ -43,7 +47,8 @@ const products = [
     storage: "256GB",
     batteryCapacity: "4323mAh",
     description: "The ultimate iPhone experience with unparalleled features.",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
   },
   {
     id: 5,
@@ -53,7 +58,8 @@ const products = [
     storage: "256GB",
     batteryCapacity: "4323mAh",
     description: "The ultimate iPhone experience with unparalleled features.",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
   },
   {
     id: 6,
@@ -63,12 +69,14 @@ const products = [
     storage: "256GB",
     batteryCapacity: "4323mAh",
     description: "The ultimate iPhone experience with unparalleled features.",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
   },
 ];
 
-const Product = () => {
-  
+const Product = ({ params }) => {
+  // const router = useRouter();
+  const { category } = React.use(params);
   const [filters, setFilters] = useState({
     brand: "",
     price: "",
@@ -110,7 +118,10 @@ const Product = () => {
   const totalItem = filteredProducts.length;
   const totalPages = Math.ceil(totalItem / Items_Per_Page);
   const startIndex = (currentPage - 1) * Items_Per_Page;
-  const currentProducts = filteredProducts.slice(startIndex, startIndex + Items_Per_Page);
+  const currentProducts = filteredProducts.slice(
+    startIndex,
+    startIndex + Items_Per_Page
+  );
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -119,9 +130,15 @@ const Product = () => {
   return (
     <div className="flex flex-col md:flex-row">
       {/* Sidebar Filters */}
-      <div className={`w-full md:w-1/4 bg-gray-50 p-4 mt-4 border rounded-lg border-gray-200 ${isSidebarOpen ? "block" : "hidden md:block"}`}>
+      <div
+        className={`w-full md:w-1/4 bg-gray-50 p-4 mt-4 border rounded-lg border-gray-200 ${
+          isSidebarOpen ? "block" : "hidden md:block"
+        }`}
+      >
         <label className="block mb-4">
-          <span className="text-gray-700 text-lg font-semibold mb-4">Brand:</span>
+          <span className="text-gray-700 text-lg font-semibold mb-4">
+            Brand:
+          </span>
           <div className="mt-1 block w-full border-gray-300 rounded-md p-4">
             {brands.map((brand) => (
               <div key={brand} className="flex items-center mt-1">
@@ -143,7 +160,9 @@ const Product = () => {
         </label>
 
         <label className="block mb-4">
-          <span className="text-gray-700 text-lg font-semibold mb-4">Price Level:</span>
+          <span className="text-gray-700 text-lg font-semibold mb-4">
+            Price Level:
+          </span>
           <div className="mt-1 block w-full border-gray-300 rounded-md p-4">
             {[
               { label: "All", value: "" },
@@ -178,6 +197,9 @@ const Product = () => {
       </button>
 
       {/* Products */}
+
+      {category}
+
       <div className="w-full sm:w-2/3 md:w-3/4 lg:w-full p-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {currentProducts.map((product) => (
@@ -197,10 +219,11 @@ const Product = () => {
           {Array.from({ length: totalPages }, (_, index) => (
             <button
               key={index}
-              className={`px-4 py-2 mx-1 ${currentPage === index + 1
-                ? "bg-black text-white"
-                : "bg-gray-300 text-gray-700"
-                } rounded`}
+              className={`px-4 py-2 mx-1 ${
+                currentPage === index + 1
+                  ? "bg-black text-white"
+                  : "bg-gray-300 text-gray-700"
+              } rounded`}
               onClick={() => handlePageChange(index + 1)}
             >
               {index + 1}
@@ -214,11 +237,9 @@ const Product = () => {
             Next
           </button>
         </div>
-
       </div>
     </div>
   );
 };
 
 export default Product;
-
