@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
+import "../globals.css";
 import { Toaster } from "react-hot-toast";
+import Footer from "@/components/footer";
+import NavBar from "@/components/NavBar";
 
 const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
+  src: "../fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
 });
 const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
+  src: "../fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
 });
@@ -21,19 +23,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div>
+          <NavBar /> {/* Show NavBar globally, except in /auth pages */}
+        </div>
+        <div className="w-full">{children}</div>
+        <div>
+          <Footer /> {/* Show Footer globally, except in /auth pages */}
+        </div>
         <Toaster />
       </body>
-      
     </html>
-    
   );
 }

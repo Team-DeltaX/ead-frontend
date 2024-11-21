@@ -61,7 +61,7 @@ const OrdersTable: React.FC = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="p-6 bg-gray-100 min-h-screen w-full">
       <h1 className="text-2xl ml-2 mb-4">Orders</h1>
       <div className="overflow-x-auto rounded-xl">
         <table className="min-w-full bg-white border border-gray-200 rounded-xl">
