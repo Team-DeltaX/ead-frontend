@@ -2,7 +2,7 @@ import React from "react";
 
 const Dashboard: React.FC = () => {
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="p-6 bg-gray-100 min-h-screen w-full">
       <div className="text-right">
         <h2 className="text-2xl text-right text-gray-800 font-semibold">
           Hello, <span className="font-bold text-black">Ashen</span>

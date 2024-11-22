@@ -1,11 +1,9 @@
-//------------------------new 
 "use client";
+import RegisterForm from '@/components/forms/RegistrationForm';
+import { Card } from '@/components/ui/card';
+import { useRouter } from 'next/navigation';
 
-
-import { useRouter } from "next/navigation";
-import { Card } from "@/components/ui/card";
-import RegisterForm from "../components/forms/RegistrationForm";
-import Link from "next/link";
+import React from 'react'
 
 const user = {
   $id: "user123",
@@ -14,7 +12,8 @@ const user = {
   phone: "0711402286",
 };
 
-export default function Home() {
+const Page = () => {
+
   const router = useRouter();
 
   return (
@@ -35,3 +34,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Page

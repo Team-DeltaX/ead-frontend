@@ -40,7 +40,6 @@ const categories: Category[] = [
       { id: 7, name: "Sony" },
       { id: 8, name: "Bose" },
       { id: 9, name: "JBL" },
-
     ],
   },
   {
@@ -84,9 +83,11 @@ const CategoriesPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-gray-100 p-6 w-full">
       <h1 className="text-2xl mb-4">Categories</h1>
-      <div className="mb-4"><AddCategory/></div>
+      <div className="mb-4">
+        <AddCategory />
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Categories */}
         <div className="bg-white rounded-lg shadow p-4 h-auto md:h-[400px] overflow-y-auto">
@@ -109,34 +110,34 @@ const CategoriesPage: React.FC = () => {
 
         {/* Brands */}
         <div className="col-span-2 bg-white rounded-lg shadow p-4">
-  <div className="flex flex-row mb-2">
-    <h2 className="text-lg font-semibold mb-4">
-      {selectedCategory
-        ? `Brands in ${selectedCategory.name}`
-        : "Select a category to view brands"}
-    </h2>
-    {selectedCategory && (
-      <div className="ml-auto">
-        <AddBrand />
-      </div>
-    )}
-  </div>
-  {selectedCategory ? (
-    <ul className="grid grid-cols-2 md:grid-cols-3 gap-4">
-      {selectedCategory.brands.map((brand) => (
-        <li
-          key={brand.id}
-          onClick={() => handleBrandClick(brand)}
-          className="p-3 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 text-center"
-        >
-          {brand.name}
-        </li>
-      ))}
-    </ul>
-  ) : (
-    <p className="text-gray-500">No category selected.</p>
-  )}
-</div>
+          <div className="flex flex-row mb-2">
+            <h2 className="text-lg font-semibold mb-4">
+              {selectedCategory
+                ? `Brands in ${selectedCategory.name}`
+                : "Select a category to view brands"}
+            </h2>
+            {selectedCategory && (
+              <div className="ml-auto">
+                <AddBrand />
+              </div>
+            )}
+          </div>
+          {selectedCategory ? (
+            <ul className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {selectedCategory.brands.map((brand) => (
+                <li
+                  key={brand.id}
+                  onClick={() => handleBrandClick(brand)}
+                  className="p-3 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 text-center"
+                >
+                  {brand.name}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-gray-500">No category selected.</p>
+          )}
+        </div>
       </div>
     </div>
   );
