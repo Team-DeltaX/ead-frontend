@@ -1,78 +1,92 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { ProductCard } from "../../../../../components/ProductCard";
+import ProductCard from "../../../../components/ProductCard";
 import { FaFilter } from "react-icons/fa";
 // import { useRouter } from "next/router";
 
-const products = [
+export interface ProductInterface {
+  id: number;
+  name: string;
+  price: number;
+  brand: string;
+  category: string;
+  storage: string;
+  batteryCapacity: string;
+  description: string;
+  image: string;
+}
+
+
+const products: ProductInterface[] = [
   {
     id: 1,
     name: "Apple iPhone 14 Pro Max",
     price: 1299,
     brand: "Apple",
+    category: "phone",
     storage: "256GB",
     batteryCapacity: "4323mAh",
     description: "The ultimate iPhone experience with unparalleled features.",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
   },
   {
     id: 2,
     name: "Samsung Galaxy S23 Ultra",
     price: 1199,
     brand: "Samsung",
+    category: "phone",
     storage: "128GB",
     batteryCapacity: "5000mAh",
     description: "The pinnacle of Samsung innovation with stunning features.",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdeSoJWzJ7Mu85-gpfgV7hHqNiKE0dQnQq5A&s",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdeSoJWzJ7Mu85-gpfgV7hHqNiKE0dQnQq5A&s",
   },
   {
     id: 3,
     name: "Samsung Galaxy S23 Ultra",
     price: 1199,
     brand: "Samsung",
+    category: "phone",
     storage: "128GB",
     batteryCapacity: "5000mAh",
     description: "The pinnacle of Samsung innovation with stunning features.",
-    image:
-      "https://s.alicdn.com/@sc04/kf/H4467cbfe96cb42639c74d4aa9aa5b199f.jpg_300x300.jpg",
+    image: "https://s.alicdn.com/@sc04/kf/H4467cbfe96cb42639c74d4aa9aa5b199f.jpg_300x300.jpg",
   },
   {
     id: 4,
     name: "Apple iPhone 14 Pro Max",
     price: 1299,
     brand: "Apple",
+    category: "phone",
     storage: "256GB",
     batteryCapacity: "4323mAh",
     description: "The ultimate iPhone experience with unparalleled features.",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
   },
   {
     id: 5,
     name: "Apple iPhone 14 Pro Max",
     price: 1299,
     brand: "Apple",
+    category: "phone",
     storage: "256GB",
     batteryCapacity: "4323mAh",
     description: "The ultimate iPhone experience with unparalleled features.",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
   },
   {
     id: 6,
     name: "Apple iPhone 14 Pro Max",
     price: 1299,
     brand: "Apple",
+    category: "phone",
     storage: "256GB",
     batteryCapacity: "4323mAh",
     description: "The ultimate iPhone experience with unparalleled features.",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
   },
 ];
+
 
 const Product = ({ params }) => {
   // const router = useRouter();

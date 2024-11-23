@@ -1,7 +1,10 @@
+import { ProductInterface } from '@/app/(home)/product/[category]/page';
 import { useRouter } from 'next/navigation'
 import React from "react";
 
-export const ProductCard = ({ product }) => {
+const ProductCard = ({ product }:{
+  product: ProductInterface
+}) => {
   const router = useRouter()
 
   return (
@@ -14,12 +17,14 @@ export const ProductCard = ({ product }) => {
       <div className="mt-4 text-center">
         <h3 className="text-base font-medium text-gray-900">{product.name}</h3>
         <p className="text-xs text-gray-500">{product.brand}</p>
+        <p className="text-xs text-gray-500">{product.category}</p>
         <p className="mt-1 text-lg font-bold text-gray-800">${product.price}</p>
+        
         <button
           className="mt-2 px-4 py-1 bg-black text-white rounded-lg hover:bg-gray-800"
           onClick={()=>{
             
-            router.push(`/${product.id}`);
+            router.push(`/product/${product.category}/${product.id}`);
 
           }}
         >
@@ -29,3 +34,5 @@ export const ProductCard = ({ product }) => {
     </div>
   );
 };
+
+export default ProductCard
