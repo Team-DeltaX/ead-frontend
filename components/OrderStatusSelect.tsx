@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from "react";
 import {
     Select,
     SelectContent,
@@ -9,7 +9,27 @@ import {
     SelectValue,
   } from "@/components/ui/select";
 
+type Order = {
+  id: number;
+  status: "pending" | "processing" | "shipped" | "delivered";
+};
+
+const initialOrders: Order[] = [
+  { id: 1, status: "pending" },
+  { id: 2, status: "processing" },
+  { id: 3, status: "shipped" },
+  { id: 4, status: "delivered" },
+];
+
 const OrderStatusSelect = () => {
+    const [orders, setOrders] = useState<Order[]>(initialOrders);
+
+    const handleStatusChange = (index: number, newStatus: Order["status"]) => {
+        const updatedOrders = orders.map((order, i) =>
+          i === index ? { ...order, status: newStatus } : order
+        );
+        setOrders(updatedOrders);
+        };
   
     return (
         <Select >

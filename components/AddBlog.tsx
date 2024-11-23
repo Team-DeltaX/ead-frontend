@@ -16,7 +16,7 @@ import { AlertDialogComponent } from "./Alert";
 import { blogService } from "@/services/blog.service";
 import { toast } from "react-hot-toast";
 
-export function AddBlog() {
+export function AddBlog({ fetchdata }: { fetchdata: () => void }) {
   const [blogTitle, setBlogTitle] = useState("");
   const [image, setImage] = useState("");
   const [content, setContent] = useState("");
@@ -54,6 +54,7 @@ export function AddBlog() {
       const response = await blogService.createBlog(formData);
       console.log("Response:", response.data);
       toast.success("Blog added successfully!");
+      fetchdata();
     } catch (error) {
       toast.error("Error adding blog. Please try again.");
     } finally {
