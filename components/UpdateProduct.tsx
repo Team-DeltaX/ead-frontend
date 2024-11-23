@@ -15,7 +15,6 @@ import { FiPlus, FiTrash2 } from "react-icons/fi";
 import { FaEdit } from "react-icons/fa";
 
 import SelectCategory from "@/components/Categorieselect";
-import { BrandSelect } from "@/components/Categorieselect";
 
 export function UpdateProduct() {
   const [images, setImages] = useState<File[]>([]);
@@ -59,7 +58,7 @@ export function UpdateProduct() {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="category" className="text-right">Category</Label>
-            <SelectCategory />
+            <SelectCategory selectedCategory={null} setSelectedCategory={() => {}} />
           </div>
           {/* <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="brand" className="text-right">Brand</Label>

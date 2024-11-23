@@ -11,13 +11,15 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Category } from "@/services/product.service";
-import { categoryService } from "@/services/product.service";
-import { toast } from "react-hot-toast";
+import { Textarea } from "@/components/ui/textarea";
 import { AlertDialogComponent } from "./Alert";
+import { blogService } from "@/services/blog.service";
+import { toast } from "react-hot-toast";
 
-export function AddCategory() {
-  const [categoryName, setCategoryName] = useState("");
+export function AddBlog() {
+  const [blogTitle, setBlogTitle] = useState("");
+  const [image, setImage] = useState("");
+  const [content, setContent] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -25,44 +27,48 @@ export function AddCategory() {
 
   // Validation logic
   const validateInput = () => {
-    if (!categoryName.trim()) {
-      setError("Category name is required.");
+    if (!blogTitle.trim() || !image.trim() || !content.trim()) {
+      setError("Please fill all the fields");
       return false;
     }
-    if (categoryName.length < 3) {
-      setError("Category name must be at least 3 characters long.");
+
+    if (content.length > 5000) {
+      setError("Blog content must be at least 5000 characters long.");
       return false;
     }
     setError("");
     setIsAlertOpen(true);
     return true;
   };
-
   const handleSubmit = async () => {
     if (!validateInput()) return; // Stop if validation fails
 
-    const formData: Category = {
-      name: categoryName,
+    const formData = {
+      title: blogTitle,
+      image: image,
+      content: content,
     };
+
     setLoading(true);
     try {
-      const response = await categoryService.createCategory(formData);
-
-      toast.success("Category added successfully!");
-
-      
+      const response = await blogService.createBlog(formData);
+      console.log("Response:", response.data);
+      toast.success("Blog added successfully!");
     } catch (error) {
-      toast.error("Error adding category. Please try again.");
+      toast.error("Error adding blog. Please try again.");
     } finally {
-      setCategoryName("");
+      setImage("");
+      setContent("");
+      setBlogTitle("");
       setLoading(false);
       setIsDialogOpen(false);
     }
   };
-
   const handleClose = () => {
     setIsDialogOpen(false);
-    setCategoryName("");
+    setBlogTitle("");
+    setImage("");
+    setContent("");
     setError("");
   };
 
@@ -79,28 +85,53 @@ export function AddCategory() {
           variant="outline"
           className="font-semibold mt-1 bg-gray-500 hover:bg-gray-600 hover:text-gray-200 text-white py-2 px-4 rounded focus:border-black"
         >
-          Add Category
+          Add Blog
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Add Category</DialogTitle>
+          <DialogTitle className="font-semibold">Add Blog</DialogTitle>
           <DialogDescription>
-            Add new Categories here. Click save when you're done.
+            Enter the blog details below and click save to add the blogs.
           </DialogDescription>
         </DialogHeader>
+
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
-              Name
+              Blog Title
             </Label>
             <div className="col-span-3">
               <Input
                 id="name"
-                value={categoryName}
+                placeholder="Enter blog title"
                 className={`w-full ${error ? "border-red-500" : ""}`}
-                onChange={(e) => setCategoryName(e.target.value)}
-                placeholder="Enter a category name"
+                onChange={(e) => setBlogTitle(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="image" className="text-right">
+              Image
+            </Label>
+            <div className="col-span-3">
+              <Input
+                id="image"
+                placeholder="Enter image url"
+                className={`w-full ${error ? "border-red-500" : ""}`}
+                onChange={(e) => setImage(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="content" className="text-right">
+              Content
+            </Label>
+            <div className="col-span-3">
+              <Textarea
+                placeholder="Enter content of blog"
+                className={`w-full ${error ? "border-red-500" : ""}`}
+                onChange={(e) => setContent(e.target.value)}
               />
               {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
             </div>
@@ -112,16 +143,19 @@ export function AddCategory() {
             setOpen={setIsAlertOpen}
             handleOk={handleSubmit}
           />
+
           <Button
             type="submit"
             onClick={validateInput}
             disabled={loading}
             className={loading ? "opacity-50 cursor-not-allowed" : ""}
           >
-            {loading ? "Saving..." : "Add Category"}
+            {loading ? "Saving..." : "Add Blog"}
           </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 }
+
+export default AddBlog;
