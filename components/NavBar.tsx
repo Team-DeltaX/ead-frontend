@@ -37,16 +37,19 @@ const NavBar = () => {
         <nav>
           <ul className=" flex opacity-50 gap-10 font-SFPro">
             <li >
-              <Link href="/user/home" className="">Home</Link>
+              <Link href="/" className="">Home</Link>
             </li>
             <li>
-              <Link href="/user/about">About</Link>
+              <Link href="/about">About</Link>
             </li>
             <li>
-              <Link href="/user/contact">Contact Us</Link>
+              <Link href="/contact">Contact Us</Link>
             </li>
             <li>
-              <Link href="/user/blog">Blog</Link>
+              <Link href="/product">Product</Link>
+            </li>
+            <li>
+              <Link href="/blog">Blog</Link>
             </li>
           </ul>
         </nav>
@@ -55,12 +58,12 @@ const NavBar = () => {
         <nav>
           <ul className=" flex opacity-50 md:gap-10 gap-5 items-center">
             <li>
-              <Link href="/user/cart">
+              <Link href="/cart">
                 <IoCartOutline className="md:h-[24px] md:w-[24px] h-[20px] w-[20px]" />
               </Link>
             </li>
             <li>
-              <Link href="/user/login">
+              <Link href="/auth/login">
                 <FiUser className="md:h-[20px] md:w-[20px] h-[16px] w-[16px]" />
               </Link>
             </li>

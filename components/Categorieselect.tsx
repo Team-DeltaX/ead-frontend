@@ -1,5 +1,6 @@
-import * as React from "react"
-
+import React, { useState, useEffect } from "react";
+import { categoryService } from "@/services/product.service";
+import { Category } from "@/services/product.service";
 import {
   Select,
   SelectContent,
@@ -8,46 +9,87 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
-const  SelectCategory = () => {
+const SelectCategory = ({
+  selectedCategory,
+  setSelectedCategory,
+}:{
+  selectedCategory: Category | null;
+  setSelectedCategory: (category: Category ) => void;
+}) => {
+  
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        setIsLoading(true);
+        const response = await categoryService.getAllCategories();
+        setCategories(response.data); // Assuming response.data is the array of categories
+        setError(null);
+      } catch (err) {
+        setError("Failed to fetch categories. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   return (
-    <Select>
+    <Select value={selectedCategory && selectedCategory.id ? selectedCategory.id.toString() : ""} onValueChange={
+      (value) => {
+        const category = categories.find((category) => category?.id?.toString() === value);
+        if (category && category.id) {
+          setSelectedCategory(category);
+        }
+      }
+    }>
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select a category" />
+        <SelectValue placeholder={isLoading ? "Loading..." : "Select a category"} />
       </SelectTrigger>
       <SelectContent>
-        <SelectGroup>
-          <SelectItem value="apple">Smartphone</SelectItem>
-          <SelectItem value="banana">Laptop</SelectItem>
-          <SelectItem value="blueberry">Headphones</SelectItem>
-          <SelectItem value="grapes">Speakers</SelectItem>
-          <SelectItem value="pineapple">Accessories</SelectItem>
-        </SelectGroup>
+        {error ? (
+          <SelectGroup>
+            <SelectItem value="error" disabled>
+              {error}
+            </SelectItem>
+          </SelectGroup>
+        ) : (
+          <SelectGroup>
+            {categories.map((category) => (
+              <SelectItem key={category?.id} value={category?.id?.toString() || ""}>
+                {category.name}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        )}
       </SelectContent>
     </Select>
+  );
+};
+
+export default SelectCategory;
+
+
+const OrderStatusSelect = () => {
+  return (
+      <Select>
+      <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="processing" />
+      </SelectTrigger>
+      <SelectContent>
+          <SelectGroup>
+          <SelectItem value="processing">Processing</SelectItem>
+          <SelectItem value="shipped">Shipped</SelectItem>
+          <SelectItem value="delivered">Delivered</SelectItem>
+          </SelectGroup>
+      </SelectContent>
+      </Select>
   )
-}
-
-export default SelectCategory
-
-const BrandSelect = () => {
-    return (
-        <Select>
-        <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select a brand" />
-        </SelectTrigger>
-        <SelectContent>
-            <SelectGroup>
-            <SelectItem value="apple">Apple</SelectItem>
-            <SelectItem value="samsung">Samsung</SelectItem>
-            <SelectItem value="dell">Dell</SelectItem>
-            <SelectItem value="hp">HP</SelectItem>
-            <SelectItem value="sony">Sony</SelectItem>
-            </SelectGroup>
-        </SelectContent>
-        </Select>
-    )
-    }
-
-export { BrandSelect }
+  }
+export { OrderStatusSelect }
