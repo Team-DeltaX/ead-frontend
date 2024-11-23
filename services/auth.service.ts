@@ -18,18 +18,33 @@ export const authService = {
   login: async (user: UserLogin) => {
     try {
       const response = await axiosInstance.post("/auth/login", user);
-      return response.data;
+      return {
+        success: true,
+        data: response.data,
+        error: null,
+      };
     } catch (error: any) {
-      throw new Error(error.response.data.message);
+      return {
+        success: false,
+        data: null,
+        error: error.response.data.message,
+      };
     }
   },
   register: async (user: UserRegister) => {
     try {
-      const response = await axiosInstance.post("/auth/register", user);
-      return response.data;
+      const response = await axiosInstance.post("/users", user);
+      return {
+        success: true,
+        data: response.data,
+        error: null,
+      };
     } catch (error: any) {
-      throw new Error(error.response.data.message);
+      return {
+        success: false,
+        data: null,
+        error: error.response.data.message,
+      };
     }
   },
 };
-
