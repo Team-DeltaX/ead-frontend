@@ -73,27 +73,28 @@ const Home = () => {
     <div>
       <div className="w-full lg:h-[530px] md:h-[430px] sm:h-[330px] h-[230px]  bg-custom-dark">
         <Carousel
+          data-testid="carousel container"
           plugins={[plugin.current]}
           onMouseEnter={plugin.current.stop}
           onMouseLeave={plugin.current.reset}
         >
           <CarouselContent>
             {contentArray.map((content, index) => (
-              <CarouselItem key={index}>
+              <CarouselItem data-testid="carousel-item" key={index}>
                 <div className="lg:h-[510px] md:h-[410px] sm:h-[310px] h-[230px]  xl:px-32 lg:px-32 md:px-18 px-5 mb-4 grid grid-flow-col items-center justify-between">
                   {/* Text content */}
                   <div className="text-left">
-                    <h1 className="font-bold text-white opacity-40 text-[12px] sm:text-[14px] md:text-[16px] lg:text-[18px] font-figtree">
+                    <h1 data-testid="carousel-item-title" className="font-bold text-white opacity-40 text-[12px] sm:text-[14px] md:text-[16px] lg:text-[18px] font-figtree">
                       {content.title}
                     </h1>
 
-                    <h1 className="font-thin text-white sm:text-[30px] md:text-[40px] lg:text-[70px] xl:text-[75px] text-[25px] font-SFPro">
+                    <h1 data-testid="carousel-item-maintext" className="font-thin text-white sm:text-[30px] md:text-[40px] lg:text-[70px] xl:text-[75px] text-[25px] font-SFPro">
                       {content.mainText.split(" ").slice(0, -1).join(" ")}{" "}
                       <span className=" font-extrabold">
                         {content.mainText.split(" ").slice(-1)}
                       </span>
                     </h1>
-                    <p className="text-[10px] sm:text-[14px] md:text-[14px] lg:text-[16px] font-SFPro font-light text-gray-500">
+                    <p data-testid="carousel-item-description" className="text-[10px] sm:text-[14px] md:text-[14px] lg:text-[16px] font-SFPro font-light text-gray-500">
                       {content.description}
                     </p>
                     <div className="text-left xl:pt-6 lg:pt-6 md:pt-4 sm:pt-2 pt-2">
