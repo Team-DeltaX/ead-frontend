@@ -1,9 +1,5 @@
 import axiosInstance from "./axiosInstance";
-
-export interface Category {
-  id?: number;
-  name: string;
-}
+import { Category } from "./category.service";
 
 export interface Image {
   id: number;
@@ -14,6 +10,7 @@ export interface Product {
   id?: number;
   productName: string;
   category: Category;
+  brand?:string;
   productPrice: number;
   productQuantity: number;
   productDescription: string;
@@ -51,21 +48,4 @@ export const productService = {
   },
 };
 
-export const categoryService = {
-    createCategory: async (category: Category) => {
-        try {
-        const response = await axiosInstance.post("/categories/add", category);
-        return response.data;
-        } catch (error: any) {
-        throw new Error(error.response.data.message);
-        }
-    },
-    getAllCategories: async () => {
-        try {
-        const response = await axiosInstance.get("/categories/all");
-        return response.data;
-        } catch (error: any) {
-        throw new Error(error.response.data.message);
-        }
-    },
-    };
+

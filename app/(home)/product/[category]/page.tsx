@@ -17,7 +17,6 @@ export interface ProductInterface {
   image: string;
 }
 
-
 const products: ProductInterface[] = [
   {
     id: 1,
@@ -87,16 +86,16 @@ const products: ProductInterface[] = [
   },
 ];
 
-
-const Product = ({ params }) => {
+const Product = ({ params } : { params: { category: string } }) => {
   // const router = useRouter();
-  const { category } = React.use(params);
+  // const { category } = React.use(params);
+  const category= params.category;
   const [filters, setFilters] = useState({
     brand: "",
     price: "",
   });
 
-  const [brands, setBrands] = useState([]);
+  const [brands, setBrands] = useState<string[]>([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -105,7 +104,7 @@ const Product = ({ params }) => {
     setBrands(uniqueBrands);
   }, []);
 
-  const handleFilterChange = (e) => {
+  const handleFilterChange = (e:any) => {
     const { name, value } = e.target;
     setFilters((prev) => ({
       ...prev,
@@ -137,15 +136,15 @@ const Product = ({ params }) => {
     startIndex + Items_Per_Page
   );
 
-  const handlePageChange = (page) => {
+  const handlePageChange = (page : any) => {
     setCurrentPage(page);
   };
 
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="flex flex-col lg:flex-row lg:mx-28">
       {/* Sidebar Filters */}
       <div
-        className={`w-full md:w-1/4 bg-gray-50 p-4 mt-4 border rounded-lg border-gray-200 ${
+        className={` lg:mb-16 w-full md:w-1/4 bg-gray-50 p-4 mt-4 border rounded-lg border-gray-200 ${
           isSidebarOpen ? "block" : "hidden md:block"
         }`}
       >
@@ -212,7 +211,7 @@ const Product = ({ params }) => {
 
       {/* Products */}
 
-      {category}
+      <p>{category}</p>
 
       <div className="w-full sm:w-2/3 md:w-3/4 lg:w-full p-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
