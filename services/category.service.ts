@@ -6,20 +6,12 @@ export interface Category {
 }
 
 export const categoryService = {
-    createCategory: async (category: Category) => {
-        try {
-        const response = await axiosInstance.post("/categories/add", category);
-        return response.data;
-        } catch (error: any) {
-        throw new Error(error.response.data.message);
-        }
-    },
-    getAllCategories: async () => {
-        try {
-        const response = await axiosInstance.get("/categories/all");
-        return response.data;
-        } catch (error: any) {
-        throw new Error(error.response.data.message);
-        }
-    },
-    };
+  createCategory: async (category: Category) => {
+    const response = await axiosInstance.post("/categories/add", category);
+    return response.data;
+  },
+  getAllCategories: async () => {
+    const response = await axiosInstance.get("/categories/all");
+    return response.data;
+  },
+};
