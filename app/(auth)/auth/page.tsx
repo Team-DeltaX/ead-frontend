@@ -2,6 +2,7 @@
 import RegisterForm from '@/components/forms/RegistrationForm';
 import { Card } from '@/components/ui/card';
 import { useRouter } from 'next/navigation';
+import LoginForm from '@/components/forms/LoginForm';
 
 import React from 'react'
 
@@ -18,6 +19,9 @@ const Page = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-blue-400 to-indigo-500 p-6">
+
+      <LoginForm />
+
       <Card className="w-full max-w-lg bg-white rounded-lg shadow-xl p-8 mb-4">
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">
           Create Your Account
