@@ -13,21 +13,21 @@ const LoginForm = () => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
 
-    const UserFormValidation = z.object({
+    const UserLoginFormValidation = z.object({
         email: z.string().email("Invalid email address"),
         password: z.string().min(8, "Password must be at least 8 characters"),
     });
 
 
-    const form = useForm<z.infer<typeof UserFormValidation>>({
-        resolver: zodResolver(UserFormValidation),
+    const form = useForm<z.infer<typeof UserLoginFormValidation>>({
+        resolver: zodResolver(UserLoginFormValidation),
         defaultValues: {
             email: "",
             password: "",
         },
     });
 
-    const onSubmit = async (values: z.infer<typeof UserFormValidation>) => {
+    const onSubmit = async (values: z.infer<typeof UserLoginFormValidation>) => {
         setIsLoading(true);
 
         try {

@@ -3,6 +3,7 @@ import RegisterForm from '@/components/forms/RegistrationForm';
 import { Card } from '@/components/ui/card';
 import { useRouter } from 'next/navigation';
 import LoginForm from '@/components/forms/LoginForm';
+import RegistrationForm from '@/components/forms/RegistrationForm';
 
 import React from 'react'
 
@@ -18,22 +19,14 @@ const Page = () => {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-blue-400 to-indigo-500 p-6">
+    <div className="min-h-screen bg-slate-200 flex px-12 flex-col items-center justify-center">
 
-      <LoginForm />
-
-      <Card className="w-full max-w-lg bg-white rounded-lg shadow-xl p-8 mb-4">
-        <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">
-          Create Your Account
-        </h1>
-        <RegisterForm user={user} />
+      {/* <LoginForm /> */}
+      <Card className='w-full md:w-[45%] p-10'>
+        
+      <RegistrationForm />
       </Card>
-      <button
-        className="bg-indigo-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300"
-        onClick={() => router.push("user/contactus")}
-      >
-        Contact Us
-      </button>
+
       {/* <Link href="user/contactus">contact</Link> */}
     </div>
   );

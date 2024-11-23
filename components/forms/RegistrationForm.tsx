@@ -33,112 +33,124 @@ const PatientFormDefaultValues = {
   confirmPassword: "",
 };
 
-const RegisterForm = ({
-  user,
-}: {
-  user: { $id: string; name: string; email: string; phone: string };
-}) => {
+const RegisterForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const form = useForm<z.infer<typeof PatientFormValidation>>({
-    resolver: zodResolver(PatientFormValidation),
+  const UserRegisterFormValidation = z
+    .object({
+      firstName: z.string().nonempty("First name is required"),
+      lastName: z.string().nonempty("Last name is required"),
+      email: z.string().email("Invalid email").nonempty("Email is required"),
+      phone: z
+        .string()
+        .nonempty("Phone number is required")
+        .regex(/^0\d{9}$/, "Phone number must start with 0 and have exactly 10 digits"),
+      address: z.string().nonempty("Address is required"),
+      password: z.string().min(6, "Password must be at least 6 characters long"),
+      confirmPassword: z.string().min(6, "Please confirm your password"),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: "Passwords must match",
+      path: ["confirmPassword"],
+    });
+
+
+
+  const form = useForm<z.infer<typeof UserRegisterFormValidation>>({
+    resolver: zodResolver(UserRegisterFormValidation),
     defaultValues: {
-      ...PatientFormDefaultValues,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      address: "",
+      password: "",
+      confirmPassword: "",
     },
   });
 
-  const { errors } = form.formState;
-
-  const onSubmit = async (values: z.infer<typeof PatientFormValidation>) => {
+  const onSubmit = async (values: z.infer<typeof UserRegisterFormValidation>) => {
     setIsLoading(true);
+
     try {
-      const newUser = {
-        userId: user.$id,
-        ...values,
+      const user = {
+
+        email: values.email,
+        password: values.password
       };
 
-      console.log("User registered:", newUser);
 
-     
     } catch (error) {
-      console.error("Registration failed:", error);
-    } finally {
-      setIsLoading(false);
+      console.log(error);
     }
+
+    setIsLoading(false);
   };
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col space-y-6"
-      >
-        {/* Form Header */}
-        <div className="space-y-1 text-center">
-          <p className="text-gray-600">Let's set up your account</p>
-        </div>
-
-        {/* Personal Information */}
-        <section className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col space-y-4 w-full">
+        <section className="mb-5 space-y-4">
+          <h1 className="text-2xl font-semibold">Register</h1>
+          <p className="text-gray-500">Create an account to get started</p>
+        </section>
+        <div className="flex flex-row space-x-6">
           <CustomFormField
-            fieldType={FormFieldType.INPUT}
+            name="firstName"
             control={form.control}
-            name="name"
-            placeholder="Enter your name"
-            icon={<FaUser className="text-blue-500" />}
-            error={errors.name?.message}
+            fieldType={FormFieldType.INPUT}
+            placeholder="John"
           />
           <CustomFormField
-            fieldType={FormFieldType.INPUT}
+            name="lastName"
             control={form.control}
+            fieldType={FormFieldType.INPUT}
+            placeholder="Doe"
+          />
+        </div>
+        <div className="flex flex-row space-x-6">
+          <CustomFormField
             name="email"
-            placeholder="Enter your email"
-            icon={<FaEnvelope className="text-blue-500" />}
-            error={errors.email?.message}
+            control={form.control}
+            fieldType={FormFieldType.INPUT}
+            placeholder="johndoe@gmail.com"
           />
           <CustomFormField
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="phone"
-            placeholder="Enter your phone number"
-            icon={<FaPhoneAlt className="text-blue-500" />}
-            error={errors.phone?.message}
+            label="Phone Number"
+            placeholder="0712345678"
           />
-          <CustomFormField
-            fieldType={FormFieldType.INPUT}
-            control={form.control}
-            name="address"
-            placeholder="Enter your address"
-            icon={<FaMapMarkerAlt className="text-blue-500" />}
-            error={errors.address?.message}
-          />
-          <CustomFormField
-            fieldType={FormFieldType.PASSWORD}
-            control={form.control}
-            name="password"
-            placeholder="Create a password"
-            icon={<FaLock className="text-blue-500" />}
-            error={errors.password?.message}
-          />
-          <CustomFormField
-            fieldType={FormFieldType.PASSWORD}
-            control={form.control}
-            name="confirmPassword"
-            placeholder="Confirm your password"
-            icon={<FaLock className="text-blue-500" />}
-            error={errors.confirmPassword?.message}
-          />
-        </section>
+        </div>
+        <CustomFormField
+          name="address"
+          control={form.control}
+          fieldType={FormFieldType.INPUT}
+          placeholder="123, Main Street, Colombo 05"
+        />
+        <CustomFormField
+          name="password"
+          control={form.control}
+          fieldType={FormFieldType.INPUT}
+          placeholder="Password"
+          type="password"
+        />
+        <CustomFormField
+          name="confirmPassword"
+          control={form.control}
+          fieldType={FormFieldType.INPUT}
+          placeholder="Confirm Password"
+          type="password"
+        />
 
-        {/* Submit Button */}
-        <SubmitButton isLoading={isLoading}>Create Account</SubmitButton>
+
+
+        <SubmitButton isLoading={isLoading}>Register</SubmitButton>
       </form>
     </Form>
-  );
+  )
 };
 
 export default RegisterForm;

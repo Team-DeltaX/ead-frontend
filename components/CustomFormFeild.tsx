@@ -1,10 +1,5 @@
-/* eslint-disable no-unused-vars */
-import { E164Number } from "libphonenumber-js/core";
 import Image from "next/image";
 import { Control } from "react-hook-form";
-import PhoneInput from "react-phone-number-input";
-
-import { Checkbox } from "./ui/checkbox";
 import {
   FormControl,
   FormField,
@@ -19,7 +14,6 @@ import { Textarea } from "./ui/textarea";
 export enum FormFieldType {
   INPUT = "input",
   TEXTAREA = "textarea",
-  PHONE_INPUT = "phoneInput",
   SELECT = "select",
   SKELETON = "skeleton",
 }
@@ -27,6 +21,7 @@ export enum FormFieldType {
 interface CustomProps {
   control: Control<any>;
   name: string;
+  type?: string;
   label?: string;
   placeholder?: string;
   iconSrc?: string;
@@ -57,6 +52,8 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
             <Input
               placeholder={props.placeholder}
               {...field}
+              type={props.type}
+              autoComplete="off"
               className="shad-input border-0"
             />
           </FormControl>
@@ -73,21 +70,6 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
           />
         </FormControl>
       );
-    case FormFieldType.PHONE_INPUT:
-      return (
-        <FormControl>
-          <PhoneInput
-            defaultCountry="US"
-            placeholder={props.placeholder}
-            international
-            withCountryCallingCode
-            value={field.value as E164Number | undefined}
-            onChange={field.onChange}
-            className="input-phone"
-          />
-        </FormControl>
-      );
-   
     
     case FormFieldType.SELECT:
       return (
