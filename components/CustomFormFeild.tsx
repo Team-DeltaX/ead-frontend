@@ -53,7 +53,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
               placeholder={props.placeholder}
               {...field}
               type={props.type}
-              autoComplete="off"
+              autoComplete={props.type === "password" ? "new-password" : "off"}
               className="shad-input border-0"
             />
           </FormControl>
@@ -67,10 +67,10 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
             {...field}
             className="shad-textArea"
             disabled={props.disabled}
+            autoComplete="off" // Ensures textarea also doesn't autofill
           />
         </FormControl>
       );
-    
     case FormFieldType.SELECT:
       return (
         <FormControl>
@@ -102,7 +102,8 @@ const CustomFormField = (props: CustomProps) => {
       name={name}
       render={({ field }) => (
         <FormItem className="flex-1">
-          
+          {label && <FormLabel>{label}</FormLabel>}
+
           <RenderInput field={field} props={props} />
 
           <FormMessage className="shad-error" />

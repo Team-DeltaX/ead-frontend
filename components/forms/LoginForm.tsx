@@ -7,15 +7,19 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import CustomFormField, { FormFieldType } from "../CustomFormFeild";
 import SubmitButton from "../SubmitButton";
+import { authService } from "@/services/auth.service";
 
-const LoginForm = () => {
+const LoginForm = ({
+    setOpen,
+}:{
+    setOpen: (open: boolean) => void;
+}) => {
 
-    const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
 
     const UserLoginFormValidation = z.object({
         email: z.string().email("Invalid email address"),
-        password: z.string().min(8, "Password must be at least 8 characters"),
+        password: z.string().min(3, "Password must be at least 8 characters"),
     });
 
 
@@ -37,6 +41,17 @@ const LoginForm = () => {
                 password: values.password
             };
 
+            await authService.login(user).then((response) => {
+                console.log("login",response);
+
+                if (response) {
+                    sessionStorage.setItem("token", response.data.token);
+                    setOpen(false);
+                }
+                
+            })
+
+
 
         } catch (error) {
             console.log(error);
@@ -48,16 +63,12 @@ const LoginForm = () => {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-6">
-                <section className="mb-12 space-y-4">
-                    <h1 className="header">Hi there 👋</h1>
-                    <p className="text-dark-700">Login</p>
-                </section>
-
                 <CustomFormField
                     fieldType={FormFieldType.INPUT}
                     control={form.control}
                     name="email"
                     label="Email"
+                    placeholder="johndoe@gmail.com"
 
                 />
                 <CustomFormField
@@ -65,6 +76,8 @@ const LoginForm = () => {
                     control={form.control}
                     name="password"
                     label="Password"
+                    type="password"
+                    placeholder="********"
                 />
                 <SubmitButton isLoading={isLoading}>Login</SubmitButton>
             </form>

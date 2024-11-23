@@ -12,6 +12,7 @@ import { FaUser, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaLock } from "react-ic
 import { Form } from "@/components/ui/form";
 import SubmitButton from "../SubmitButton";
 import CustomFormField, { FormFieldType } from "../CustomFormFeild";
+import { authService } from "@/services/auth.service";
 
 // Validation schema using Zod
 const PatientFormValidation = z.object({
@@ -74,11 +75,15 @@ const RegisterForm = () => {
     setIsLoading(true);
 
     try {
-      const user = {
+      
+      await authService.register(values).then((response) => {
+        console.log("register", response);
 
-        email: values.email,
-        password: values.password
-      };
+        if (response) {
+          router.push("/");
+        }
+      })
+      
 
 
     } catch (error) {
@@ -95,7 +100,7 @@ const RegisterForm = () => {
           <h1 className="text-2xl font-semibold">Register</h1>
           <p className="text-gray-500">Create an account to get started</p>
         </section>
-        <div className="flex flex-row space-x-6">
+        <div className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0">
           <CustomFormField
             name="firstName"
             control={form.control}
@@ -109,7 +114,7 @@ const RegisterForm = () => {
             placeholder="Doe"
           />
         </div>
-        <div className="flex flex-row space-x-6">
+        <div className="flex flex-col md:flex-row md:space-x-6 space-y-4  md:space-y-0">
           <CustomFormField
             name="email"
             control={form.control}
@@ -120,7 +125,6 @@ const RegisterForm = () => {
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="phone"
-            label="Phone Number"
             placeholder="0712345678"
           />
         </div>
