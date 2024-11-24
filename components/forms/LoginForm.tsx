@@ -41,9 +41,10 @@ const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
 
          console.log("Backend response:", response); // Debugging log
 
-         if (response?.success) {
+         if (response.success) {
            console.log("Login successful:", response);
-           sessionStorage.setItem("token", response.data.data.token);
+           console.log("Token:", response.data.token);
+           sessionStorage.setItem("token", response.data.token);
            setOpen(false); // Close the modal
            return "Logged in successfully!"; // Success message
          } else {
