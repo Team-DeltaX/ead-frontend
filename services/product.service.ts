@@ -30,9 +30,12 @@ export const productService = {
     );
     return response.data;
   },
-
   getProductById: async (id: number) => {
     const response = await axiosInstance.get(`/products/${id}`);
+    return response.data;
+  },
+  getProductByCategoryName: async(category: string) =>{
+    const response = await axiosInstance.get(`/category/${category}`)
     return response.data;
   }
 };

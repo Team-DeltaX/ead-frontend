@@ -5,7 +5,7 @@ import { MdDriveEta } from "react-icons/md";
 import { CiShop } from "react-icons/ci";
 import { FaGalacticRepublic } from "react-icons/fa";
 import { Product, productService } from "@/services/product.service";
-import { useParams } from "next/navigation"; // Import the `useParams` hook
+import { useParams } from "next/navigation";
 
 type Params = {
   prodid: string;
@@ -14,17 +14,16 @@ type Params = {
 const Page = () => {
   const router = useRouter();
 
-  // Unwrap params using the useParams hook and type it explicitly
-  const params = useParams() as Params; // Explicitly typing params as Params
+  const params = useParams() as Params;
   const { prodid } = params;
 
-  const parsedProdid = parseInt(prodid, 10); // Parse prodid to an integer
+  const parsedProdid = parseInt(prodid, 10); 
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!parsedProdid) return; // Prevent fetch if prodid is invalid or not available
+    if (!parsedProdid) return; 
 
     const fetchProduct = async () => {
       try {
@@ -41,11 +40,11 @@ const Page = () => {
   }, [parsedProdid]);
 
   if (loading) {
-    return <div>Loading...</div>; // Show a loading state
+    return <div>Loading...</div>; 
   }
 
   if (!product) {
-    return <div>Product not found</div>; // Show a "not found" message
+    return <div>Product not found</div>; 
   }
 
   return (

@@ -3,106 +3,35 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../../../../components/ProductCard";
 import { FaFilter } from "react-icons/fa";
-// import { useRouter } from "next/router";
+import { Product, productService } from "@/services/product.service";
+import { useParams } from "next/navigation";
 
-export interface ProductInterface {
-  id: number;
-  name: string;
-  price: number;
-  brand: string;
+type Params ={
   category: string;
-  storage: string;
-  batteryCapacity: string;
-  description: string;
-  image: string;
-}
+};
 
-const products: ProductInterface[] = [
-  {
-    id: 1,
-    name: "Apple iPhone 14 Pro Max",
-    price: 1299,
-    brand: "Apple",
-    category: "phone",
-    storage: "256GB",
-    batteryCapacity: "4323mAh",
-    description: "The ultimate iPhone experience with unparalleled features.",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
-  },
-  {
-    id: 2,
-    name: "Samsung Galaxy S23 Ultra",
-    price: 1199,
-    brand: "Samsung",
-    category: "phone",
-    storage: "128GB",
-    batteryCapacity: "5000mAh",
-    description: "The pinnacle of Samsung innovation with stunning features.",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdeSoJWzJ7Mu85-gpfgV7hHqNiKE0dQnQq5A&s",
-  },
-  {
-    id: 3,
-    name: "Samsung Galaxy S23 Ultra",
-    price: 1199,
-    brand: "Samsung",
-    category: "phone",
-    storage: "128GB",
-    batteryCapacity: "5000mAh",
-    description: "The pinnacle of Samsung innovation with stunning features.",
-    image: "https://s.alicdn.com/@sc04/kf/H4467cbfe96cb42639c74d4aa9aa5b199f.jpg_300x300.jpg",
-  },
-  {
-    id: 4,
-    name: "Apple iPhone 14 Pro Max",
-    price: 1299,
-    brand: "Apple",
-    category: "phone",
-    storage: "256GB",
-    batteryCapacity: "4323mAh",
-    description: "The ultimate iPhone experience with unparalleled features.",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
-  },
-  {
-    id: 5,
-    name: "Apple iPhone 14 Pro Max",
-    price: 1299,
-    brand: "Apple",
-    category: "phone",
-    storage: "256GB",
-    batteryCapacity: "4323mAh",
-    description: "The ultimate iPhone experience with unparalleled features.",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
-  },
-  {
-    id: 6,
-    name: "Apple iPhone 14 Pro Max",
-    price: 1299,
-    brand: "Apple",
-    category: "phone",
-    storage: "256GB",
-    batteryCapacity: "4323mAh",
-    description: "The ultimate iPhone experience with unparalleled features.",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRndYBNHmnuV8-xuvyBHiXRg7XXSH34vtXoXg&s",
-  },
-];
+const ProductPage = () => {
 
-const Product = ({ params } : { params: { category: string } }) => {
-  // const router = useRouter();
   // const { category } = React.use(params);
+  const params = useParams() as Params;
   const category= params.category;
   const [filters, setFilters] = useState({
     brand: "",
     price: "",
   });
 
+  const [data,setData] = useState<Product[]>([])
+
   const [brands, setBrands] = useState<string[]>([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    const uniqueBrands = [...new Set(products.map((product) => product.brand))];
+    const uniqueBrands = [...new Set(data.map((product) => product.brand))].filter(
+      (brand): brand is string => brand !== undefined
+    );
     setBrands(uniqueBrands);
-  }, []);
+  }, [data]);
 
   const handleFilterChange = (e:any) => {
     const { name, value } = e.target;
@@ -111,6 +40,20 @@ const Product = ({ params } : { params: { category: string } }) => {
       [name]: value,
     }));
   };
+  useEffect(() => {
+    if (!category) return; 
+
+    const fetchProduct = async () => {
+      try {
+        const response = await productService.getProductByCategoryName(category)
+        setData(response.data);
+      } catch (error) {
+        console.error("Failed to fetch product:", error);
+      } 
+    };
+
+    fetchProduct();
+  }, [category]);
 
   // const handleBrandFilterChange = (e) => {
   //   const value = e.target.value;
@@ -120,10 +63,10 @@ const Product = ({ params } : { params: { category: string } }) => {
   //   }));
   // };
 
-  const filteredProducts = products.filter((product) => {
+  const filteredProducts = data.filter((product:Product) => {
     return (
       (!filters.brand || product.brand === filters.brand) &&
-      (!filters.price || product.price <= parseInt(filters.price))
+      (!filters.price || product.productPrice <= parseInt(filters.price))
     );
   });
 
@@ -255,4 +198,4 @@ const Product = ({ params } : { params: { category: string } }) => {
   );
 };
 
-export default Product;
+export default ProductPage;

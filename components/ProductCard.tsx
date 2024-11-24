@@ -10,7 +10,7 @@ const ProductCard = ({ product }:{
   return (
     <div className="max-w-sm p-4 border rounded-lg shadow-md bg-[#F6F6F6]">
       {/* <img
-        src={product.image}
+        src={product.images[0].url}
         alt={product.name}
         className="w-full object-cover rounded-lg p-4"
       /> */}
@@ -23,7 +23,7 @@ const ProductCard = ({ product }:{
         <button
           className="mt-2 px-4 py-1 bg-black text-white rounded-lg hover:bg-gray-800"
           onClick={()=>{           
-            router.push(`/product/${product.category.id}/${product.id}`);
+            router.push(`/product/${product.category}/${product.id}`);
           }}
         >
           Buy Now
