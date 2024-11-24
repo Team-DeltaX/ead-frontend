@@ -97,7 +97,7 @@ const RegisterForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col space-y-4 w-full">
         <section className="mb-5 space-y-4">
-          <h1 className="text-2xl font-semibold">Register</h1>
+          <h1 className="text-2xl font-semibold">REGISTER</h1>
           <p className="text-gray-500">Create an account to get started</p>
         </section>
         <div className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0">
@@ -151,7 +151,7 @@ const RegisterForm = () => {
 
 
 
-        <SubmitButton isLoading={isLoading}>Register</SubmitButton>
+        <SubmitButton isLoading={isLoading}>REGISTER</SubmitButton>
       </form>
     </Form>
   )

@@ -12,9 +12,10 @@ const axiosInstance = axios.create({
 // Request interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("accessToken");
-
+    const token = sessionStorage.getItem("token");
+    console.log("Tdfdfgdfge");
     if (token) {
+      console.log("Token found in local storage");
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
@@ -31,7 +32,7 @@ axiosInstance.interceptors.response.use(
   (error) => {
     if (axios.isAxiosError(error)) {
       const errorMessage =
-        error.response?.data?.message || "An unexpected error occurred";
+       "An unexpected error occurred";
       return Promise.reject(new Error(errorMessage));
     }
     return Promise.reject(new Error("A network error occurred"));
