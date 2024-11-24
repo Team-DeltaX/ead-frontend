@@ -14,10 +14,12 @@ import {
     handleOk,
     open,
     setOpen,
+    handleOkAsync,
   }:{
-    handleOk: () => void;
+    handleOk?: () => void;
     open: boolean;
     setOpen: (open: boolean) => void;
+    handleOkAsync?: () => Promise<void>;
   }) {
     return (
       <AlertDialog open={open} onOpenChange={setOpen}>
@@ -32,7 +34,9 @@ import {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleOk}>Continue</AlertDialogAction>
+            <AlertDialogAction onClick={
+              handleOkAsync ? handleOkAsync : handleOk
+            }>Continue</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
