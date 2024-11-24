@@ -7,6 +7,7 @@ import { CiSearch } from "react-icons/ci";
 import { IoCartOutline } from "react-icons/io5";
 import { FiUser, FiMenu } from "react-icons/fi";
 import Link from "next/link";
+import LoginDialog from "@/components/LoginDialog";
 
 
 const NavBar = () => {
@@ -43,7 +44,7 @@ const NavBar = () => {
               <Link href="/about">About</Link>
             </li>
             <li>
-              <Link href="/contact">Contact Us</Link>
+              <Link href="/contactus">Contact Us</Link>
             </li>
             <li>
               <Link href="/product">Product</Link>
@@ -55,7 +56,8 @@ const NavBar = () => {
         </nav>
       </div>
       <div className="ml-auto flex">
-        <nav>
+        <LoginDialog />
+        {/* <nav>
           <ul className=" flex opacity-50 md:gap-10 gap-5 items-center">
             <li>
               <Link href="/cart">
@@ -68,7 +70,7 @@ const NavBar = () => {
               </Link>
             </li>
           </ul>
-        </nav>
+        </nav> */}
       </div>
       <button className="block lg:hidden z-50 ml-4" onClick={toggleMenu}>
         <FiMenu  className="opacity-50"/>
@@ -89,7 +91,7 @@ const NavBar = () => {
             </li>
             <li>
               <Link
-                href="/user/contact"
+                href="/user/contactus"
                 className="p-4 w-full text-center block"
               >
                 Contact Us

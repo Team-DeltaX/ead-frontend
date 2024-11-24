@@ -6,7 +6,7 @@ const LoginDialog = () => {
   return (
       <Dialog>
           <DialogTrigger asChild>
-              <Button>
+              <Button className="rounded-md  px-8 py-1.5 hover:bg-gray-700 hover:text-white bg-black text-white font-SFPro md:text-[14px] text-[10px]">
                   
               </Button>
           </DialogTrigger>
