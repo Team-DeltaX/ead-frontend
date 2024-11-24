@@ -5,9 +5,11 @@ import { Separator } from "@/components/ui/separator";
 import Iphone from "../../assets/sliderimages/Iphone.png";
 import Image from "next/image";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
+import { PaymentDialog } from "@/components/payment/paymentDialog";
 
 const Cart = () => {
   
+  const [paymentDialogOpen,setPaymentDialogOpen]=useState(false);
   const [cartItems, setCartItems] = useState([
 
     {
@@ -189,9 +191,11 @@ const Cart = () => {
                 Rs. 999.99
               </h1>
             </div>
-            <button className="bg-black text-white rounded-md py-2 w-full mt-4 lg:text-[16px] md:text-[14px] sm:text-[14px] text-[12px] font-bold">
+            <button onClick={()=>{setPaymentDialogOpen(true)}} className="bg-black text-white rounded-md py-2 w-full mt-4 lg:text-[16px] md:text-[14px] sm:text-[14px] text-[12px] font-bold">
               Check Out
             </button>
+           <PaymentDialog isOpen={paymentDialogOpen} onOpenChange={setPaymentDialogOpen}></PaymentDialog>
+           
           </div>
         </div>
       </div>
