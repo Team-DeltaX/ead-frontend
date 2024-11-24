@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { OrderStatusSelect } from "@/components/Categorieselect";
+import { OrderStatusSelect } from "@/components/OrderStatusSelect";
 
 interface Order {
   date: string;
@@ -68,7 +68,6 @@ const OrdersTable: React.FC = () => {
           <thead>
             <tr className="bg-gray-200 text-gray-400 text-lg leading-normal">
               <th className="py-3 px-6 text-left">Date</th>
-              <th className="py-3 px-6 text-left">Paid</th>
               <th className="py-3 px-6 text-left">Recipient</th>
               <th className="py-3 px-6 text-left">Products</th>
               <th className="py-3 px-6 text-left">Order Status</th>
@@ -78,15 +77,7 @@ const OrdersTable: React.FC = () => {
             {orders.map((order, index) => (
               <tr key={index} className="border-b border-gray-200 hover:bg-gray-100">
                 <td className="py-3 px-6">{order.date}</td>
-                <td className="py-3 px-6">
-                  <span
-                    className={`px-3 py-1 rounded-full font-semibold ${
-                      order.paid ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"
-                    }`}
-                  >
-                    {order.paid ? "YES" : "NO"}
-                  </span>
-                </td>
+                
                 <td className="py-3 px-6">
                   <div>
                     <p className="font-semibold">{order.recipient.name}</p>

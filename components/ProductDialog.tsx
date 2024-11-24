@@ -57,18 +57,17 @@ export function DialogDemo() {
 
       alert("Product added successfully!");
       console.log("Response:", response.data);
-
-      // Clear the form
+      
+    } catch (error) {
+      console.error("Error adding product:", error);
+      alert("Error adding product. Please try again.");
+    } finally {
       setProductName("");
       setCategory(null);
       setPrice(0);
       setQuantity(0);
       setDescription("");
       setImages([]);
-    } catch (error) {
-      console.error("Error adding product:", error);
-      alert("Error adding product. Please try again.");
-    } finally {
       setLoading(false);
     }
   };
@@ -92,7 +91,7 @@ export function DialogDemo() {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="font-semibold mt-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded focus:border-black"
+          className="font-semibold mt-1 bg-gray-500 hover:bg-gray-600 hover:text-gray-200 text-white py-2 px-4 rounded focus:border-black"
         >
           Add Product
         </Button>
