@@ -155,6 +155,7 @@ const Home = () => {
         <div className="grid grid-cols-5  justify-between gap-5 mt-6">
           {categoryArray.map((category, index) => (
             <div
+              data-testid='categoryitem'
               key={index}
               className="bg-gray-200 rounded-md text-center md:py-6 sm:py-4 py-3 "
             >
