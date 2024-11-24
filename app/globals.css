@@ -78,3 +78,34 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .shad-input-label {
+    @apply text-14-medium text-gray-700 !important;
+  }
+
+  .shad-input {
+    @apply bg-gray-200 placeholder:text-gray-600 border-gray-500 h-11 focus-visible:ring-0 focus-visible:ring-offset-0 !important;
+  }
+
+  .shad-input-icon {
+    @apply bg-gray-200 placeholder:text-gray-600 border-gray-500 h-11 focus-visible:ring-0 focus-visible:ring-offset-0 !important;
+  }
+
+  .shad-textArea {
+    @apply bg-gray-200 placeholder:text-gray-600 border-gray-600 focus-visible:ring-0 focus-visible:ring-offset-0 !important;
+  }
+  
+}
+
+.PhoneInputInput {
+  outline: none;
+  margin-left: 4px;
+  background: #1a1d21;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.PhoneInputInput::placeholder {
+  color: #1a1d21;
+}
