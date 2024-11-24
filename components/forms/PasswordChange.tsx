@@ -9,23 +9,23 @@ import SubmitButton from "../SubmitButton";
 import { authService } from "@/services/auth.service";
 import toast from "react-hot-toast";
 
-const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
+const PasswordChange = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const UserLoginFormValidation = z.object({
+  const UserPasswordChangeValidation = z.object({
     email: z.string().email("Invalid email address"),
     password: z.string().min(3, "Password must be at least 8 characters"),
   });
 
-  const form = useForm<z.infer<typeof UserLoginFormValidation>>({
-    resolver: zodResolver(UserLoginFormValidation),
+  const form = useForm<z.infer<typeof UserPasswordChangeValidation>>({
+    resolver: zodResolver(UserPasswordChangeValidation),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
- const onSubmit = async (values: z.infer<typeof UserLoginFormValidation>) => {
+ const onSubmit = async (values: z.infer<typeof UserPasswordChangeValidation>) => {
    const user = {
      email: values.email,
      password: values.password,
@@ -37,22 +37,11 @@ const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
        (async () => {
          const response = await authService.login(user);
 
-         console.log("Backend response:", response); // Debugging log
-
-         if (response?.success) {
-           console.log("Login successful:", response);
-           sessionStorage.setItem("token", response.data.token);
-           setOpen(false); // Close the modal
-           return "Logged in successfully!"; // Success message
-         } else {
-           throw new Error(
-             response?.error || "Invalid credentials. Please try again."
-           );
-         }
+        
        })(),
        {
          loading: "Logging in...",
-         success: (message) => message,
+         success: "Login successful!",
          error: (error) => error?.message || "An unexpected error occurred.",
        }
      );
@@ -65,25 +54,36 @@ const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-6 font-SFPro ">
         <CustomFormField
-          name="email"
+          
+          name="currentPassword"
+          label="Current Password"
           control={form.control}
           fieldType={FormFieldType.INPUT}
-          placeholder="johndoe@gmail.com"
-        />
-        <CustomFormField
-          fieldType={FormFieldType.INPUT}
-          control={form.control}
-          name="password"
-          label="Password"
           type="password"
           placeholder="********"
         />
-        <SubmitButton isLoading={isLoading}>LOGIN</SubmitButton>
+        <CustomFormField
+          fieldType={FormFieldType.INPUT}
+          control={form.control}
+          name="newPassword"
+          label="New Password"
+          type="password"
+          placeholder="********"
+        />
+        <CustomFormField
+          fieldType={FormFieldType.INPUT}
+          control={form.control}
+          name="confirmPassword"
+          label="Confirm Password"
+          type="password"
+          placeholder="********"
+        />
+        <SubmitButton isLoading={isLoading}>Change Password</SubmitButton>
       </form>
     </Form>
   );
 };
 
-export default LoginForm;
+export default PasswordChange;

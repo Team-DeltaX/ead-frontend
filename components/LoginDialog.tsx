@@ -22,9 +22,9 @@ const LoginDialog = () => {
       <DialogTrigger asChild>
         <Button  className="bg-black hover:bg-gray-700 text-white py-1.5 px-8 rounded focus:border-black font-SFPro">LOGIN</Button>
       </DialogTrigger>
-      <DialogContent className="w-[90%] md:max-w-[425px]">
+      <DialogContent className="w-[90%] md:max-w-[425px] font-SFPro">
         <DialogHeader>
-          <DialogTitle>Login</DialogTitle>
+          <DialogTitle>LOGIN</DialogTitle>
           <DialogDescription>
             Enter your credentials to access your account.
           </DialogDescription>

@@ -11,7 +11,7 @@ import LoginDialog from "@/components/LoginDialog";
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isLogging = false;
+  const isLogging = true;
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -72,9 +72,12 @@ const NavBar = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/auth/login">
+                <Link href="/profile">
                   <FiUser className="md:h-[20px] md:w-[20px] h-[16px] w-[16px]" />
                 </Link>
+              </li>
+              <li>
+              <LoginDialog />
               </li>
             </ul>
           </nav>
