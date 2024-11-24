@@ -4,7 +4,6 @@ import { Card } from '@/components/ui/card';
 import { useRouter } from 'next/navigation';
 import LoginForm from '@/components/forms/LoginForm';
 import RegistrationForm from '@/components/forms/RegistrationForm';
-import LoginDialog from '@/components/LoginDialog';
 
 import React from 'react'
 
@@ -26,8 +25,7 @@ const Page = () => {
       <Card className='w-full md:max-w-[500px] p-3 md:p-10'>
 
         <RegistrationForm />
-
-        <LoginDialog />
+      <p className='text-center pt-4'>Already have an account? <span className='text-blue-600 cursor-pointer' onClick={() => router.push("/")}>Login</span></p>
       </Card>
 
       {/* <Link href="user/contactus">contact</Link> */}

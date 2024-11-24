@@ -5,6 +5,7 @@ export interface Blog {
   title: string;
   content: string;
   imageUrl?: string;
+  createdAt?: string;
 }
 
 export const blogService = {
@@ -23,5 +24,14 @@ export const blogService = {
   deleteBlog: async (id: number) => {
     const response = await axiosInstance.delete(`/blogs/${id}`);
     return response.data;
+  },
+
+  getBlogById: async (id: number) => {
+    try {
+      const response = await axiosInstance.get(`/blogs/${id}`);
+      return response.data;
+    } catch (error: any) {
+      throw new Error(error.response.data.message);
+    }
   },
 };

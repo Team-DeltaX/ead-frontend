@@ -27,7 +27,7 @@ export const authService = {
       return {
         success: false,
         data: null,
-        error: error.response.data.message,
+        error: error,
       };
     }
   },
