@@ -5,8 +5,8 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hovercard";
-import { categoryService } from "@/services/product.service";
-import { Category } from "@/services/product.service";
+import { categoryService } from "@/services/category.service";
+import { Category } from "@/services/category.service";
 
 const Categorycard = () => {
   const [categories, setCategories] = useState<Category[]>([]);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { categoryService } from "@/services/product.service";
-import { Category } from "@/services/product.service";
+import { categoryService } from "@/services/category.service";
+import { Category } from "@/services/category.service";
 import {
   Select,
   SelectContent,
