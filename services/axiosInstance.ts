@@ -7,7 +7,6 @@ const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true,
 });
 
 // Request interceptor
@@ -33,7 +32,7 @@ axiosInstance.interceptors.response.use(
   (error) => {
     if (axios.isAxiosError(error)) {
       const errorMessage =
-        error.response?.data?.message || "An unexpected error occurred";
+       "An unexpected error occurred";
       return Promise.reject(new Error(errorMessage));
     }
     return Promise.reject(new Error("A network error occurred"));

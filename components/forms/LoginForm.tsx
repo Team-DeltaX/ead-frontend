@@ -31,6 +31,8 @@ const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
      password: values.password,
    };
 
+   console.log("User data:", user); // Debugging log
+
    setIsLoading(true);
    try {
      await toast.promise(

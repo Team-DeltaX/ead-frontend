@@ -39,7 +39,9 @@ const Page = () => {
     return <div>Blog not found</div>; 
   }
   return (
-    <div><h1>{blog.title} hello</h1></div>
+    <div>
+      {/* <h1>{blog.title} hello</h1> */}
+      </div>
   )
 }
 
