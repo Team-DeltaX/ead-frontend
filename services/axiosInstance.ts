@@ -7,14 +7,16 @@ const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 // Request interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
-
+    const token = sessionStorage.getItem("token");
+    console.log("Tdfdfgdfge");
     if (token) {
+      console.log("Token found in local storage");
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;

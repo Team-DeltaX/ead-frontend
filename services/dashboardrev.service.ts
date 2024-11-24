@@ -6,6 +6,7 @@ export interface DashboardRev {
   ThisWeekRev: number;
   ThisMonthRev: number;
 }
+
 export interface DashboardOrd {
   totalOrders: number;
   today: number;
