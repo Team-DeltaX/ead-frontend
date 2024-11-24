@@ -11,35 +11,17 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-// Request interceptor to add Authorization header
-axiosInstance.interceptors.request.use((config) => {
-  const token = sessionStorage.getItem("token");
-  console.log("token", token);
-  if (token) {
-    config.headers["Authorization"] = `Bearer ${token}`;
-  }
-  return config;
-});
-
-// Response interceptor to handle responses and errors
-axiosInstance.interceptors.response.use(
-  (response) => {
-    return response; // Simply return the response if no issues
+// add token to the header
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
   },
   (error) => {
-    if (axios.isAxiosError(error)) {
-      console.error("Axios error response:", error.response); // Log the Axios error response
-
-      // Return a user-friendly error message
-      return Promise.reject(
-        new Error(
-          error.response?.data?.message || "An unexpected error occurred"
-        )
-      );
-    }
-
-    console.error("Network error:", error); // Log network-related errors
-    return Promise.reject(new Error("A network error occurred"));
+    return Promise.reject(error);
   }
 );
 
