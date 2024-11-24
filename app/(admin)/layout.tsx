@@ -32,10 +32,12 @@ export default function RootLayout({
           <div>
             <Sidebar />
           </div>
-          <div className="w-full h-[90%]">{children}</div>
-        </div>
+          <div className="w-full h-[90%]">
+            {children}
 
-        <Toaster />
+            <Toaster />
+          </div>
+        </div>
       </body>
     </html>
   );
