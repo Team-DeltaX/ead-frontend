@@ -29,14 +29,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div>
-          <NavBar /> {/* Show NavBar globally, except in /auth pages */}
+        <NavBar />
+        <div className="w-full min-h-screen">
+          {children}
+          <Toaster />
         </div>
-        <div className="w-full">{children}</div>
-        <div>
-          <Footer /> {/* Show Footer globally, except in /auth pages */}
-        </div>
-        <Toaster />
+        <Footer />
       </body>
     </html>
   );
