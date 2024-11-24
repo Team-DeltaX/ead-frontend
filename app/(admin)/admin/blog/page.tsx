@@ -6,7 +6,7 @@ import { UpdateBlog } from "@/components/UpdateBlog";
 import { blogService } from "@/services/blog.service";
 import { Blog } from "@/services/blog.service";
 
-const page = () => {
+const Page = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -101,4 +101,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
