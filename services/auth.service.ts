@@ -16,35 +16,11 @@ export interface UserRegister {
 
 export const authService = {
   login: async (user: UserLogin) => {
-    try {
-      const response = await axiosInstance.post("/auth/login", user);
-      return {
-        success: true,
-        data: response.data,
-        error: null,
-      };
-    } catch (error: any) {
-      return {
-        success: false,
-        data: null,
-        error: error,
-      };
-    }
+    const response = await axiosInstance.post("/auth/login", user);
+    return response.data;
   },
   register: async (user: UserRegister) => {
-    try {
-      const response = await axiosInstance.post("/users", user);
-      return {
-        success: true,
-        data: response.data,
-        error: null,
-      };
-    } catch (error: any) {
-      return {
-        success: false,
-        data: null,
-        error: error.response.data.message,
-      };
-    }
+    const response = await axiosInstance.post("/auth/register", user);
+    return response.data;
   },
 };

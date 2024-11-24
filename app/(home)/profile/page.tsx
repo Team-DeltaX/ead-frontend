@@ -12,7 +12,8 @@ const Profile = () => {
   const getUserDetails = async () => {
     try {
       const response = await userService.getUserById();
-      console.log(response);
+      console.log(response.data.firstName);
+      setUserData(response.data);
     } catch (error) {
       console.log(error);
     }finally{
@@ -38,7 +39,7 @@ const Profile = () => {
               htmlFor="name"
               className="text-[11px] sm:text-[11px] md:text-[12px] lg:text-[14px] font-SFPro text-black"
             >
-              First Name : <span className="text-gray-500"> Sasindu</span>
+              First Name : <span className="text-gray-500"> { userData?.firstName}</span>
             </label>
           </div>
           <div className="grid grid-cols-1 gap-4 px-20 pt-2">
