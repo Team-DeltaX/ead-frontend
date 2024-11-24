@@ -13,8 +13,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FiPlus, FiTrash2 } from "react-icons/fi";
 import SelectCategory from "@/components/Categorieselect";
-import {productService} from "@/services/product.service";
-import {Category, Product} from "@/services/product.service";
+import { productService } from "@/services/product.service";
+import { Product } from "@/services/product.service";
+import { Category } from "@/services/category.service";
 import { AlertDialogComponent } from "./Alert";
 
 export function DialogDemo() {
@@ -25,22 +26,23 @@ export function DialogDemo() {
   const [description, setDescription] = useState("");
   const [images, setImages] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
+  const [isalertOpen, setIsAlertOpen] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async () => {
     console.log(productName, category, price, quantity, description);
     if (!productName || !category || !price || !quantity || !description) {
-      alert("Please fill all fields!");
+      setError("Please fill all the fields");
       return;
     }
 
-    const formData : Product = {
+    const formData: Product = {
       productName: productName,
       category: category,
       productPrice: price,
       productQuantity: quantity,
-      productDescription: description
-
-    }
+      productDescription: description,
+    };
     // images.forEach((image, index) => {
     //   formData.append(`images[${index}]`, image);
     // });
@@ -52,12 +54,11 @@ export function DialogDemo() {
         category,
         productPrice: price,
         productQuantity: quantity,
-        productDescription: description
+        productDescription: description,
       });
 
       alert("Product added successfully!");
       console.log("Response:", response.data);
-      
     } catch (error) {
       console.error("Error adding product:", error);
       alert("Error adding product. Please try again.");
@@ -72,7 +73,6 @@ export function DialogDemo() {
     }
   };
 
-  
   // Handler to add selected images to the state
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -106,25 +106,60 @@ export function DialogDemo() {
         <div className="grid gap-4 py-4">
           {/* Product Details Inputs */}
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">Product Name</Label>
-            <Input onChange={(e) => setProductName(e.target.value)} id="name" placeholder="Enter product name" className="col-span-3" />
+            <Label htmlFor="name" className="text-right">
+              Product Name
+            </Label>
+            <Input
+              onChange={(e) => setProductName(e.target.value)}
+              id="name"
+              placeholder="Enter product name"
+              className="col-span-3"
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="category" className="text-right">Category</Label>
-            <SelectCategory selectedCategory={category} setSelectedCategory={setCategory} />
+            <Label htmlFor="category" className="text-right">
+              Category
+            </Label>
+            <SelectCategory
+              selectedCategory={category}
+              setSelectedCategory={setCategory}
+            />
           </div>
-          
+
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="price" className="text-right">Price</Label>
-            <Input onChange={(e) => setPrice(Number(e.target.value))} id="price" placeholder="Enter price" type="number" className="col-span-3" />
+            <Label htmlFor="price" className="text-right">
+              Price
+            </Label>
+            <Input
+              onChange={(e) => setPrice(Number(e.target.value))}
+              id="price"
+              placeholder="Enter price"
+              type="number"
+              className="col-span-3"
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="quantity" className="text-right">Quantity</Label>
-            <Input onChange={(e) => setQuantity(Number(e.target.value))} id="quantity" placeholder="Enter quantity" type="number" className="col-span-3" />
+            <Label htmlFor="quantity" className="text-right">
+              Quantity
+            </Label>
+            <Input
+              onChange={(e) => setQuantity(Number(e.target.value))}
+              id="quantity"
+              placeholder="Enter quantity"
+              type="number"
+              className="col-span-3"
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="description" className="text-right">Description</Label>
-            <Input onChange={(e) => setDescription(e.target.value)} id="description" placeholder="Enter product description" className="col-span-3" />
+            <Label htmlFor="description" className="text-right">
+              Description
+            </Label>
+            <Input
+              onChange={(e) => setDescription(e.target.value)}
+              id="description"
+              placeholder="Enter product description"
+              className="col-span-3"
+            />
           </div>
 
           {/* Image Upload Section */}
@@ -132,7 +167,10 @@ export function DialogDemo() {
             <div className="flex gap-4 overflow-x-auto">
               {/* Image Previews */}
               {images.map((image, index) => (
-                <div key={index} className="relative w-24 h-24 border rounded overflow-hidden">
+                <div
+                  key={index}
+                  className="relative w-24 h-24 border rounded overflow-hidden"
+                >
                   <img
                     src={URL.createObjectURL(image)}
                     alt={`Preview ${index + 1}`}
@@ -165,10 +203,8 @@ export function DialogDemo() {
           </div>
         </div>
         <DialogFooter>
-          <AlertDialogComponent handleOk={handleSubmit}>
-            
-          <Button>Add Product</Button>
-          </AlertDialogComponent>
+          <AlertDialogComponent open={isalertOpen} setOpen={setIsAlertOpen} handleOk={handleSubmit} />
+          <Button onClick={handleSubmit}>Add Product</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
