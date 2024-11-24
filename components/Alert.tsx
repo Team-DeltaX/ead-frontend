@@ -8,21 +8,20 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
-  } from "@/components/ui/alert-dialog"
-  import { Button } from "@/components/ui/button"
+  } from "@/components/ui/alert-dialog";
   
   export function AlertDialogComponent({
-    children,
-    handleOk
+    handleOk,
+    open,
+    setOpen,
   }:{
-    children: React.ReactNode
-    handleOk: () => void
+    handleOk: () => void;
+    open: boolean;
+    setOpen: (open: boolean) => void;
   }) {
     return (
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
-          {children}
-        </AlertDialogTrigger>
+      <AlertDialog open={open} onOpenChange={setOpen}>
+        
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>

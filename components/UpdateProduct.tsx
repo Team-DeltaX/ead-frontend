@@ -16,7 +16,7 @@ import { FaEdit } from "react-icons/fa";
 
 import SelectCategory from "@/components/Categorieselect";
 import BrandSelect from "@/components/Categorieselect";
-import { Category } from "@/services/product.service";
+//import { Category } from "@/services/product.service";
 
 export function UpdateProduct() {
   const [images, setImages] = useState<File[]>([]);
@@ -60,9 +60,7 @@ export function UpdateProduct() {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="category" className="text-right">Category</Label>
-            <SelectCategory selectedCategory={null} setSelectedCategory={function (category: Category): void {
-              throw new Error("Function not implemented.");
-            } } />
+            <SelectCategory selectedCategory={null} setSelectedCategory={() => {}} />
           </div>
           {/* <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="brand" className="text-right">Brand</Label>
