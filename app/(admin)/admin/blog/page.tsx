@@ -5,11 +5,14 @@ import { FaSearch, FaTrashAlt } from "react-icons/fa";
 import { UpdateBlog } from "@/components/UpdateBlog";
 import { blogService } from "@/services/blog.service";
 import { Blog } from "@/services/blog.service";
+import { AlertDialogComponent } from "@/components/Alert";
 
 const Page = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [id, setId] = useState<number | undefined>(undefined);
 
   const fetchBlogs = async () => {
     try {
@@ -24,6 +27,16 @@ const Page = () => {
       setIsLoading(false);
     }
   };
+  const deleteBlog = async () => {
+    try {
+      if (id === undefined) return;
+      await blogService.deleteBlog(id);
+      setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchBlogs();
   }, []);
@@ -67,17 +80,30 @@ const Page = () => {
               </thead>
               <tbody>
                 {blogs.length > 0 ? (
-                  blogs.map((blog:Blog) => (
+                  blogs.map((blog: Blog) => (
                     <tr key={blog.id} className="border-b">
                       <td className="px-6 py-2">{blog.title}</td>
                       <td className="px-4 py-2">
-                        {blog.content.split(" ").slice(0, 5).join(" ")}
+                        {blog.content.split(" ").slice(0, 10).join(" ")}
                         <span className="text-2xl"> ...</span>
                       </td>
                       <td className="px-4 py-2 text-right">
                         <div className="flex justify-end space-x-2">
-                          <UpdateBlog blog={blog}/>
-                          <button className="flex items-center px-3 py-1 text-sm font-medium text-white bg-red-500 rounded hover:bg-red-600">
+                          <UpdateBlog fetchblog={fetchBlogs} blog={blog} />
+                          <AlertDialogComponent
+                            handleOkAsync={deleteBlog}
+                            open={isAlertOpen}
+                            setOpen={setIsAlertOpen}
+                          />
+                          <button
+                            onClick={() => {
+                              if (blog.id !== undefined) {
+                                setIsAlertOpen(true);
+                                setId(blog.id);
+                              }
+                            }}
+                            className="flex items-center px-3 py-1 text-sm font-medium text-white bg-red-500 rounded hover:bg-red-600"
+                          >
                             <FaTrashAlt className="mr-1" />
                           </button>
                         </div>
@@ -93,7 +119,6 @@ const Page = () => {
                 )}
               </tbody>
             </table>
-            {/* )} */}
           </div>
         </div>
       </div>
