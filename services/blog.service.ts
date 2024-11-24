@@ -4,7 +4,7 @@ export interface Blog {
   id?: number;
   title: string;
   content: string;
-  images?: string;
+  imageUrl?: string;
 }
 
 export const blogService = {
@@ -30,9 +30,10 @@ export const blogService = {
       const response = await axiosInstance.put(`/blogs/${blog.id}`, blog);
       return response.data;
     } catch (error: any) {
-      throw new Error(error.response.data.message);
+      throw new Error(error.response?.data?.message || "An error occurred");
     }
   },
+  
   deleteBlog: async (id: number) => {
     try {
       const response = await axiosInstance.delete(`/blogs/${id}`);

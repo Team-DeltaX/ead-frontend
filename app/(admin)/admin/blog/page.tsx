@@ -15,6 +15,7 @@ const page = () => {
     try {
       setIsLoading(true);
       const response = await blogService.getAllBlogs();
+      console.log(response.data);
       setBlogs(response.data);
       setError(null);
     } catch (err) {
@@ -66,7 +67,7 @@ const page = () => {
               </thead>
               <tbody>
                 {blogs.length > 0 ? (
-                  blogs.map((blog) => (
+                  blogs.map((blog:Blog) => (
                     <tr key={blog.id} className="border-b">
                       <td className="px-6 py-2">{blog.title}</td>
                       <td className="px-4 py-2">
@@ -75,7 +76,7 @@ const page = () => {
                       </td>
                       <td className="px-4 py-2 text-right">
                         <div className="flex justify-end space-x-2">
-                          <UpdateBlog blogId={blog.id}/>
+                          <UpdateBlog blog={blog}/>
                           <button className="flex items-center px-3 py-1 text-sm font-medium text-white bg-red-500 rounded hover:bg-red-600">
                             <FaTrashAlt className="mr-1" />
                           </button>
