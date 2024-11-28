@@ -5,9 +5,12 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { CiSearch } from "react-icons/ci";
 import { IoCartOutline } from "react-icons/io5";
+import { FiLogOut } from "react-icons/fi";
 import { FiUser, FiMenu } from "react-icons/fi";
 import Link from "next/link";
 import LoginDialog from "@/components/LoginDialog";
+import { useAuthContext } from "@/hooks/useAuthContext";
+import Alert from "@/components/ui/Alert";
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -65,7 +68,7 @@ const NavBar = () => {
       <div className="ml-auto flex">
         {isLogging ? (
           <nav>
-            <ul className=" flex opacity-50 md:gap-10 gap-5 items-center">
+            <ul className=" flex opacity-50 md:gap-6 gap-5 items-center ">
               <li>
                 <Link href="/cart">
                   <IoCartOutline className="md:h-[24px] md:w-[24px] h-[20px] w-[20px]" />
@@ -77,7 +80,9 @@ const NavBar = () => {
                 </Link>
               </li>
               <li>
-              <LoginDialog />
+                <button>
+                  <FiLogOut className="md:h-[20px] md:w-[20px] h-[16px] w-[16px] justify-self-center items-center" />
+                </button>
               </li>
             </ul>
           </nav>
