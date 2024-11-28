@@ -31,7 +31,7 @@ const LoginDialog = () => {
         </DialogHeader>
         <LoginForm setOpen={setIsDialogOpen} />
         <p className="text-center text-sm mt-4">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link
             href="/auth"
             className="text-blue-500 hover:underline"

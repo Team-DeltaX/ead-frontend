@@ -1,3 +1,4 @@
+import { getAuthToken } from "@/lib/encrypt";
 import axios from "axios";
 
 const BaseUrl = process.env.BASE_URL || "http://localhost:8080/api/v1";
@@ -12,14 +13,14 @@ const axiosInstance = axios.create({
 });
 
 // add token to the header only in authenticated routes
-// axiosInstance.interceptors.request.use((config) => {
-//   const token = sessionStorage.getItem("token");
-//   if (token) {
-//     config.headers.Authorization = `Bearer ${token}`;
-//   }
-//   return config;
-// });
-
+axiosInstance.interceptors.request.use((config) => {
+  const token = getAuthToken();
+  console.log("Token:", token);
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 // axiosInstance.interceptors.response.use(
 //   (response) => response,
@@ -31,6 +32,5 @@ const axiosInstance = axios.create({
 //     return Promise.reject(error);
 //   }
 // );
-
 
 export default axiosInstance;

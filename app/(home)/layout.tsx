@@ -4,6 +4,7 @@ import "../globals.css";
 import { Toaster } from "react-hot-toast";
 import Footer from "@/components/footer";
 import NavBar from "@/components/NavBar";
+import { AuthContextProvider } from "@/context/AuthContext";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -29,12 +30,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NavBar />
-        <div className="w-full min-h-screen">
-          {children}
-          <Toaster />
-        </div>
-        <Footer />
+        <AuthContextProvider>
+          <NavBar />
+          <div className="w-full min-h-screen">
+            {children}
+            <Toaster />
+          </div>
+          <Footer />
+        </AuthContextProvider>
       </body>
     </html>
   );
