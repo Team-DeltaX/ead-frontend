@@ -13,7 +13,9 @@ const Profile = () => {
     try {
       const response = await userService.getUserById();
       console.log(response.data.firstName);
+      console.log(response.data.phone);
       setUserData(response.data);
+      
     } catch (error) {
       console.log(error);
     }finally{
@@ -47,7 +49,7 @@ const Profile = () => {
               htmlFor="name"
               className="text-[11px] sm:text-[11px] md:text-[12px] lg:text-[14px] font-SFPro text-black"
             >
-              Last Name : <span className="text-gray-500"> Sandaruwan</span>
+              Last Name : <span className="text-gray-500"> {userData?.lastName}</span>
             </label>
           </div>
           <div className="grid grid-cols-1 gap-4 px-20 pt-2">
@@ -56,7 +58,7 @@ const Profile = () => {
               className="text-[11px] sm:text-[11px] md:text-[12px] lg:text-[14px] font-SFPro text-black"
             >
               E-mail :
-              <span className="text-gray-500">godagesasindu@gmail.com</span>
+              <span className="text-gray-500">{userData?.email}</span>
             </label>
           </div>
           <div className="grid grid-cols-1 gap-4 px-20 pt-2">
@@ -64,24 +66,16 @@ const Profile = () => {
               htmlFor="name"
               className="text-[11px] sm:text-[11px] md:text-[12px] lg:text-[14px] font-SFPro text-black"
             >
-              Phone :<span className="text-gray-500">+9471234567</span>
+              Phone :<span className="text-gray-500">{ userData?.phone}</span>
             </label>
           </div>
+          
           <div className="grid grid-cols-1 gap-4 px-20 pt-2">
             <label
               htmlFor="name"
               className="text-[11px] sm:text-[11px] md:text-[12px] lg:text-[14px] font-SFPro text-black"
             >
-              E-mail :{" "}
-              <span className="text-gray-500">godagesasindu@gmail.com</span>
-            </label>
-          </div>
-          <div className="grid grid-cols-1 gap-4 px-20 pt-2">
-            <label
-              htmlFor="name"
-              className="text-[11px] sm:text-[11px] md:text-[12px] lg:text-[14px] font-SFPro text-black"
-            >
-              Address : <span className="text-gray-500">Matara</span>
+              Address : <span className="text-gray-500">{userData?.address}</span>
             </label>
           </div>
         </div>
