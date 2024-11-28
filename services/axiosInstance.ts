@@ -11,36 +11,26 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-// Request interceptor to add Authorization header
-axiosInstance.interceptors.request.use((config) => {
-  const token = sessionStorage.getItem("token");
-  console.log("token", token);
-  if (token) {
-    config.headers["Authorization"] = `Bearer ${token}`;
-  }
-  return config;
-});
+// add token to the header only in authenticated routes
+// axiosInstance.interceptors.request.use((config) => {
+//   const token = sessionStorage.getItem("token");
+//   if (token) {
+//     config.headers.Authorization = `Bearer ${token}`;
+//   }
+//   return config;
+// });
 
-// Response interceptor to handle responses and errors
-axiosInstance.interceptors.response.use(
-  (response) => {
-    return response; // Simply return the response if no issues
-  },
-  (error) => {
-    if (axios.isAxiosError(error)) {
-      console.error("Axios error response:", error.response); // Log the Axios error response
 
-      // Return a user-friendly error message
-      return Promise.reject(
-        new Error(
-          error.response?.data?.message || "An unexpected error occurred"
-        )
-      );
-    }
+// axiosInstance.interceptors.response.use(
+//   (response) => response,
+//   (error) => {
+//     if (error.response.status === 401) {
+//       // Redirect to login page
+//       window.location.href = "/";
+//     }
+//     return Promise.reject(error);
+//   }
+// );
 
-    console.error("Network error:", error); // Log network-related errors
-    return Promise.reject(new Error("A network error occurred"));
-  }
-);
 
 export default axiosInstance;
