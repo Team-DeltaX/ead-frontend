@@ -18,7 +18,7 @@ function PaymentPage() {
       {/* Conditional Rendering of Components */}
       {activeComponent === 1 && <PaymentAddress activeComponent={activeComponent} setActiveComponent={setActiveComponent}/>}
       {activeComponent === 2 && <PaymentShipping activeComponent={activeComponent} setActiveComponent={setActiveComponent}/>}
-      {activeComponent === 3 && <PaymentCard />}
+      {activeComponent === 3 && <PaymentCard activeComponent={activeComponent} setActiveComponent={setActiveComponent}/>}
 
     </div>
   );
