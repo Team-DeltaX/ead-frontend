@@ -19,7 +19,7 @@ const Sidebar = () => {
 
   return (
     <div className="h-screen w-64 shadow-lg">
-      <div className="m-3  p-3 bg-gray-100">
+      <div className="m-3  p-3 bg-gray-200">
         <div className="flex flex-row ">
           <Image
             src={logo}

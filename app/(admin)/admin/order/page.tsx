@@ -1,64 +1,39 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
+import { Order } from "@/services/order.service";
+import { orderService } from "@/services/order.service";
+import { OrderItem } from "@/services/order.service";
+import { Recipient } from "@/services/order.service";
 
-interface Order {
-  date: string;
-  paid: boolean;
-  recipient: {
-    name: string;
-    email: string;
-    address: string;
-  };
-  products: string[];
-  status: "Processing" | "Shipped" | "Delivered";
-}
 
-const initialOrders: Order[] = [
-  {
-    date: "4/8/2023, 4:41:16 PM",
-    paid: false,
-    recipient: {
-      name: "Dawid Paszko",
-      email: "dawid.paszko@gmail.com",
-      address: "Stockholm 12345 Sweden, Test 123",
-    },
-    products: ["Xiaomi Redmi Note 11 x1", "MSI Laptop LED x3", "ASUS Rog Gaming Laptop x2"],
-    status: "Processing",
-  },
-  {
-    date: "4/8/2023, 4:37:39 PM",
-    paid: false,
-    recipient: {
-      name: "Dawid Paszko",
-      email: "dawid.paszko@gmail.com",
-      address: "Stockholm 12345 Sweden, Test 123",
-    },
-    products: ["MSI Laptop LED x4", "Xiaomi Redmi Note 11 x1", "ASUS Rog Gaming Laptop x2"],
-    status: "Shipped",
-  },
-  {
-    date: "4/7/2023, 2:49:42 PM",
-    paid: true,
-    recipient: {
-      name: "Dawid Paszko",
-      email: "dawid.paszko@gmail.com",
-      address: "Stockholm 12345 Sweden, Test 123",
-    },
-    products: ["Xiaomi Redmi Note 11 x1", "ASUS Rog Gaming Laptop x2"],
-    status: "Delivered",
-  },
-];
 
 const OrdersTable: React.FC = () => {
-  const [orders, setOrders] = useState<Order[]>(initialOrders);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
+  const [recipient, setRecipient] = useState<Recipient[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleStatusChange = (index: number, newStatus: Order["status"]) => {
-    const updatedOrders = orders.map((order, i) =>
-      i === index ? { ...order, status: newStatus } : order
-    );
-    setOrders(updatedOrders);
-  };
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        setIsLoading(true);
+        const response = await orderService.getAllOrders();
+        setOrders(response.data);
+        setOrderItems(response.data);
+        setRecipient(response.data);
+        console.log(response.data);
+        setError(null);
+      } catch (err) {
+        setError("Failed to fetch orders. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen w-full">
@@ -70,30 +45,31 @@ const OrdersTable: React.FC = () => {
               <th className="py-3 px-6 text-left">Date</th>
               <th className="py-3 px-6 text-left">Recipient</th>
               <th className="py-3 px-6 text-left">Products</th>
+              <th className="py-3 px-6 text-left">Total Amount</th>
               <th className="py-3 px-6 text-left">Order Status</th>
             </tr>
           </thead>
           <tbody className="text-gray-700 text-sm font-light">
             {orders.map((order, index) => (
               <tr key={index} className="border-b border-gray-200 hover:bg-gray-100">
-                <td className="py-3 px-6">{order.date}</td>
+                <td className="py-3 px-6">{order.orderDate}</td>
                 
                 <td className="py-3 px-6">
                   <div>
-                    <p className="font-semibold">{order.recipient.name}</p>
-                    <p>{order.recipient.email}</p>
-                    <p>{order.recipient.address}</p>
+                    <p className="font-semibold">samna</p>
+                    <p>samana@.com</p>
+                    <p>kegalle</p>
                   </div>
                 </td>
                 <td className="py-3 px-6">
                   <ul className="list-disc list-inside">
-                    {order.products.map((product, i) => (
-                      <li key={i}>{product}</li>
+                    {order.orderItems.map((item, i) => (
+                      <li key={i}>{item.productName}</li>
                     ))}
                   </ul>
                 </td>
                 <td className="py-3 px-6">
-                <Badge variant="destructive">Pending</Badge>
+                <Badge variant="destructive">{order.status}</Badge>
                 </td>
               </tr>
             ))}

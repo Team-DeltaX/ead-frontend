@@ -49,7 +49,7 @@ const Dashboard: React.FC = () => {
           <p className="text-red-600 font-semibold">{error}</p>
           <button
             onClick={getOrdersAndRevenue}
-            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            className="mt-4 bg-gray-500  text-white px-4 py-2 rounded hover:bg-gray-700"
           >
             Retry
           </button>
