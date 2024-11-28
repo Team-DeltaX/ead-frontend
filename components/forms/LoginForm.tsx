@@ -8,9 +8,12 @@ import CustomFormField, { FormFieldType } from "../CustomFormFeild";
 import SubmitButton from "../SubmitButton";
 import { authService } from "@/services/auth.service";
 import toast from "react-hot-toast";
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
   const [isLoading, setIsLoading] = useState(false);
+
+  const { dispatch } = useAuthContext();
 
   const UserLoginFormValidation = z.object({
     email: z.string().email("Invalid email address"),
@@ -25,45 +28,55 @@ const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
     },
   });
 
- const onSubmit = async (values: z.infer<typeof UserLoginFormValidation>) => {
-   const user = {
-     email: values.email,
-     password: values.password,
-   };
+  const onSubmit = async (values: z.infer<typeof UserLoginFormValidation>) => {
+    const user = {
+      email: values.email,
+      password: values.password,
+    };
 
-   console.log("User data:", user); // Debugging log
+    console.log("User data:", user); // Debugging log
 
-   setIsLoading(true);
-   try {
-     await toast.promise(
-       (async () => {
-         const response = await authService.login(user);
+    setIsLoading(true);
+    try {
+      await toast.promise(
+        (async () => {
+          const response = await authService.login(user);
 
-         console.log("Backend response:", response); // Debugging log
+          console.log("Backend response:", response); // Debugging log
 
-         if (response?.success) {
-           console.log("Login successful:", response);
-           sessionStorage.setItem("token", response.data.data.token);
-           setOpen(false); // Close the modal
-           return "Logged in successfully!"; // Success message
-         } else {
-           throw new Error(
-             response?.error || "Invalid credentials. Please try again."
-           );
-         }
-       })(),
-       {
-         loading: "Logging in...",
-         success: (message) => message,
-         error: (error) => error?.message || "An unexpected error occurred.",
-       }
-     );
-   } catch (error) {
-     console.error("Login error:", error);
-   } finally {
-     setIsLoading(false); // Ensure loading state is reset
-   }
- };
+          if (response.success) {
+            console.log("Login successful:", response);
+            console.log("Token:", response.data.token);
+
+            dispatch({
+              type: "LOGIN",
+              payload: {
+                user: response.data.user,
+                token: response.data.token,
+                role: response.data.role,
+              },
+            });
+
+            setOpen(false); // Close the modal
+            return "Logged in successfully!"; // Success message
+          } else {
+            throw new Error(
+              response?.error || "Invalid credentials. Please try again."
+            );
+          }
+        })(),
+        {
+          loading: "Logging in...",
+          success: (message) => message,
+          error: (error) => error?.message || "An unexpected error occurred.",
+        }
+      );
+    } catch (error) {
+      console.error("Login error:", error);
+    } finally {
+      setIsLoading(false); // Ensure loading state is reset
+    }
+  };
 
   return (
     <Form {...form}>

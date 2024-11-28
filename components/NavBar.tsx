@@ -8,13 +8,18 @@ import { IoCartOutline } from "react-icons/io5";
 import { FiUser, FiMenu } from "react-icons/fi";
 import Link from "next/link";
 import LoginDialog from "@/components/LoginDialog";
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isLogging = true;
+  // const isLogging = true;
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  const { state } = useAuthContext();
+  const { isLoggedIn } = state;
+
+
   return (
     <div className="h-16 flex  items-center xl:px-32 lg:px-32 md:px-18 px-5 justify-items-center">
       <div>
@@ -63,7 +68,7 @@ const NavBar = () => {
         </nav>
       </div>
       <div className="ml-auto flex">
-        {isLogging ? (
+        {isLoggedIn ? (
           <nav>
             <ul className=" flex opacity-50 md:gap-10 gap-5 items-center">
               <li>
@@ -75,9 +80,6 @@ const NavBar = () => {
                 <Link href="/profile">
                   <FiUser className="md:h-[20px] md:w-[20px] h-[16px] w-[16px]" />
                 </Link>
-              </li>
-              <li>
-              <LoginDialog />
               </li>
             </ul>
           </nav>

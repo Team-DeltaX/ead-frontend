@@ -12,6 +12,7 @@ export interface UserRegister {
   lastName: string;
   phone: string;
   address: string;
+  role?: string;
 }
 
 export const authService = {
