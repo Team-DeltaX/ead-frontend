@@ -1,10 +1,10 @@
 import axiosInstance from "./axiosInstance";
 
 export interface DashboardRev {
-  TotalRev: number;
-  TodayRev: number;
-  ThisWeekRev: number;
-  ThisMonthRev: number;
+  totalRev: number;
+  todayRev: number;
+  thisWeekRev: number;
+  thisMonthRev: number;
 }
 
 export interface DashboardOrd {

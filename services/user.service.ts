@@ -10,6 +10,7 @@ export interface User {
   phone: string;
   address: string;
   orders: Order[];
+  role: string;
 }
 
 export const userService = {

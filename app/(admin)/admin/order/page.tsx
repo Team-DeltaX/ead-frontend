@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { OrderStatusSelect } from "@/components/OrderStatusSelect";
+import { Badge } from "@/components/ui/badge";
 
 interface Order {
   date: string;
@@ -93,7 +93,7 @@ const OrdersTable: React.FC = () => {
                   </ul>
                 </td>
                 <td className="py-3 px-6">
-                  <OrderStatusSelect />
+                <Badge variant="destructive">Pending</Badge>
                 </td>
               </tr>
             ))}
