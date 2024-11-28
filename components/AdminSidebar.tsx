@@ -19,8 +19,8 @@ const Sidebar = () => {
 
   return (
     <div className="h-screen w-64 shadow-lg">
-      <div className=" ml-4 mt-3 p-3">
-        <div className="flex flex-row gap-4">
+      <div className="m-3  p-3 bg-gray-100">
+        <div className="flex flex-row ">
           <Image
             src={logo}
             alt="Logo"
@@ -28,7 +28,7 @@ const Sidebar = () => {
             width={100}
             height={100}
           />
-          <h1 className="pt- text-2xl text-gray-500 font-semibold ml-2">Admin</h1>
+          <h1 className="pt- text-2xl text-gray-600 font-semibold ml-2">Admin</h1>
         </div>
       </div>
       <nav>
