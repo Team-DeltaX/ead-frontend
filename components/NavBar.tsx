@@ -10,18 +10,18 @@ import { FiUser, FiMenu } from "react-icons/fi";
 import Link from "next/link";
 import LoginDialog from "@/components/LoginDialog";
 import { useAuthContext } from "@/hooks/useAuthContext";
-import Alert from "@/components/ui/Alert";
-import { useAuthContext } from "@/hooks/useAuthContext";
+import { Button } from "@/components/ui/button";
 
 const NavBar = () => {
+  const { state } = useAuthContext();
+  const { isLoggedIn } = state;
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   // const isLogging = true;
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  const { state } = useAuthContext();
-  const { isLoggedIn } = state;
-
 
   return (
     <div className="h-16 flex  items-center xl:px-32 lg:px-32 md:px-18 px-5 justify-items-center">
@@ -87,7 +87,9 @@ const NavBar = () => {
             </ul>
           </nav>
         ) : (
-          <LoginDialog />
+          <Button className="bg-black hover:bg-gray-700 text-white py-1.5 px-8 rounded focus:border-black font-SFPro">
+            LOGIN
+          </Button>
         )}
       </div>
       <button className="block lg:hidden z-50 ml-4" onClick={toggleMenu}>
@@ -123,6 +125,11 @@ const NavBar = () => {
           </ul>
         </nav>
       )}
+
+      <LoginDialog
+        isDialogOpen={isDialogOpen}
+        setIsDialogOpen={setIsDialogOpen}
+      />
     </div>
   );
 };
