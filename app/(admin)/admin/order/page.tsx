@@ -4,14 +4,12 @@ import { Badge } from "@/components/ui/badge";
 import { Order } from "@/services/order.service";
 import { orderService } from "@/services/order.service";
 import { OrderItem } from "@/services/order.service";
-import { Recipient } from "@/services/order.service";
 
 
 
 const OrdersTable: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
-  const [recipient, setRecipient] = useState<Recipient[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,7 +20,6 @@ const OrdersTable: React.FC = () => {
         const response = await orderService.getAllOrders();
         setOrders(response.data);
         setOrderItems(response.data);
-        setRecipient(response.data);
         console.log(response.data);
         setError(null);
       } catch (err) {
@@ -55,19 +52,23 @@ const OrdersTable: React.FC = () => {
                 <td className="py-3 px-6">{order.orderDate}</td>
                 
                 <td className="py-3 px-6">
-                  <div>
-                    <p className="font-semibold">samna</p>
-                    <p>samana@.com</p>
-                    <p>kegalle</p>
-                  </div>
+                {order.user && (
+                  order.user.firstName )
+                    }
                 </td>
                 <td className="py-3 px-6">
-                  <ul className="list-disc list-inside">
-                    {order.orderItems.map((item, i) => (
-                      <li key={i}>{item.productName}</li>
-                    ))}
-                  </ul>
+                  
+                  {orderItems.map((orderItem, index) => (
+                    <div key={index}>
+                      
+                      <p className="font-semibold">{orderItem.productName}</p>
+                      <p>Qty: {orderItem.quantity}</p>
+                      <p>Price: {orderItem.price}</p>
+                    </div>
+                  ))}
                 </td>
+                <td className="py-3 px-6">{order.totalAmount}</td>
+                
                 <td className="py-3 px-6">
                 <Badge variant="destructive">{order.status}</Badge>
                 </td>

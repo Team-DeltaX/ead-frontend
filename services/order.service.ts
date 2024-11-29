@@ -1,9 +1,12 @@
 import axiosInstance from "./axiosInstance";
+import { User } from "./user.service";
+
 
 export interface Order {
   id: number;
   totalAmount: number;
-  orderDate: Date;
+  user: User;
+  orderDate?: string;
   status: string;
   orderItems: OrderItem[];
 }
@@ -13,12 +16,6 @@ export interface OrderItem {
   productName: string;
   quantity: number;
   price: number;
-}
-
-export interface Recipient {
-  name: string;
-  email: string;
-  address: string;
 }
 
 export const orderService = {
