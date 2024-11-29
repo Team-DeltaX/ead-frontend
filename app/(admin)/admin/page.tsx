@@ -2,8 +2,11 @@
 import { DashboardOrd, DashboardRev } from "@/services/dashboardrev.service";
 import React, { useState, useEffect } from "react";
 import { dashboardOrdService } from "@/services/dashboardrev.service";
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 const Dashboard: React.FC = () => {
+  const { state } = useAuthContext();
+  const { user } = state;
   const [orders, setOrders] = useState<DashboardOrd>();
   const [revenue, setRevenue] = useState<DashboardRev>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -49,7 +52,7 @@ const Dashboard: React.FC = () => {
           <p className="text-red-600 font-semibold">{error}</p>
           <button
             onClick={getOrdersAndRevenue}
-            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            className="mt-4 bg-gray-500  text-white px-4 py-2 rounded hover:bg-gray-700"
           >
             Retry
           </button>
@@ -62,7 +65,7 @@ const Dashboard: React.FC = () => {
     <div className="p-6 bg-gray-100 min-h-screen w-full">
       <div className="text-right">
         <h2 className="text-2xl text-right text-gray-800 font-semibold">
-          Hello, <span className="font-bold text-black">Ashen</span>
+          Hello, <span className="font-bold text-black">{user?.firstName}</span>
         </h2>
       </div>
 
