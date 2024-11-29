@@ -61,10 +61,11 @@ const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
             });
 
             setOpen(false); // Close the modal
+          
 
-            if (response.data.role.toLowercase() === "admin") {
+            if (response.data.role.toLowerCase() === "admin") {
               // Redirect to admin dashboard
-              router.push("/admin/dashboard");
+              router.push("/admin");
             }
             return "Logged in successfully!"; // Success message
           } else {

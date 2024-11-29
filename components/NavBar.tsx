@@ -86,7 +86,9 @@ const NavBar = () => {
             </ul>
           </nav>
         ) : (
-          <Button className="bg-black hover:bg-gray-700 text-white py-1.5 px-8 rounded focus:border-black font-SFPro">
+            <Button className="bg-black hover:bg-gray-700 text-white py-1.5 px-8 rounded focus:border-black font-SFPro"
+            onClick={() => setIsDialogOpen(true)}
+            >
             LOGIN
           </Button>
         )}
