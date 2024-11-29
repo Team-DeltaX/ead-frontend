@@ -4,6 +4,7 @@ import "../globals.css";
 import { Toaster } from "react-hot-toast";
 import Footer from "@/components/footer";
 import NavBar from "@/components/NavBar";
+import Script from "next/script";
 import { AuthContextProvider } from "@/context/AuthContext";
 
 const geistSans = localFont({
@@ -30,6 +31,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        
+
         <AuthContextProvider>
           <NavBar />
           <div className="w-full min-h-screen">
@@ -37,6 +40,10 @@ export default function RootLayout({
             <Toaster />
           </div>
           <Footer />
+          <Script
+          src="https://www.payhere.lk/lib/payhere.js"
+          strategy="beforeInteractive" // Load the script before page rendering
+        />
         </AuthContextProvider>
       </body>
     </html>
