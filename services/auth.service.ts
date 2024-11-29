@@ -18,11 +18,7 @@ export interface UserRegister {
 export const authService = {
   login: async (user: UserLogin) => {
     const response = await axiosInstance.post("/auth/login", user);
-    return {
-      success: response.status === 200,
-      data: response.data,
-      error: response.data.error,
-    };
+    return response.data;
   },
   register: async (user: UserRegister) => {
     const response = await axiosInstance.post("/auth/register", user);

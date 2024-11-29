@@ -36,7 +36,7 @@ const NavBar = () => {
       </div>
       <div className="ml-auto relative w-40 md:w-64">
         <div className="relative">
-          <span className="absolute inset-y-0 left-3 flex items-center">
+          <span className="absolute inset-y-0 left-3 flex items-center ">
             <CiSearch className="lg:text-[14px] md:text-[12px] sm:text-[10px] text-[10px] text-gray-400" />
           </span>
           <Input
