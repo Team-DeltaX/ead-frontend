@@ -35,7 +35,7 @@ const BlogPage = () => {
   }, []);
 
   return (
-    <div className="xl:mt-8 lg:mt-8 md:mt-5 sm:mt-2 mt-2 xl:pb-8 lg:pb-8 md:pb-5 sm:pb-2 pb-2 xl:px-32 lg:px-24 md:px-16 sm:px-10 px-5">
+    <div className="xl:py-8 lg:py-8 md:py-5 sm:py-2 py-2 xl:px-32 lg:px-24 md:px-16 sm:px-10 px-5 ">
       <div className="flex items-center text-xl font-extrabold text-black sm:text-2xl md:text-3xl lg:text-4xl font-SFPro  justify-items-center justify-center">
         <span className="ml-2">
           <Image
