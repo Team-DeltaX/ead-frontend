@@ -17,7 +17,7 @@ export const userService = {
 
   getUserById : async () => {
     const response = await axiosInstance.get(`/users`);
-    return response.data
+    return response.data;
   }
 
 }
