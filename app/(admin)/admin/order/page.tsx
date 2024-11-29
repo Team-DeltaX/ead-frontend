@@ -82,7 +82,7 @@ const OrdersTable: React.FC = () => {
                   </td>
                       <td className="py-3 px-6">
                       {order.orderItems.map((item) => (
-                        <div>
+                        <div key={item.productId}>
                           <div className="flex  items-center">
                             <p className="font-semibold">{item.productName}</p>
                             <p className="ml-4">Qty: <span className="font-semibold">{item.quantity}</span></p>
