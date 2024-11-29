@@ -9,9 +9,12 @@ import SubmitButton from "../SubmitButton";
 import { authService } from "@/services/auth.service";
 import toast from "react-hot-toast";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import { useRouter } from "next/navigation";
 
 const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
   const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter();
 
   const { dispatch } = useAuthContext();
 
@@ -58,6 +61,12 @@ const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
             });
 
             setOpen(false); // Close the modal
+          
+
+            if (response.data.role.toLowerCase() === "admin") {
+              // Redirect to admin dashboard
+              router.push("/admin");
+            }
             return "Logged in successfully!"; // Success message
           } else {
             throw new Error(
