@@ -10,10 +10,13 @@ import LoginDialog from "@/components/LoginDialog";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { Button } from "@/components/ui/button";
 import { AlertDialogComponent } from "@/components/Alert";
+import { useRouter } from "next/navigation";
 
 const NavBar = () => {
-  const { state } = useAuthContext();
+  const { state ,dispatch} = useAuthContext();
   const { isLoggedIn } = state;
+
+  const router = useRouter();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -24,6 +27,8 @@ const NavBar = () => {
   };
   const handleLogout = () => {
     setOpen(false);
+    router.push("/");
+    dispatch({ type: "LOGOUT" });
   };
 
   return (

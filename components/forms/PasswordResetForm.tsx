@@ -11,29 +11,26 @@ import toast from "react-hot-toast";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useRouter } from "next/navigation";
 
-const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
+const PasswordResetForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
   const { dispatch } = useAuthContext();
 
-  const UserLoginFormValidation = z.object({
-    email: z.string().email("Invalid email address"),
+  const PasswordResetFormValidation = z.object({
     password: z.string().min(3, "Password must be at least 8 characters"),
   });
 
-  const form = useForm<z.infer<typeof UserLoginFormValidation>>({
-    resolver: zodResolver(UserLoginFormValidation),
+  const form = useForm<z.infer<typeof PasswordResetFormValidation>>({
+    resolver: zodResolver(PasswordResetFormValidation),
     defaultValues: {
-      email: "",
       password: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof UserLoginFormValidation>) => {
+  const onSubmit = async (values: z.infer<typeof PasswordResetFormValidation>) => {
     const user = {
-      email: values.email,
       password: values.password,
     };
 
@@ -43,14 +40,13 @@ const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
     try {
       await toast.promise(
         (async () => {
-          const response = await authService.login(user);
+          const response = await authService.changePassword(user);
 
           console.log("Backend response:", response); // Debugging log
 
           if (response.success) {
-            console.log("Login successful:", response.data);
+            console.log("Login successful:", response);
             console.log("Token:", response.data.token);
-            console.log("Token:", response.data);
 
             dispatch({
               type: "LOGIN",
@@ -91,25 +87,26 @@ const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-6">
-        <CustomFormField
-          name="email"
-          label="Email"
-          control={form.control}
-          fieldType={FormFieldType.INPUT}
-          placeholder="johndoe@gmail.com"
-        />
-        <CustomFormField
-          fieldType={FormFieldType.INPUT}
-          control={form.control}
-          name="password"
-          label="Password"
-          type="password"
-          placeholder="********"
-        />
-        <SubmitButton isLoading={isLoading}>LOGIN</SubmitButton>
-      </form>
+      <CustomFormField
+        fieldType={FormFieldType.INPUT}
+        control={form.control}
+        name="password"
+        label="New Password"
+        type="password"
+        placeholder="********"
+      />
+      <CustomFormField
+        fieldType={FormFieldType.INPUT}
+        control={form.control}
+        name="confirmpassword"
+        label="Confirm Password"
+        type="password"
+        placeholder="********"
+      />
+      <SubmitButton isLoading={false}>Update Password</SubmitButton>
+    </form>
     </Form>
   );
 };
 
-export default LoginForm;
+export default PasswordResetForm;

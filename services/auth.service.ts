@@ -18,14 +18,26 @@ export interface UserRegister {
 export const authService = {
   login: async (user: UserLogin) => {
     const response = await axiosInstance.post("/auth/login", user);
-    return {
-      success: response.status === 200,
-      data: response.data,
-      error: response.data.error,
-    };
+    return response.data;
   },
   register: async (user: UserRegister) => {
     const response = await axiosInstance.post("/auth/register", user);
     return response.data;
   },
+  sentOtp: async (email: string) => {
+    const response = await axiosInstance.post(`/auth/otp/${email}`);
+    return response.data;
+  },
+  validateOtp: async (email: string, otp: string) => {
+    const response = await axiosInstance.post(`/auth/otp/${email}`,{
+      otp
+    });
+    return response.data;
+  },
+  changePassword: async (email: string, password: string) => {
+    const response = await axiosInstance.put(`/auth/otp/${email}`,{
+      password
+    });
+    return response.data;
+  }
 };

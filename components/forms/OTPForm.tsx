@@ -10,31 +10,34 @@ import { authService } from "@/services/auth.service";
 import toast from "react-hot-toast";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useRouter } from "next/navigation";
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 
-const ForgotPasswordForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
+const OTPForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
   const { dispatch } = useAuthContext();
 
-  const UserLoginFormValidation = z.object({
-    email: z.string().email("Invalid email address"),
-    password: z.string().min(3, "Password must be at least 8 characters"),
+  const OTPFormValidation = z.object({
+    OTP: z.string().length(6, "OTP must be 6 characters"),
   });
 
-  const form = useForm<z.infer<typeof UserLoginFormValidation>>({
-    resolver: zodResolver(UserLoginFormValidation),
+  const form = useForm<z.infer<typeof OTPFormValidation>>({
+    resolver: zodResolver(OTPFormValidation),
     defaultValues: {
-      email: "",
-      password: "",
+      OTP: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof UserLoginFormValidation>) => {
+  const onSubmit = async (values: z.infer<typeof OTPFormValidation>) => {
     const user = {
-      email: values.email,
-      password: values.password,
+      OTP: values.OTP,
     };
 
     console.log("User data:", user); // Debugging log
@@ -43,7 +46,7 @@ const ForgotPasswordForm = ({ setOpen }: { setOpen: (open: boolean) => void }) =
     try {
       await toast.promise(
         (async () => {
-          const response = await authService.login(user);
+          const response = await authService.validateOtp();
 
           console.log("Backend response:", response); // Debugging log
 
@@ -61,7 +64,6 @@ const ForgotPasswordForm = ({ setOpen }: { setOpen: (open: boolean) => void }) =
             });
 
             setOpen(false); // Close the modal
-          
 
             if (response.data.role.toLowerCase() === "admin") {
               // Redirect to admin dashboard
@@ -90,17 +92,22 @@ const ForgotPasswordForm = ({ setOpen }: { setOpen: (open: boolean) => void }) =
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-6">
-        <CustomFormField
-          name="email"
-          label="Email"
-          control={form.control}
-          fieldType={FormFieldType.INPUT}
-          placeholder="johndoe@gmail.com"
-        />
-        <SubmitButton isLoading={isLoading}>SEND</SubmitButton>
+        <div className="grid items-center justify-center">
+          <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
+            <InputOTPGroup>
+              <InputOTPSlot index={0} />
+              <InputOTPSlot index={1} />
+              <InputOTPSlot index={2} />
+              <InputOTPSlot index={3} />
+              <InputOTPSlot index={4} />
+              <InputOTPSlot index={5} />
+            </InputOTPGroup>
+          </InputOTP>
+        </div>
+        <SubmitButton isLoading={false}>Submit OTP</SubmitButton>
       </form>
     </Form>
   );
 };
 
-export default ForgotPasswordForm;
+export default OTPForm;
