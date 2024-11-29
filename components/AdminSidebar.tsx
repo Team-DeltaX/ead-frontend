@@ -13,6 +13,7 @@ import logo from "@/app/assets/Logo.png";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { AlertDialogComponent } from "./Alert";
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -119,7 +120,13 @@ const Sidebar = () => {
           </li>
         </ul>
       </nav>
-      
+      <AlertDialogComponent
+        title="Confirm Logout"
+        description="Your session will be closed, and you will be redirected to the Home page. Do you wish to continue?"
+        open={isAlertOpen}
+        setOpen={setIsAlertOpen}
+        handleOk={handleLogout}
+      />
     </div>
   );
 };
