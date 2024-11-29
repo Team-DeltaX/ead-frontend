@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useRouter } from "next/navigation";
 
-const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
+const ForgotPasswordForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
@@ -97,18 +97,10 @@ const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
           fieldType={FormFieldType.INPUT}
           placeholder="johndoe@gmail.com"
         />
-        <CustomFormField
-          fieldType={FormFieldType.INPUT}
-          control={form.control}
-          name="password"
-          label="Password"
-          type="password"
-          placeholder="********"
-        />
-        <SubmitButton isLoading={isLoading}>LOGIN</SubmitButton>
+        <SubmitButton isLoading={isLoading}>SEND</SubmitButton>
       </form>
     </Form>
   );
 };
 
-export default LoginForm;
+export default ForgotPasswordForm;
