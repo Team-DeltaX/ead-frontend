@@ -76,11 +76,24 @@ const config: Config = {
   				to: {
   					height: '0'
   				}
-  			}
+  			},
+        'spinner-grow': {
+          '0%': { transform: 'scale(0)' },
+          '50%': { opacity: '1' },
+          '100%': { transform: 'scale(1)', opacity: '100' },
+        },
+        'left-to-right': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+        'spinner-grow': 'spinner-grow 0.75s linear infinite',
+        'left-to-right': 'left-to-right 2s linear infinite',
+
   		}
   	}
   },

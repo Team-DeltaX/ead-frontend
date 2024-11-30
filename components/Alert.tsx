@@ -7,29 +7,33 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger,
   } from "@/components/ui/alert-dialog";
   
   export function AlertDialogComponent({
     handleOk,
     open,
     setOpen,
+    title,
+    description,
     handleOkAsync,
   }:{
     handleOk?: () => void;
     open: boolean;
     setOpen: (open: boolean) => void;
+    title?: string;
+    description?: string;
     handleOkAsync?: () => Promise<void>;
   }) {
     return (
-      <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialog open={open} onOpenChange={setOpen} >
         
-        <AlertDialogContent>
+        <AlertDialogContent className="font-SFPro">
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>{
+              title ? title : "Are you sure?"
+              }</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently save your
-              account and save your data from our servers.
+              {description ? description : "This action cannot be undone."}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

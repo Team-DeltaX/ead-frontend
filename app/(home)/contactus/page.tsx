@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function ContactUs() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 via-white to-blue-100">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 via-white to-blue-100 font-SFPro">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl w-full p-8 shadow-lg rounded-xl bg-white">
         {/* Left Section - Image */}
         <div className="flex justify-center items-center">
@@ -19,7 +19,7 @@ export default function ContactUs() {
 
         {/* Right Section - Content */}
         <div className="flex flex-col justify-center">
-          <h1 className="text-5xl font-extrabold text-gray-800 mb-6 leading-tight">
+          <h1 className="text-5xl font-black text-gray-800 mb-6 leading-tight">
             Contact US 
           </h1>
           <div className="mb-8">
@@ -42,7 +42,7 @@ export default function ContactUs() {
           </div>
           {/* Next Button */}
           <button
-            className="bg-blue-500 text-white px-8 py-3 rounded-lg shadow-md hover:bg-blue-600 transition-all duration-300"
+            className="bg-gray-900 text-white px-8 py-3 rounded-lg shadow-md hover:bg-gray-700 transition-all duration-300"
             onClick={() => alert("Navigating to Careers!")}
           >
             Next

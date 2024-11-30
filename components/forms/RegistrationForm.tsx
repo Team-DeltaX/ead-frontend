@@ -6,37 +6,18 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-// Importing React Iconsnpm install zod
-import { FaUser, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaLock } from "react-icons/fa";
 
 import { Form } from "@/components/ui/form";
 import SubmitButton from "../SubmitButton";
 import CustomFormField, { FormFieldType } from "../CustomFormFeild";
 import { authService } from "@/services/auth.service";
-
-// Validation schema using Zod
-const PatientFormValidation = z.object({
-  name: z.string().nonempty("Name is required"),
-  email: z.string().email("Invalid email").nonempty("Email is required"),
-  phone: z.string().nonempty("Phone number is required"),
-  address: z.string().nonempty("Address is required"),
-  password: z.string().min(6, "Password must be at least 6 characters long"),
-  confirmPassword: z.string().min(6, "Please confirm your password"),
-});
-
-// Default form values
-const PatientFormDefaultValues = {
-  name: "",
-  email: "",
-  phone: "",
-  address: "",
-  password: "",
-  confirmPassword: "",
-};
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 const RegisterForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+
+    const { dispatch } = useAuthContext();
 
   const UserRegisterFormValidation = z
     .object({
@@ -79,8 +60,17 @@ const RegisterForm = () => {
       await authService.register(values).then((response) => {
         console.log("register", response);
 
-        if (response) {
+        if (response.success) {
           router.push("/");
+
+          dispatch({
+            type: "LOGIN",
+            payload: {
+              user: response.data.user,
+              token: response.data.token,
+              role: response.data.role,
+            },
+          });
         }
       })
       

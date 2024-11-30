@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import logo from "../../assets/Logo.png";
 import dayjs from "dayjs";
 import { Blog, blogService } from "@/services/blog.service";
+import Spinner from "@/components/Spinner";
 
 import {
   Carousel,
@@ -35,7 +36,9 @@ const BlogPage = () => {
   }, []);
 
   return (
-    <div className="xl:mt-8 lg:mt-8 md:mt-5 sm:mt-2 mt-2 xl:pb-8 lg:pb-8 md:pb-5 sm:pb-2 pb-2 xl:px-32 lg:px-24 md:px-16 sm:px-10 px-5">
+    <div>
+    {isLoading ? (<div><Spinner/></div>) : (
+    <div className="xl:py-8 lg:py-8 md:py-5 sm:py-2 py-2 xl:px-32 lg:px-24 md:px-16 sm:px-10 px-5 ">
       <div className="flex items-center text-xl font-extrabold text-black sm:text-2xl md:text-3xl lg:text-4xl font-SFPro  justify-items-center justify-center">
         <span className="ml-2">
           <Image
@@ -52,7 +55,7 @@ const BlogPage = () => {
         Stay updated with the latest in tech trends, product reviews, and tips
         to enhance your digital lifestyle.
       </p>
-      {isLoading && <div>Loading...</div>}
+      
       {!isLoading && blogs.length === 0 && <div>No blogs found</div>}
       {!isLoading && blogs.length > 0 && (
         <div className="grid grid-cols-1 ">
@@ -101,6 +104,8 @@ const BlogPage = () => {
           </Carousel>
         </div>
       )}
+    </div>
+    )}
     </div>
   );
 };

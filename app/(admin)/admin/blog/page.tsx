@@ -6,6 +6,7 @@ import { UpdateBlog } from "@/components/UpdateBlog";
 import { blogService } from "@/services/blog.service";
 import { Blog } from "@/services/blog.service";
 import { AlertDialogComponent } from "@/components/Alert";
+import isAuth from "@/components/isAuth";
 
 const Page = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -21,7 +22,7 @@ const Page = () => {
       setBlogs(response.data);
       setError(null);
     } catch (err) {
-      setError("Failed to fetch blogs. Please try again later.");
+      setError("Failed to fetch blogs. Please try again later. " + err);
     } finally {
       setIsLoading(false);
     }
@@ -127,4 +128,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default isAuth(Page, { allowedRoles: ["ADMIN"] });

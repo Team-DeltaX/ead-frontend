@@ -51,10 +51,13 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
           <FormControl>
             <Input
               placeholder={props.placeholder}
+
               {...field}
               type={props.type}
               autoComplete={props.type === "password" ? "new-password" : "off"}
-              className="shad-input border-0"
+            
+              height={2}
+              className="shad-input border-0 "
             />
           </FormControl>
         </div>
