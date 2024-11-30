@@ -8,13 +8,13 @@ import CustomFormField, { FormFieldType } from "../CustomFormFeild";
 import SubmitButton from "../SubmitButton";
 import { authService } from "@/services/auth.service";
 import toast from "react-hot-toast";
-import { useAuthContext } from "@/hooks/useAuthContext";
-import { useRouter } from "next/navigation";
 
-const EmailForm = ({ setOpen, 
-  
- }: { setOpen: (open: boolean) => void,
-  setEmail: (email: string) => void
+const EmailForm = ({ 
+  setEmail,
+  setStep
+ }: { 
+    setEmail: (email: string) => void
+   setStep: (step: number) => void
  }) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -48,29 +48,29 @@ const EmailForm = ({ setOpen,
 
           if (response.success) {
             console.log("Login successful:", response);
-            console.log("Token:", response.data.token);
 
-           
-            setOpen(false); // Close the modal
-            setEmail(values.email); // Set the email
+            setEmail(email.email); // Close the modal
+            setStep(2); // Set the email
+            
 
           
 
-           
-            return "Logged in successfully!"; // Success message
+           return response.message || "Check your email for the OTP";
           } else {
+            setStep(1);
             throw new Error(
               response?.error || "Invalid credentials. Please try again."
             );
           }
         })(),
         {
-          loading: "Logging in...",
+          loading: "Sending OTP...",
           success: (message) => message,
           error: (error) => error?.message || "An unexpected error occurred.",
         }
       );
     } catch (error) {
+      setStep(1);
       console.error("Login error:", error);
     } finally {
       setIsLoading(false); // Ensure loading state is reset
@@ -85,10 +85,9 @@ const EmailForm = ({ setOpen,
         control={form.control}
         name="email"
         label="Email"
-        type="email"
         placeholder="johndoe@gmail.com"
       />
-      <SubmitButton isLoading={false}>Send OTP</SubmitButton>
+      <SubmitButton isLoading={isLoading}>Send OTP</SubmitButton>
     </form>
     </Form>
   );

@@ -8,15 +8,13 @@ import CustomFormField, { FormFieldType } from "../CustomFormFeild";
 import SubmitButton from "../SubmitButton";
 import { authService } from "@/services/auth.service";
 import toast from "react-hot-toast";
-import { useAuthContext } from "@/hooks/useAuthContext";
-import { useRouter } from "next/navigation";
 
-const PasswordResetForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
+const PasswordResetForm = ({ setOpen, email, setStep }: {
+  setOpen: (open: boolean) => void
+  email: string
+  setStep: (step: number) => void
+ }) => {
   const [isLoading, setIsLoading] = useState(false);
-
-  const router = useRouter();
-
-  const { dispatch } = useAuthContext();
 
   const PasswordResetFormValidation = z.object({
     password: z.string().min(3, "Password must be at least 8 characters"),
@@ -40,31 +38,17 @@ const PasswordResetForm = ({ setOpen }: { setOpen: (open: boolean) => void }) =>
     try {
       await toast.promise(
         (async () => {
-          const response = await authService.changePassword(user);
+          const response = await authService.changePassword(email, user.password);
 
           console.log("Backend response:", response); // Debugging log
 
           if (response.success) {
             console.log("Login successful:", response);
-            console.log("Token:", response.data.token);
-
-            dispatch({
-              type: "LOGIN",
-              payload: {
-                user: response.data.user,
-                token: response.data.token,
-                role: response.data.role,
-              },
-            });
 
             setOpen(false); // Close the modal
+            setStep(1); // Set the email
           
-
-            if (response.data.role.toLowerCase() === "admin") {
-              // Redirect to admin dashboard
-              router.push("/admin");
-            }
-            return "Logged in successfully!"; // Success message
+            return response.message || "Password updated successfully";
           } else {
             throw new Error(
               response?.error || "Invalid credentials. Please try again."
@@ -72,7 +56,7 @@ const PasswordResetForm = ({ setOpen }: { setOpen: (open: boolean) => void }) =>
           }
         })(),
         {
-          loading: "Logging in...",
+          loading: "Updating password...",
           success: (message) => message,
           error: (error) => error?.message || "An unexpected error occurred.",
         }
@@ -103,7 +87,7 @@ const PasswordResetForm = ({ setOpen }: { setOpen: (open: boolean) => void }) =>
         type="password"
         placeholder="********"
       />
-      <SubmitButton isLoading={false}>Update Password</SubmitButton>
+      <SubmitButton isLoading={isLoading}>Update Password</SubmitButton>
     </form>
     </Form>
   );

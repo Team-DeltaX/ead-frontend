@@ -24,20 +24,20 @@ export const authService = {
     const response = await axiosInstance.post("/auth/register", user);
     return response.data;
   },
-  sentOtp: async (email: string) => {
-    const response = await axiosInstance.post(`/auth/otp/${email}`);
+  sentOtp: async ({ email }: { email: string }) => {
+    const response = await axiosInstance.get(`/auth/otp/${email}`);
     return response.data;
   },
   validateOtp: async (email: string, otp: string) => {
-    const response = await axiosInstance.post(`/auth/otp/${email}`,{
-      otp
+    const response = await axiosInstance.post(`/auth/otp/${email}`, {
+      otp,
     });
     return response.data;
   },
   changePassword: async (email: string, password: string) => {
-    const response = await axiosInstance.put(`/auth/otp/${email}`,{
-      password
+    const response = await axiosInstance.put(`/auth/otp/${email}`, {
+      password,
     });
     return response.data;
-  }
+  },
 };

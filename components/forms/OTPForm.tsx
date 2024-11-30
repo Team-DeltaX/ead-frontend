@@ -1,15 +1,13 @@
 "use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "@/components/ui/form";
-import CustomFormField, { FormFieldType } from "../CustomFormFeild";
 import SubmitButton from "../SubmitButton";
 import { authService } from "@/services/auth.service";
 import toast from "react-hot-toast";
-import { useAuthContext } from "@/hooks/useAuthContext";
-import { useRouter } from "next/navigation";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import {
   InputOTP,
@@ -17,12 +15,14 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 
-const OTPForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
+const OTPForm = ({
+  email,
+  setStep
+}: {
+  email: string;
+  setStep: (step: number) => void;
+}) => {
   const [isLoading, setIsLoading] = useState(false);
-
-  const router = useRouter();
-
-  const { dispatch } = useAuthContext();
 
   const OTPFormValidation = z.object({
     OTP: z.string().length(6, "OTP must be 6 characters"),
@@ -46,43 +46,31 @@ const OTPForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
     try {
       await toast.promise(
         (async () => {
-          const response = await authService.validateOtp();
+          const response = await authService.validateOtp(email, user.OTP);
 
           console.log("Backend response:", response); // Debugging log
 
           if (response.success) {
             console.log("Login successful:", response);
-            console.log("Token:", response.data.token);
 
-            dispatch({
-              type: "LOGIN",
-              payload: {
-                user: response.data.user,
-                token: response.data.token,
-                role: response.data.role,
-              },
-            });
+            setStep(3);
 
-            setOpen(false); // Close the modal
-
-            if (response.data.role.toLowerCase() === "admin") {
-              // Redirect to admin dashboard
-              router.push("/admin");
-            }
-            return "Logged in successfully!"; // Success message
+            return response.message || "OTP validated successfully";
           } else {
+            setStep(1);
             throw new Error(
               response?.error || "Invalid credentials. Please try again."
             );
           }
         })(),
         {
-          loading: "Logging in...",
+          loading: "Validating OTP...",
           success: (message) => message,
           error: (error) => error?.message || "An unexpected error occurred.",
         }
       );
     } catch (error) {
+      setStep(1);
       console.error("Login error:", error);
     } finally {
       setIsLoading(false); // Ensure loading state is reset
@@ -93,18 +81,32 @@ const OTPForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-6">
         <div className="grid items-center justify-center">
-          <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
-            <InputOTPGroup>
-              <InputOTPSlot index={0} />
-              <InputOTPSlot index={1} />
-              <InputOTPSlot index={2} />
-              <InputOTPSlot index={3} />
-              <InputOTPSlot index={4} />
-              <InputOTPSlot index={5} />
-            </InputOTPGroup>
-          </InputOTP>
+          {/* Use Controller to bind react-hook-form with InputOTP */}
+          <Controller
+            name="OTP"
+            control={form.control}
+            render={({ field }) => (
+              <InputOTP
+                maxLength={6}
+                pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
+                value={field.value}
+                onChange={(otpValue) => {
+                  field.onChange(otpValue);
+                }}
+              >
+                <InputOTPGroup>
+                  <InputOTPSlot index={0} />
+                  <InputOTPSlot index={1} />
+                  <InputOTPSlot index={2} />
+                  <InputOTPSlot index={3} />
+                  <InputOTPSlot index={4} />
+                  <InputOTPSlot index={5} />
+                </InputOTPGroup>
+              </InputOTP>
+            )}
+          />
         </div>
-        <SubmitButton isLoading={false}>Submit OTP</SubmitButton>
+        <SubmitButton isLoading={isLoading}>Submit OTP</SubmitButton>
       </form>
     </Form>
   );
