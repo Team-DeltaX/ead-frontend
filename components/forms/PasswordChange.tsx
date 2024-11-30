@@ -37,6 +37,8 @@ const PasswordChange = () => {
        (async () => {
          const response = await authService.login(user);
 
+          console.log("Backend response:", response); // Debugging log
+
         
        })(),
        {

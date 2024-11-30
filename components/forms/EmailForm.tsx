@@ -53,8 +53,6 @@ const EmailForm = ({
             setStep(2); // Set the email
             
 
-          
-
            return response.message || "Check your email for the OTP";
           } else {
             setStep(1);

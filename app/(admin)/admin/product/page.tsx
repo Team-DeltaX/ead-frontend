@@ -7,6 +7,7 @@ import { AddCategory } from "@/components/AddCategory";
 import { productService } from "@/services/product.service";
 import Categorycard from "@/components/Categorycard";
 import { Product } from "@/services/product.service";
+import isAuth from "@/components/isAuth";
 
 const Products: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -21,7 +22,7 @@ const Products: React.FC = () => {
         setProducts(response.data);
         setError(null);
       } catch (err) {
-        setError("Failed to fetch products. Please try again later.");
+        setError("Failed to fetch products. Please try again later. "+err);
       } finally {
         setIsLoading(false);
       }
@@ -103,4 +104,4 @@ const Products: React.FC = () => {
   );
 };
 
-export default Products;
+export default isAuth(Products, { allowedRoles: ["ADMIN"] });
