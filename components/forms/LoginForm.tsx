@@ -8,9 +8,15 @@ import CustomFormField, { FormFieldType } from "../CustomFormFeild";
 import SubmitButton from "../SubmitButton";
 import { authService } from "@/services/auth.service";
 import toast from "react-hot-toast";
+import { useAuthContext } from "@/hooks/useAuthContext";
+import { useRouter } from "next/navigation";
 
 const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
   const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter();
+
+  const { dispatch } = useAuthContext();
 
   const UserLoginFormValidation = z.object({
     email: z.string().email("Invalid email address"),
@@ -25,49 +31,69 @@ const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
     },
   });
 
- const onSubmit = async (values: z.infer<typeof UserLoginFormValidation>) => {
-   const user = {
-     email: values.email,
-     password: values.password,
-   };
+  const onSubmit = async (values: z.infer<typeof UserLoginFormValidation>) => {
+    const user = {
+      email: values.email,
+      password: values.password,
+    };
 
-   setIsLoading(true);
-   try {
-     await toast.promise(
-       (async () => {
-         const response = await authService.login(user);
+    console.log("User data:", user); // Debugging log
 
-         console.log("Backend response:", response); // Debugging log
+    setIsLoading(true);
+    try {
+      await toast.promise(
+        (async () => {
+          const response = await authService.login(user);
 
-         if (response?.success) {
-           console.log("Login successful:", response);
-           sessionStorage.setItem("token", response.data.token);
-           setOpen(false); // Close the modal
-           return "Logged in successfully!"; // Success message
-         } else {
-           throw new Error(
-             response?.error || "Invalid credentials. Please try again."
-           );
-         }
-       })(),
-       {
-         loading: "Logging in...",
-         success: (message) => message,
-         error: (error) => error?.message || "An unexpected error occurred.",
-       }
-     );
-   } catch (error) {
-     console.error("Login error:", error);
-   } finally {
-     setIsLoading(false); // Ensure loading state is reset
-   }
- };
+          console.log("Backend response:", response); // Debugging log
+
+          if (response.success) {
+            console.log("Login successful:", response.data);
+            console.log("Token:", response.data.token);
+            console.log("Token:", response.data);
+
+            dispatch({
+              type: "LOGIN",
+              payload: {
+                user: response.data.user,
+                token: response.data.token,
+                role: response.data.role,
+              },
+            });
+
+            setOpen(false); // Close the modal
+          
+
+            if (response.data.role.toLowerCase() === "admin") {
+              // Redirect to admin dashboard
+              router.push("/admin");
+            }
+            return "Logged in successfully!"; // Success message
+          } else {
+            throw new Error(
+              response?.error || "Invalid credentials. Please try again."
+            );
+          }
+        })(),
+        {
+          loading: "Logging in...",
+          success: (message) => message,
+          error: (error) => error?.message || "An unexpected error occurred.",
+        }
+      );
+    } catch (error) {
+      console.error("Login error:", error);
+    } finally {
+      setIsLoading(false); // Ensure loading state is reset
+    }
+  };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-6">
         <CustomFormField
           name="email"
+          label="Email"
           control={form.control}
           fieldType={FormFieldType.INPUT}
           placeholder="johndoe@gmail.com"
@@ -80,7 +106,7 @@ const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
           type="password"
           placeholder="********"
         />
-        <SubmitButton isLoading={isLoading}>Login</SubmitButton>
+        <SubmitButton isLoading={isLoading}>LOGIN</SubmitButton>
       </form>
     </Form>
   );

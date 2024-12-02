@@ -6,7 +6,7 @@ interface StepIndicatorProps {
 
 const StepIndicator: React.FC<StepIndicatorProps> = ({ activeStep }) => {
   return (
-    <div className="flex items-center justify-center md:w-[1200px] mx-auto mt-8 space-x-4 h-20">
+    <div className="flex max-w-[900px] items-center justify-center md:w-[1200px] mx-auto mt-8 space-x-4 h-20">
       {/* steps container */}
       <div className="flex flex-row w-full justify-center sm:justify-between">
         

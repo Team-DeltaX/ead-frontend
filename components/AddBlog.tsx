@@ -45,7 +45,7 @@ export function AddBlog({ fetchdata }: { fetchdata: () => void }) {
 
     const formData = {
       title: blogTitle,
-      image: image,
+      imageUrl: image,
       content: content,
     };
 

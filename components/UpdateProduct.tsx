@@ -15,6 +15,8 @@ import { FiPlus, FiTrash2 } from "react-icons/fi";
 import { FaEdit } from "react-icons/fa";
 
 import SelectCategory from "@/components/Categorieselect";
+import BrandSelect from "@/components/Categorieselect";
+//import { Category } from "@/services/product.service";
 
 export function UpdateProduct() {
   const [images, setImages] = useState<File[]>([]);

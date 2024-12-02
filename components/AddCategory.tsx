@@ -11,8 +11,8 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Category } from "@/services/product.service";
-import { categoryService } from "@/services/product.service";
+import { Category } from "@/services/category.service";
+import { categoryService } from "@/services/category.service";
 import { toast } from "react-hot-toast";
 import { AlertDialogComponent } from "./Alert";
 

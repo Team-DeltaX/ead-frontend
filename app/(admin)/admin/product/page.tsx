@@ -7,6 +7,7 @@ import { AddCategory } from "@/components/AddCategory";
 import { productService } from "@/services/product.service";
 import Categorycard from "@/components/Categorycard";
 import { Product } from "@/services/product.service";
+import isAuth from "@/components/isAuth";
 
 const Products: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -21,7 +22,7 @@ const Products: React.FC = () => {
         setProducts(response.data);
         setError(null);
       } catch (err) {
-        setError("Failed to fetch products. Please try again later.");
+        setError("Failed to fetch products. Please try again later. "+err);
       } finally {
         setIsLoading(false);
       }
@@ -53,7 +54,12 @@ const Products: React.FC = () => {
       <div className="p-4">
         <div className="overflow-y-auto h-[calc(100vh-200px)] border border-gray-300 rounded-xl shadow-lg">
           {isLoading ? (
-            <div className="text-center py-4 text-gray-500">Loading...</div>
+            <div>
+              <div className="text-center pt-4 text-gray-500 font-semibold mb-4">Loading ...</div>
+            <div className="flex items-center justify-center min-h-full">
+              <div className="spinner border-t-4 border-b-4 border-gray-900 w-16 h-16 rounded-full animate-spin"></div>
+            </div>
+            </div>
           ) : error ? (
             <div className="text-center py-4 text-red-500">{error}</div>
           ) : (
@@ -98,4 +104,4 @@ const Products: React.FC = () => {
   );
 };
 
-export default Products;
+export default isAuth(Products, { allowedRoles: ["ADMIN"] });
