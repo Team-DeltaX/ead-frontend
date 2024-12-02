@@ -37,7 +37,7 @@ const BlogPage = () => {
 
   return (
     <div>
-    {isLoading ? (<div><Spinner/></div>) : (
+    {isLoading ? (<div data-cy="spinner"><Spinner/></div>) : (
     <div className="xl:py-8 lg:py-8 md:py-5 sm:py-2 py-2 xl:px-32 lg:px-24 md:px-16 sm:px-10 px-5 ">
       <div className="flex items-center text-xl font-extrabold text-black sm:text-2xl md:text-3xl lg:text-4xl font-SFPro  justify-items-center justify-center">
         <span className="ml-2">
@@ -59,10 +59,11 @@ const BlogPage = () => {
       {!isLoading && blogs.length === 0 && <div>No blogs found</div>}
       {!isLoading && blogs.length > 0 && (
         <div className="grid grid-cols-1 ">
-          <Carousel className="w-full mt-8">
+          <Carousel data-cy="carousel" className="w-full mt-8">
             <CarouselContent className="-ml-1">
               {blogs.map((blog) => (
                 <CarouselItem
+                  data-cy="carousel-item"
                   key={blog.id}
                   className="pl-1 md:basis-1/2 lg:basis-1/3"
                 >
@@ -80,17 +81,17 @@ const BlogPage = () => {
                         </>
                       )}
                       <div className="p-5">
-                        <h2 className="text-lg font-semibold text-black font-SFPro">
+                        <h2 data-cy="blog-title" className="text-lg font-semibold text-black font-SFPro">
                           {blog.title}
                         </h2>
-                        <p className="text-sm line-clamp-3 text-gray-500 font-light mt-2 font-SFPro">
+                        <p data-cy="blog-content" className="text-sm line-clamp-3 text-gray-500 font-light mt-2 font-SFPro">
                           {blog.content}
                         </p>
-                        <p className="text-xs text-gray-400 mt-3 font-SFPro">
+                        <p data-cy="blog-date" className="text-xs text-gray-400 mt-3 font-SFPro">
                           Published on{" "}
                           {dayjs(blog.createdAt).format("DD/MM/YYYY")}
                         </p>
-                        <button onClick={() => router.push(`/blog/${blog.id}`)} className="mt-4 px-4 py-2 border border-gray-800 text-black text-sm font-medium rounded hover:bg-gray-800 transition font-SFPro ">
+                        <button  data-cy="read-more-button" onClick={() => router.push(`/blog/${blog.id}`)} className="mt-4 px-4 py-2 border border-gray-800 text-black text-sm font-medium rounded hover:bg-gray-800 transition font-SFPro ">
                           Read More
                         </button>
                       </div>
