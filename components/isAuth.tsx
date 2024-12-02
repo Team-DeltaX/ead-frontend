@@ -3,7 +3,7 @@
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useEffect } from "react";
 import { redirect } from "next/navigation";
-import { ComponentType, JSX } from "react";
+import { ComponentType } from "react";
 
 interface AuthState {
   isLoggedIn: boolean;
@@ -15,11 +15,11 @@ interface IsAuthProps {
   allowedRoles?: string[]; // List of roles allowed to access the route
 }
 
-export default function isAuth<P extends JSX.IntrinsicAttributes>(
+export default function isAuth<P extends object>(
   Component: ComponentType<P>,
-  { allowedRoles }: IsAuthProps = {} // Default to no role restriction
+  { allowedRoles }: IsAuthProps = {}
 ) {
-  return function IsAuth(props: P) {
+  const WithAuth = (props: P) => {
     const { state } = useAuthContext();
     const { isLoggedIn, role, authInitialized }: AuthState = state;
 
@@ -36,11 +36,11 @@ export default function isAuth<P extends JSX.IntrinsicAttributes>(
         // Redirect if the user's role is not authorized
         redirect("/unauthorized");
       }
-    }, [isLoggedIn, role, authInitialized, allowedRoles]);
+    }, [isLoggedIn, role, authInitialized]);
 
-    // Only render the component if the authentication state is initialized
     if (!authInitialized) {
-      return null; // or a loading spinner
+      // Show a loading indicator while auth state is initializing
+      return <div>Loading...</div>;
     }
 
     if (
@@ -51,6 +51,14 @@ export default function isAuth<P extends JSX.IntrinsicAttributes>(
       return null; // Render nothing while redirecting
     }
 
+    // Render the wrapped component with the received props
     return <Component {...props} />;
   };
+
+  // Ensure proper typing for the wrapped component
+  WithAuth.displayName = `WithAuth(${
+    Component.displayName || Component.name || "Component"
+  })`;
+
+  return WithAuth;
 }

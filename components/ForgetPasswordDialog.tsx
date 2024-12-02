@@ -32,10 +32,7 @@ const ForgetPasswordDialog = ({
               <DialogTitle>Forget Password</DialogTitle>
               <DialogDescription>Enter email to get OTP</DialogDescription>
             </DialogHeader>
-            <EmailForm
-              setEmail={setEmail}
-              setStep={setStep}
-            />
+            <EmailForm setEmail={setEmail} setStep={setStep} />
             <h1 className="text-center text-sm">
               Already have an account?{" "}
               <Link href="/auth" className="text-blue-500 hover:underline">
@@ -51,10 +48,7 @@ const ForgetPasswordDialog = ({
                 Enter your one-time password
               </DialogDescription>
             </DialogHeader>
-            <OTPForm
-              setStep={setStep}
-              email={email}
-            />
+            <OTPForm setStep={setStep} email={email} />
           </>
         ) : step === 3 ? (
           <>

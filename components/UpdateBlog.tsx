@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -18,7 +18,13 @@ import { blogService } from "@/services/blog.service";
 import { Blog } from "@/services/blog.service";
 import { toast } from "react-hot-toast";
 
-export function UpdateBlog({ blog , fetchblog }: { blog: Blog , fetchblog: () => void }) {
+export function UpdateBlog({
+  blog,
+  fetchblog,
+}: {
+  blog: Blog;
+  fetchblog: () => void;
+}) {
   const [blogTitle, setBlogTitle] = useState(blog.title || ""); // Default to an empty string
   const [image, setImage] = useState(blog.imageUrl || ""); // Default to an empty string
   const [content, setContent] = useState(blog.content || ""); // Default to an empty string
@@ -26,7 +32,7 @@ export function UpdateBlog({ blog , fetchblog }: { blog: Blog , fetchblog: () =>
   const [loading, setLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const [blogs, setBlogs] = useState<Blog[]>([]);
+  // const [blogs, setBlogs] = useState<Blog[]>([]);
 
   const validateInput = () => {
     if (!blogTitle.trim() || !image.trim() || !content.trim()) {
@@ -57,16 +63,19 @@ export function UpdateBlog({ blog , fetchblog }: { blog: Blog , fetchblog: () =>
       };
 
       const response = await blogService.updateBlog(updatedBlog);
-      toast.success("Blog updated successfully!");
+
+      if (response.success) {
+        fetchblog();
+        toast.success("Blog updated successfully!");
+      }
       // Update the local blogs state if needed
-      setBlogs((prevBlogs) =>
-        prevBlogs.map((blog) =>
-          blog.id === response.data.id ? { ...blog, ...updatedBlog } : blog
-        )
-      );
-      fetchblog();
+      // setBlogs((prevBlogs) =>
+      //   prevBlogs.map((blog) =>
+      //     blog.id === response.data.id ? { ...blog, ...updatedBlog } : blog
+      //   )
+      // );
     } catch (error) {
-      toast.error("An unexpected error occurred.");
+      toast.error("An unexpected error occurred. " + error);
     } finally {
       setLoading(false);
       setIsDialogOpen(false);

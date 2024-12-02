@@ -5,7 +5,6 @@ import { Product, productService } from "@/services/product.service";
 import React, { useEffect, useState } from "react";
 import Spinner from "@/components/Spinner";
 import SearchBar from "@/components/SearchBar";
-import { IoMdArrowDropdown } from "react-icons/io";
 import FilterSelect from "@/components/FilterSelect";
 import { CgUnavailable } from "react-icons/cg";
 

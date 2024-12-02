@@ -1,5 +1,10 @@
 import Image from "next/image";
-import { Control } from "react-hook-form";
+import {
+  Control,
+  FieldValues,
+  Path,
+  ControllerRenderProps,
+} from "react-hook-form";
 import {
   FormControl,
   FormField,
@@ -18,9 +23,9 @@ export enum FormFieldType {
   SKELETON = "skeleton",
 }
 
-interface CustomProps {
-  control: Control<any>;
-  name: string;
+interface CustomProps<TFieldValues extends FieldValues> {
+  control: Control<TFieldValues>;
+  name: Path<TFieldValues>;
   type?: string;
   label?: string;
   placeholder?: string;
@@ -30,11 +35,19 @@ interface CustomProps {
   dateFormat?: string;
   showTimeSelect?: boolean;
   children?: React.ReactNode;
-  renderSkeleton?: (field: any) => React.ReactNode;
+  renderSkeleton?: (
+    field: ControllerRenderProps<TFieldValues, Path<TFieldValues>>
+  ) => React.ReactNode;
   fieldType: FormFieldType;
 }
 
-const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
+const RenderInput = <TFieldValues extends FieldValues>({
+  field,
+  props,
+}: {
+  field: ControllerRenderProps<TFieldValues, Path<TFieldValues>>;
+  props: CustomProps<TFieldValues>;
+}) => {
   switch (props.fieldType) {
     case FormFieldType.INPUT:
       return (
@@ -51,13 +64,10 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
           <FormControl>
             <Input
               placeholder={props.placeholder}
-
               {...field}
               type={props.type}
               autoComplete={props.type === "password" ? "new-password" : "off"}
-            
-              height={2}
-              className="shad-input border-0 "
+              className="shad-input border-0"
             />
           </FormControl>
         </div>
@@ -70,7 +80,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
             {...field}
             className="shad-textArea"
             disabled={props.disabled}
-            autoComplete="off" // Ensures textarea also doesn't autofill
+            autoComplete="off"
           />
         </FormControl>
       );
@@ -96,7 +106,9 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
   }
 };
 
-const CustomFormField = (props: CustomProps) => {
+const CustomFormField = <TFieldValues extends FieldValues>(
+  props: CustomProps<TFieldValues>
+) => {
   const { control, name, label } = props;
 
   return (
@@ -106,9 +118,7 @@ const CustomFormField = (props: CustomProps) => {
       render={({ field }) => (
         <FormItem className="flex-1">
           {label && <FormLabel>{label}</FormLabel>}
-
           <RenderInput field={field} props={props} />
-
           <FormMessage className="shad-error" />
         </FormItem>
       )}

@@ -16,7 +16,7 @@ function NewAddressDialog() {
             <DialogHeader>
               <DialogTitle>Add new Address</DialogTitle>
               <DialogDescription>
-                Make sure to Add valid address. Click save when you're done.
+                Make sure to Add valid address. Click save when you&apos;re done.
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">

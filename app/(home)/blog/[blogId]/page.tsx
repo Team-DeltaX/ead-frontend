@@ -16,30 +16,30 @@ const Page = () => {
   const [blog, setBlog] = useState<Blog | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   if (!parsedBlogId) return;
+  useEffect(() => {
+    if (!parsedBlogId) return;
 
-  //   const fetchBlogById = async () => {
-  //     try {
-  //       const response = await blogService.getBlogById(parsedBlogId);
-  //       setBlog(response.data);
-  //     } catch (error) {
-  //       console.error("Failed to fetch Blog:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+    const fetchBlogById = async () => {
+      try {
+        const response = await blogService.getBlogById(parsedBlogId);
+        setBlog(response.data);
+      } catch (error) {
+        console.error("Failed to fetch Blog:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  //   fetchBlogById();
-  // }, [parsedBlogId]);
+    fetchBlogById();
+  }, [parsedBlogId]);
 
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-  // if (!blog) {
-  //   return <div>Blog not found</div>;
-  // }
+  if (!blog) {
+    return <div>Blog not found</div>;
+  }
   return (
     <div className="xl:px-32 lg:px-24 md:px-16 sm:px-10 px-5 xl:py-8 lg:py-8 md:py-5 sm:py-2 py-2 ">
       <div className=" grid grid-cols-2 gap-10 bg-white px-8 py-5 rounded-lg">

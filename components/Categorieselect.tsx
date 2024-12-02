@@ -6,7 +6,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -31,7 +30,7 @@ const SelectCategory = ({
         setCategories(response.data); // Assuming response.data is the array of categories
         setError(null);
       } catch (err) {
-        setError("Failed to fetch categories. Please try again later.");
+        setError("Failed to fetch categories. Please try again later. "+err);
       } finally {
         setIsLoading(false);
       }

@@ -56,7 +56,7 @@ export function AddBlog({ fetchdata }: { fetchdata: () => void }) {
       toast.success("Blog added successfully!");
       fetchdata();
     } catch (error) {
-      toast.error("Error adding blog. Please try again.");
+      toast.error("Error adding blog. Please try again. "+error);
     } finally {
       setImage("");
       setContent("");

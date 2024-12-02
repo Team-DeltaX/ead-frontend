@@ -2,9 +2,5 @@
   "extends": [
     "next/core-web-vitals",
     "next/typescript"
-  ],
-  "rules": {
-    // vatiables can be declared but never used
-    "no-unused-vars": "off"
-  }
+  ]
 }
