@@ -116,8 +116,8 @@ const Cart = () => {
           Shopping Cart
         </h1>
       </div>
-      <div className="grid md:grid-cols-2 grid-cols-1 py-4">
-        <div className="flex items-center justify-between">
+      <div className="grid md:grid-cols-2 grid-cols-1 py-4 gap-4">
+        <div className="flex items-center justify-between  ">
           <ScrollArea className="h-[450px] rounded-md w-full pr-6">
             {cartItems.map((item) => (
               <div key={item.id}>
@@ -153,7 +153,7 @@ const Cart = () => {
           </ScrollArea>
           <Separator orientation="vertical" />
         </div>
-        <div className=" px-10">
+        <div className="w- px-10 ">
           <h1 className="lg:text-[18px] md:text-[16px] sm:text-[14px] text-[14px] font-SFPro font-bold text-black">
             Order Summary
           </h1>
