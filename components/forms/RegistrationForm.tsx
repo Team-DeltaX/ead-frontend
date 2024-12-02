@@ -60,7 +60,7 @@ const RegisterForm = () => {
       await authService.register(values).then((response) => {
         console.log("register", response);
 
-        if (response.data.success) {
+        if (response.success) {
           router.push("/");
 
           dispatch({

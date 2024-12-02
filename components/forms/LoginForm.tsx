@@ -48,8 +48,9 @@ const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
           console.log("Backend response:", response); // Debugging log
 
           if (response.success) {
-            console.log("Login successful:", response);
+            console.log("Login successful:", response.data);
             console.log("Token:", response.data.token);
+            console.log("Token:", response.data);
 
             dispatch({
               type: "LOGIN",
@@ -92,6 +93,7 @@ const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-6">
         <CustomFormField
           name="email"
+          label="Email"
           control={form.control}
           fieldType={FormFieldType.INPUT}
           placeholder="johndoe@gmail.com"

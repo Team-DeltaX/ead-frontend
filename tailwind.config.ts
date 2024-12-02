@@ -76,11 +76,23 @@ const config: Config = {
   				to: {
   					height: '0'
   				}
-  			}
+  			},
+        
+        blink: {
+          '0%, 100%': { opacity: '0' },
+          '50%': { opacity: '1' },
+        },
+
+
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+        'blink-1': 'blink 1.5s infinite',
+        'blink-2': 'blink 1.5s infinite 0.3s',
+        'blink-3': 'blink 1.5s infinite 0.6s',
+        'blink-4': 'blink 1.5s infinite 0.9s',
+
   		}
   	}
   },

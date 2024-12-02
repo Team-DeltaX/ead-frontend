@@ -28,6 +28,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <head></head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -35,7 +36,7 @@ export default function RootLayout({
 
         <AuthContextProvider>
           <NavBar />
-          <div className="w-full min-h-screen">
+          <div className="w-full min-h-screen ">
             {children}
             <Toaster />
           </div>

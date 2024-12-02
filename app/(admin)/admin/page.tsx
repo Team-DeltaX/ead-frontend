@@ -3,6 +3,7 @@ import { DashboardOrd, DashboardRev } from "@/services/dashboardrev.service";
 import React, { useState, useEffect } from "react";
 import { dashboardOrdService } from "@/services/dashboardrev.service";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import isAuth from "@/components/isAuth";
 
 const Dashboard: React.FC = () => {
   const { state } = useAuthContext();
@@ -23,7 +24,7 @@ const Dashboard: React.FC = () => {
       setRevenue(revenueResponse.data);
       setError(null);
     } catch (err) {
-      setError("Failed to fetch data. Please try again later.");
+      setError("Failed to fetch data. Please try again later. " + err);
     } finally {
       setIsLoading(false);
     }
@@ -141,4 +142,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default isAuth(Dashboard, { allowedRoles: ["ADMIN"] });

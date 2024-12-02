@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Order } from "@/services/order.service";
 import { orderService } from "@/services/order.service";
 import { Sortby } from "@/components/Sortby";
+import isAuth from "@/components/isAuth";
 
 const OrdersTable: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -15,10 +16,11 @@ const OrdersTable: React.FC = () => {
       try {
         setIsLoading(true);
         const response = await orderService.getAllOrders();
+        console.log("Orders:", response.data);
         setOrders(response.data);
         setError(null);
       } catch (err) {
-        setError("Failed to fetch orders. Please try again later.");
+        setError("Failed to fetch orders. Please try again later. "+err);
       } finally {
         setIsLoading(false);
       }
@@ -30,11 +32,11 @@ const OrdersTable: React.FC = () => {
   const renderBadge = (status: string) => {
     switch (status.toLowerCase()) {
       case "pending":
-        return <Badge variant="secondary">Pending</Badge>;
+        return <Badge variant="secondary" color="">Pending</Badge>;
       case "delivered":
-        return <Badge variant="outline">Delivered</Badge>;
+        return <Badge variant="outline" color="">Delivered</Badge>;
       case "cancelled":
-        return <Badge variant="destructive">Cancelled</Badge>;
+        return <Badge variant="destructive" color="">Cancelled</Badge>;
       default:
         return <Badge variant="default">{status}</Badge>;
     }
@@ -112,4 +114,4 @@ const OrdersTable: React.FC = () => {
   );
 };
 
-export default OrdersTable;
+export default isAuth(OrdersTable, { allowedRoles: ["ADMIN"] });
