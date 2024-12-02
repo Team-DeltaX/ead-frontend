@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Order } from "@/services/order.service";
 import { orderService } from "@/services/order.service";
+import { Sortby } from "@/components/Sortby";
 
 const OrdersTable: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -40,67 +41,72 @@ const OrdersTable: React.FC = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen w-full">
-      <h1 className="text-2xl ml-2 mb-4">Orders</h1>
-      <div className="overflow-x-auto rounded-xl">
-        {isLoading ? (
-          <p className="text-center">Loading...</p>
-        ) : error ? (
-          <p className="text-red-500 text-center">{error}</p>
-        ) : (
-          <table className="min-w-full bg-white border border-gray-200 rounded-xl">
-            <thead>
-              <tr className="bg-gray-200 text-gray-400 text-lg leading-normal">
-                <th className="py-3 px-6 text-left">Date</th>
-                <th className="py-3 px-6 text-left">Recipient</th>
-                <th className="py-3 px-6 text-left">Products</th>
-                <th className="py-3 px-6 text-left">Total Amount</th>
-                <th className="py-3 px-6 text-left">Order Status</th>
-              </tr>
-            </thead>
-            <tbody className="text-gray-700 text-sm font-light">
-              {orders.map((order) => (
-                <tr
-                  key={order.id}
-                  className="border-b border-gray-200 hover:bg-gray-100"
-                >
-                  <td className="font-semibold py-3 px-6">{order.orderDate}</td>
-                  <td className="py-3 px-6">
-                    {order.user ? (
-                      <div>
-                        <p className="font-semibold">
-                          {order.user?.firstName || "Unknown"} {order.user?.lastName && order.user.lastName}
-                        </p>
-                        <ul className="list-disc list-inside">
-                          {order.user.email && <li>{order.user.email}</li>}
-                          {order.user.address && <li>{order.user.address}</li>}
-                        </ul>
-                      </div>
-                    ) : (
-                      <p>Unknown</p>
-                    )}
-                  </td>
-                      <td className="py-3 px-6">
-                      {order.orderItems.map((item) => (
-                        <div>
-                          <div className="flex  items-center">
-                            <p className="font-semibold">{item.productName}</p>
-                            <p className="ml-4">Qty: <span className="font-semibold">{item.quantity}</span></p>
-                          </div>
-                          {/* <p>Price: <span className="font-semibold">Rs.{item.price}</span></p> */}
-                        </div>
-                      ))}
-                    </td>
-                   
-                  <td className="font-semibold py-3 px-8">
-                    Rs.{order.totalAmount.toFixed(2)}
-                  </td>
-                  <td className="py-3 px-8">{renderBadge(order.status)}</td>
+    <div className="bg-gray-100 min-h-screen">
+      <div className="flex flex-row justify-between items-center p-3 bg-gray-100">
+        <div className="text-2xl ml-2">Orders</div>
+        <Sortby />
+      </div>
+      <div className="p-4">
+        <div className="overflow-y-auto h-[calc(100vh-200px)] border border-gray-300 rounded-xl shadow-lg">
+          {isLoading ? (
+            <div className="text-center py-4">
+              <div className="text-gray-500 font-semibold mb-4">Loading ...</div>
+              <div className="flex items-center justify-center min-h-full">
+                <div className="spinner border-t-4 border-b-4 border-gray-900 w-16 h-16 rounded-full animate-spin"></div>
+              </div>
+            </div>
+          ) : error ? (
+            <div className="text-center py-4 text-red-500">{error}</div>
+          ) : (
+            <table className="w-full text-left">
+              <thead className="sticky top-0 bg-gray-200 shadow-sm">
+                <tr>
+                  <th className="px-6 py-3 text-gray-600 font-semibold">Date</th>
+                  <th className="px-6 py-3 text-gray-600 font-semibold">Recipient</th>
+                  <th className="px-6 py-3 text-gray-600 font-semibold">Products</th>
+                  <th className="px-6 py-3 text-gray-600 font-semibold">Total Amount</th>
+                  <th className="px-6 py-3 text-gray-600 font-semibold">Status</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+              </thead>
+              <tbody>
+                {orders.length > 0 ? (
+                  orders.map((order) => (
+                    <tr key={order.id} className="border-b">
+                      <td className="px-6 py-3">{order.orderDate}</td>
+                      <td className="px-6 py-3">
+                        {order.user ? (
+                          <div>
+                            <p className="font-semibold">
+                              {order.user.firstName} {order.user.lastName || ""}
+                            </p>
+                            <p className="text-sm text-gray-500">{order.user.email}</p>
+                          </div>
+                        ) : (
+                          "Unknown"
+                        )}
+                      </td>
+                      <td className="px-6 py-3">
+                        {order.orderItems.map((item, index) => (
+                          <p key={index}>
+                            {item.productName} (x{item.quantity})
+                          </p>
+                        ))}
+                      </td>
+                      <td className="px-6 py-3">Rs.{order.totalAmount.toFixed(2)}</td>
+                      <td className="px-6 py-3">{renderBadge(order.status)}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={5} className="text-center py-4 text-gray-500">
+                      No orders found
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          )}
+        </div>
       </div>
     </div>
   );
