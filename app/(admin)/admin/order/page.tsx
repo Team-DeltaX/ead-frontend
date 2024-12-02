@@ -29,9 +29,9 @@ const OrdersTable: React.FC = () => {
   const renderBadge = (status: string) => {
     switch (status.toLowerCase()) {
       case "pending":
-        return <Badge variant="secondary">Pending</Badge>;
+        return <Badge variant="outline">Pending</Badge>;
       case "delivered":
-        return <Badge variant="outline">Delivered</Badge>;
+        return <Badge variant="secondary">Delivered</Badge>;
       case "cancelled":
         return <Badge variant="destructive">Cancelled</Badge>;
       default:
