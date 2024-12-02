@@ -6,12 +6,11 @@ import Iphone from "../../assets/sliderimages/Iphone.png";
 import Image from "next/image";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import { PaymentDialog } from "@/components/payment/paymentDialog";
+import isAuth from "@/components/isAuth";
 
 const Cart = () => {
-  
-  const [paymentDialogOpen,setPaymentDialogOpen]=useState(false);
+  const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
   const [cartItems, setCartItems] = useState([
-
     {
       id: 1,
       name: "Apple iPhone 14 Pro Max",
@@ -121,8 +120,13 @@ const Cart = () => {
           <ScrollArea className="h-[450px] rounded-md w-full pr-6">
             {cartItems.map((item) => (
               <div key={item.id}>
-                <div  className="p-4 flex items-center">
-                  <Image src={item.image} alt={item.name} width={50} height={100} />
+                <div className="p-4 flex items-center">
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    width={50}
+                    height={100}
+                  />
                   <div className="ml-6 w-[150px] ">
                     <h1 className="lg:text-[14px] md:text-[12px] sm:text-[12px] text-[10px] font-SFPro font-medium text-black">
                       {item.name}
@@ -132,9 +136,13 @@ const Cart = () => {
                     </h1>
                   </div>
                   <div className="ml-6 inline-flex items-center lg:text-[14px] md:text-[12px] sm:text-[12px] text-[10px] font-SFPro gap-2">
-                    <button onClick={() => handleQuantityChange(item.id, -1)}>-</button>
+                    <button onClick={() => handleQuantityChange(item.id, -1)}>
+                      -
+                    </button>
                     <h1 className="rounded-md border px-2">{item.quantity}</h1>
-                    <button onClick={() => handleQuantityChange(item.id, 1)}>+</button>
+                    <button onClick={() => handleQuantityChange(item.id, 1)}>
+                      +
+                    </button>
                   </div>
                   <div className="ml-6 w-[80px]   flex justify-self-end">
                     <h1 className="lg:text-[14px] md:text-[12px] sm:text-[12px] text-[10px] font-SFPro font-medium text-black">
@@ -168,7 +176,7 @@ const Cart = () => {
             </div>
             <div className="flex items-center justify-between py-4">
               <h1 className="lg:text-[16px] md:text-[14px] sm:text-[14px] text-[12px] font-SFPro font-thin text-gray-600">
-              Estimated Tax
+                Estimated Tax
               </h1>
               <h1 className="lg:text-[16px] md:text-[14px] sm:text-[14px] text-[12px] font-SFPro font-thin text-gray-600">
                 Rs. 99.99
@@ -176,7 +184,7 @@ const Cart = () => {
             </div>
             <div className="flex items-center justify-between py-4">
               <h1 className="lg:text-[16px] md:text-[14px] sm:text-[14px] text-[12px] font-SFPro font-medium text-gray-600">
-              Estimated shipping & Handling
+                Estimated shipping & Handling
               </h1>
               <h1 className="lg:text-[16px] md:text-[14px] sm:text-[14px] text-[12px] font-SFPro font-medium text-gray-600">
                 Rs. 99.99
@@ -191,11 +199,18 @@ const Cart = () => {
                 Rs. 999.99
               </h1>
             </div>
-            <button onClick={()=>{setPaymentDialogOpen(true)}} className="bg-black text-white rounded-md py-2 w-full mt-4 lg:text-[16px] md:text-[14px] sm:text-[14px] text-[12px] font-bold">
+            <button
+              onClick={() => {
+                setPaymentDialogOpen(true);
+              }}
+              className="bg-black text-white rounded-md py-2 w-full mt-4 lg:text-[16px] md:text-[14px] sm:text-[14px] text-[12px] font-bold"
+            >
               Check Out
             </button>
-           <PaymentDialog isOpen={paymentDialogOpen} onOpenChange={setPaymentDialogOpen}></PaymentDialog>
-           
+            <PaymentDialog
+              isOpen={paymentDialogOpen}
+              onOpenChange={setPaymentDialogOpen}
+            ></PaymentDialog>
           </div>
         </div>
       </div>
@@ -203,4 +218,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default isAuth(Cart, { allowedRoles: ["USER", "ADMIN"] });

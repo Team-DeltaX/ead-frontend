@@ -4,6 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import PasswordChange from "@/components/forms/PasswordChange";
 import OrderCard from "@/components/OrderCard";
 import { userService, User } from "@/services/user.service";
+import isAuth from "@/components/isAuth";
 
 
 const Profile = () => {
@@ -104,4 +105,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default isAuth(Profile, { allowedRoles: ["USER","ADMIN"] });

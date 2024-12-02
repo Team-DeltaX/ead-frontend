@@ -15,6 +15,7 @@ const OrdersTable: React.FC = () => {
       try {
         setIsLoading(true);
         const response = await orderService.getAllOrders();
+        console.log("Orders:", response.data);
         setOrders(response.data);
         setError(null);
       } catch (err) {
@@ -30,11 +31,11 @@ const OrdersTable: React.FC = () => {
   const renderBadge = (status: string) => {
     switch (status.toLowerCase()) {
       case "pending":
-        return <Badge variant="secondary">Pending</Badge>;
+        return <Badge variant="secondary" color="">Pending</Badge>;
       case "delivered":
-        return <Badge variant="outline">Delivered</Badge>;
+        return <Badge variant="outline" color="">Delivered</Badge>;
       case "cancelled":
-        return <Badge variant="destructive">Cancelled</Badge>;
+        return <Badge variant="destructive" color="">Cancelled</Badge>;
       default:
         return <Badge variant="default">{status}</Badge>;
     }
