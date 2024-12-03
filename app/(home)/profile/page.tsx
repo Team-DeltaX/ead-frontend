@@ -4,8 +4,10 @@ import { Separator } from "@/components/ui/separator";
 import PasswordChange from "@/components/forms/PasswordChange";
 import OrderCard from "@/components/OrderCard";
 import { userService, User } from "@/services/user.service";
+import isAuth from "@/components/isAuth";
+
 import Spinner from "@/components/Spinner";
-import { orderService, Order, OrderItem } from "@/services/order.service";
+import { orderService, Order } from "@/services/order.service";
 import { CgUnavailable } from "react-icons/cg";
 
 const Profile = () => {
@@ -150,4 +152,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default isAuth(Profile, { allowedRoles: ["USER","ADMIN"] });

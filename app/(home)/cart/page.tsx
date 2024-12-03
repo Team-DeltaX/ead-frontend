@@ -6,6 +6,7 @@ import Iphone from "../../assets/sliderimages/Iphone.png";
 import Image from "next/image";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import { PaymentDialog } from "@/components/payment/paymentDialog";
+import isAuth from "@/components/isAuth";
 import { Cart, cartService } from "@/services/cart.service";
 
 const ProductCart = () => {
@@ -32,6 +33,7 @@ const ProductCart = () => {
   useEffect(() => {
     getCartItems();
   }, []);
+
 
   const handleQuantityChange = (id: number, delta: number) => {
     if (!cart) return;
@@ -96,6 +98,7 @@ const ProductCart = () => {
                         <IoIosRemoveCircleOutline />
                       </button>
                     </div>
+
                   </div>
                   <Separator orientation="horizontal" />
                 </div>
@@ -160,4 +163,5 @@ const ProductCart = () => {
   );
 };
 
-export default ProductCart;
+
+export default isAuth(Cart, { allowedRoles: ["USER", "ADMIN"] });

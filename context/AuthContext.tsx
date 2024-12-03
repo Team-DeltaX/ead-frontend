@@ -15,11 +15,13 @@ interface AuthState {
   role: string | null;
   token: string | null;
   isLoggedIn: boolean;
+  authInitialized: boolean; // Track if authentication has been initialized
 }
 
 type AuthAction =
   | { type: "LOGIN"; payload: { user: User; role: string; token: string } }
-  | { type: "LOGOUT" };
+  | { type: "LOGOUT" }
+  | { type: "SET_AUTH_INITIALIZED" }; // Action to mark initialization complete
 
 interface AuthContextType {
   state: AuthState;
@@ -36,6 +38,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
         role: action.payload.role,
         token: action.payload.token,
         isLoggedIn: true,
+        authInitialized: true, // Mark as initialized
       };
       saveAuthData(newState);
       return newState;
@@ -47,7 +50,11 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
         role: null,
         token: null,
         isLoggedIn: false,
+        authInitialized: true, // Mark as initialized
       };
+    }
+    case "SET_AUTH_INITIALIZED": {
+      return { ...state, authInitialized: true }; // Action to mark initialization as complete
     }
     default:
       return state;
@@ -60,6 +67,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     role: null,
     token: null,
     isLoggedIn: false,
+    authInitialized: false, // Set authInitialized to false initially
   });
 
   useEffect(() => {
@@ -78,6 +86,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
           token: storedState.token,
         },
       });
+    } else {
+      dispatch({ type: "SET_AUTH_INITIALIZED" }); // Mark initialization as complete
     }
   }, []);
 
@@ -85,7 +95,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
-      {children}
+      {state.authInitialized ? children : <div>Loading...</div>}{" "}
+      {/* Show loading until auth is initialized */}
     </AuthContext.Provider>
   );
 };
