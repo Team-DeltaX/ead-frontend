@@ -8,7 +8,7 @@ const ProductCard = ({ product }:{
   const router = useRouter()
 
   return (
-    <div className="max-w-sm p-4 border rounded-lg shadow-md bg-[#F6F6F6]">
+    <div className="relative max-w-sm p-4 border rounded-lg shadow-md bg-[#F6F6F6] cursor-pointer group">
       {/* <img
         src={product.images[0].url}
         alt={product.name}

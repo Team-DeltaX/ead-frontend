@@ -84,10 +84,10 @@ const ProductPage = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row lg:mx-28">
+    <div className="flex flex-col lg:flex-row lg:mx-28 bg-gradient-to-r from-blue-50 via-white to-blue-100">
       {/* Sidebar Filters */}
       <div
-        className={` lg:mb-16 w-full md:w-1/4 bg-gray-50 p-4 mt-4 border rounded-lg border-gray-200 ${
+        className={` lg:mb-16 w-full md:w-1/4 bg-gray-50 p-4 mt-4 mx-2 border rounded-lg border-gray-200 ${
           isSidebarOpen ? "block" : "hidden md:block"
         }`}
       >

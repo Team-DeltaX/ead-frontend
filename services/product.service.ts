@@ -11,7 +11,7 @@ export interface Product {
   productPrice: number;
   productQuantity: number;
   productDescription: string;
-  images?: Image[];
+  images?: string;
 }
 
 export const productService = {

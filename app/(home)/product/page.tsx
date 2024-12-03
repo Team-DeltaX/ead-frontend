@@ -39,7 +39,7 @@ const Page = () => {
 
   return (
     <div className="flex">
-      <div className="w-full sm:w-2/3 md:w-3/4 lg:w-full p-4">
+      <div className="w-full sm:w-2/3 md:w-3/4 lg:w-full p-4 lg:mx-28  bg-gradient-to-r from-blue-50 via-white to-blue-100">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {currentProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
