@@ -15,7 +15,9 @@ import { FiPlus, FiTrash2 } from "react-icons/fi";
 import { FaEdit } from "react-icons/fa";
 
 import SelectCategory from "@/components/Categorieselect";
-import { BrandSelect } from "@/components/Categorieselect";
+import Image from "next/image";
+// import BrandSelect from "@/components/Categorieselect";
+//import { Category } from "@/services/product.service";
 
 export function UpdateProduct() {
   const [images, setImages] = useState<File[]>([]);
@@ -59,7 +61,7 @@ export function UpdateProduct() {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="category" className="text-right">Category</Label>
-            <SelectCategory />
+            <SelectCategory selectedCategory={null} setSelectedCategory={() => {}} />
           </div>
           {/* <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="brand" className="text-right">Brand</Label>
@@ -84,7 +86,7 @@ export function UpdateProduct() {
               {/* Image Previews */}
               {images.map((image, index) => (
                 <div key={index} className="relative w-24 h-24 border rounded overflow-hidden">
-                  <img
+                  <Image
                     src={URL.createObjectURL(image)}
                     alt={`Preview ${index + 1}`}
                     className="object-cover w-full h-full"

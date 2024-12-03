@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { categoryService } from "@/services/product.service";
-import { Category } from "@/services/product.service";
+import { categoryService } from "@/services/category.service";
+import { Category } from "@/services/category.service";
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -31,7 +30,7 @@ const SelectCategory = ({
         setCategories(response.data); // Assuming response.data is the array of categories
         setError(null);
       } catch (err) {
-        setError("Failed to fetch categories. Please try again later.");
+        setError("Failed to fetch categories. Please try again later. "+err);
       } finally {
         setIsLoading(false);
       }
@@ -76,20 +75,3 @@ const SelectCategory = ({
 export default SelectCategory;
 
 
-const OrderStatusSelect = () => {
-  return (
-      <Select>
-      <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="processing" />
-      </SelectTrigger>
-      <SelectContent>
-          <SelectGroup>
-          <SelectItem value="processing">Processing</SelectItem>
-          <SelectItem value="shipped">Shipped</SelectItem>
-          <SelectItem value="delivered">Delivered</SelectItem>
-          </SelectGroup>
-      </SelectContent>
-      </Select>
-  )
-  }
-export { OrderStatusSelect }

@@ -11,15 +11,17 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Category } from "@/services/product.service";
-import { categoryService } from "@/services/product.service";
+import { Category } from "@/services/category.service";
+import { categoryService } from "@/services/category.service";
 import { toast } from "react-hot-toast";
+import { AlertDialogComponent } from "./Alert";
 
 export function AddCategory() {
   const [categoryName, setCategoryName] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isDialogOpen, setIsDialogOpen] = useState(false); // Dialog open state
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   // Validation logic
   const validateInput = () => {
@@ -32,6 +34,7 @@ export function AddCategory() {
       return false;
     }
     setError("");
+    setIsAlertOpen(true);
     return true;
   };
 
@@ -45,23 +48,42 @@ export function AddCategory() {
     try {
       const response = await categoryService.createCategory(formData);
 
-      toast.success("Category added successfully!");
+      if (response.success) {
+        
+        toast.success("Category added successfully!");
+      } else {
+        toast.error("Error adding category. Please try again.");
+      }
 
-      setCategoryName("");
-      setIsDialogOpen(false); // Close the dialog
+
+      
     } catch (error) {
-      toast.error("Error adding category. Please try again.");
+      toast.error("Error adding category. Please try again. "+error);
     } finally {
+      setCategoryName("");
       setLoading(false);
+      setIsDialogOpen(false);
     }
   };
 
+  const handleClose = () => {
+    setIsDialogOpen(false);
+    setCategoryName("");
+    setError("");
+  };
+
   return (
-    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+    <Dialog
+      open={isDialogOpen}
+      onOpenChange={(open) => {
+        if (!open) handleClose();
+        setIsDialogOpen(open);
+      }}
+    >
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="font-semibold mt-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded focus:border-black"
+          className="font-semibold mt-1 bg-gray-500 hover:bg-gray-600 hover:text-gray-200 text-white py-2 px-4 rounded focus:border-black"
         >
           Add Category
         </Button>
@@ -70,7 +92,7 @@ export function AddCategory() {
         <DialogHeader>
           <DialogTitle>Add Category</DialogTitle>
           <DialogDescription>
-            Add new Categories here. Click save when you're done.
+            Add new Categories here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -91,13 +113,18 @@ export function AddCategory() {
           </div>
         </div>
         <DialogFooter>
+          <AlertDialogComponent
+            open={isAlertOpen}
+            setOpen={setIsAlertOpen}
+            handleOk={handleSubmit}
+          />
           <Button
             type="submit"
-            onClick={handleSubmit}
+            onClick={validateInput}
             disabled={loading}
             className={loading ? "opacity-50 cursor-not-allowed" : ""}
           >
-            {loading ? "Saving..." : "Save changes"}
+            {loading ? "Saving..." : "Add Category"}
           </Button>
         </DialogFooter>
       </DialogContent>

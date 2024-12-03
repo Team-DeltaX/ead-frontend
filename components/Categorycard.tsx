@@ -5,8 +5,8 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hovercard";
-import { categoryService } from "@/services/product.service";
-import { Category } from "@/services/product.service";
+import { categoryService } from "@/services/category.service";
+import { Category } from "@/services/category.service";
 
 const Categorycard = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -21,7 +21,7 @@ const Categorycard = () => {
         setCategories(response.data); // Assuming response.data is the array of categories
         setError(null);
       } catch (err) {
-        setError("Failed to fetch categories. Please try again later.");
+        setError("Failed to fetch categories. Please try again later. " + err);
       } finally {
         setIsLoading(false);
       }

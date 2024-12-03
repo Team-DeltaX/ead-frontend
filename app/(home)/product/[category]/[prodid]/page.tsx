@@ -6,6 +6,9 @@ import { CiShop } from "react-icons/ci";
 import { FaGalacticRepublic } from "react-icons/fa";
 import { Product, productService } from "@/services/product.service";
 import { useParams } from "next/navigation";
+import LoginDialog from "@/components/LoginDialog";
+import { Button } from "@/components/ui/button";
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 type Params = {
   prodid: string;
@@ -14,9 +17,15 @@ type Params = {
 const Page = () => {
   const router = useRouter();
 
+  const { state } = useAuthContext();
+  const { isLoggedIn } = state;
+
   const params = useParams() as Params;
   const { prodid } = params;
 
+  const parsedProdid = parseInt(prodid, 10);
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
@@ -37,6 +46,14 @@ const Page = () => {
 
     fetchProduct();
   }, [parsedProdid]);
+
+  const handleAddToCart = () => {
+    if (!isLoggedIn) {
+      setIsDialogOpen(true);
+    } else {
+      // Add to cart
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -70,15 +87,18 @@ const Page = () => {
           <p className="mt-4">{product.productDescription}</p>
 
           <div className="flex mt-6 space-x-4">
-            <button
+            <Button
               className="px-6 py-2 sm:px-4 bg-white text-black rounded-lg border border-black hover:bg-gray-400"
               onClick={() => router.push("/product")}
             >
               Go Back
-            </button>
-            <button className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800">
+            </Button>
+            <Button
+              className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800"
+              onClick={handleAddToCart}
+            >
               Add to Cart
-            </button>
+            </Button>
           </div>
           <div className="flex flex-row mt-3 space-x-4">
             <div className="flex">
@@ -138,6 +158,10 @@ const Page = () => {
           <p className="text-gray-600">No related products available.</p>
         )}
       </div> */}
+      <LoginDialog
+        isDialogOpen={isDialogOpen}
+        setIsDialogOpen={setIsDialogOpen}
+      />
     </div>
   );
 };

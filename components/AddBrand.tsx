@@ -26,7 +26,7 @@ export function AddBrand() {
         <DialogHeader>
           <DialogTitle>Add Brand</DialogTitle>
           <DialogDescription>
-            Add new Brands here. Click save when you're done.
+            Add new Brands here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
