@@ -47,9 +47,6 @@ const NavBar = () => {
         <nav>
           <ul className=" flex opacity-50 gap-10 font-SFPro">
             <li>
-              <Link href="/about">About</Link>
-            </li>
-            <li>
               <Link href="/" className="">
                 Home
               </Link>
