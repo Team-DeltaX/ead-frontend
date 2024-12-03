@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import Iphone from "../../assets/sliderimages/Iphone.png";
@@ -7,157 +7,102 @@ import Image from "next/image";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import { PaymentDialog } from "@/components/payment/paymentDialog";
 import isAuth from "@/components/isAuth";
+import { Cart, cartService } from "@/services/cart.service";
 
-const Cart = () => {
+const ProductCart = () => {
   const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Apple iPhone 14 Pro Max",
-      price: 1499.99,
-      sku: "#25139526913984",
-      quantity: 1,
-      image: Iphone,
-    },
-    {
-      id: 2,
-      name: "Samsung Galaxy S22 Ultra",
-      price: 1399.99,
-      sku: "#45139526913985",
-      quantity: 2,
-      image: Iphone,
-    },
-    {
-      id: 3,
-      name: "Google Pixel 7 Pro",
-      price: 1299.99,
-      sku: "#35139526913986",
-      quantity: 1,
-      image: Iphone,
-    },
-    {
-      id: 4,
-      name: "OnePlus 11",
-      price: 1099.99,
-      sku: "#25139526913987",
-      quantity: 3,
-      image: Iphone,
-    },
-    {
-      id: 5,
-      name: "Sony Xperia 5 IV",
-      price: 999.99,
-      sku: "#25139526913988",
-      quantity: 1,
-      image: Iphone,
-    },
-    {
-      id: 6,
-      name: "Huawei P60 Pro",
-      price: 899.99,
-      sku: "#25139526913989",
-      quantity: 2,
-      image: Iphone,
-    },
-    {
-      id: 7,
-      name: "Xiaomi 13 Pro",
-      price: 799.99,
-      sku: "#25139526913990",
-      quantity: 1,
-      image: Iphone,
-    },
-    {
-      id: 8,
-      name: "Oppo Find X6 Pro",
-      price: 749.99,
-      sku: "#25139526913991",
-      quantity: 2,
-      image: Iphone,
-    },
-    {
-      id: 9,
-      name: "Vivo X90 Pro+",
-      price: 699.99,
-      sku: "#25139526913992",
-      quantity: 1,
-      image: Iphone,
-    },
-    {
-      id: 10,
-      name: "Asus ROG Phone 7",
-      price: 1199.99,
-      sku: "#25139526913993",
-      quantity: 1,
-      image: Iphone,
-    },
-  ]);
+  const [cart, setCart] = useState<Cart>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleQuantityChange = (id: number, delta: number) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + delta) }
-          : item
-      )
-    );
+  const getCartItems = async () => {
+    try {
+      setIsLoading(true);
+      const response = await cartService.getCartItems();
+
+      setCart(response.data);
+      console.log(response);
+      //console.log(cartItem);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      console.log("fetching cart items");
+      setIsLoading(false);
+    }
   };
 
-  const subtotal = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
+  useEffect(() => {
+    getCartItems();
+  }, []);
+
+
+  const handleQuantityChange = (id: number, delta: number) => {
+    if (!cart) return;
+
+    // Update the items within the cart
+    const updatedItems = cart.items.map((item) =>
+      item.id === id
+        ? { ...item, quantity: Math.max(1, item.quantity + delta) }
+        : item
+    );
+
+    // Set the updated cart
+    setCart({
+      ...cart,
+      items: updatedItems,
+    });
+  };
 
   return (
     <div className="xl:px-32 lg:px-32 md:px-18 px-5 xl:py-8 lg:py-8 md:py-5 sm:py-2 py-2">
       <div>
         <h1 className="lg:text-[18px] md:text-[16px] sm:text-[14px] text-[14px] font-SFPro font-bold">
-          Shopping Cart
+          Shopping Cart {cart && cart.totalAmount}
         </h1>
       </div>
       <div className="grid md:grid-cols-2 grid-cols-1 py-4 gap-4">
-        <div className="flex items-center justify-between  ">
+        <div className="flex  ">
           <ScrollArea className="h-[450px] rounded-md w-full pr-6">
-            {cartItems.map((item) => (
-              <div key={item.id}>
-                <div className="p-4 flex items-center">
-                  <Image
-                    src={item.image}
-                    alt={item.name}
-                    width={50}
-                    height={100}
-                  />
-                  <div className="ml-6 w-[150px] ">
-                    <h1 className="lg:text-[14px] md:text-[12px] sm:text-[12px] text-[10px] font-SFPro font-medium text-black">
-                      {item.name}
-                    </h1>
-                    <h1 className="lg:text-[12px] md:text-[10px] sm:text-[10px] text-[8px] font-SFPro font-normal text-black opacity-40">
-                      {item.sku}
-                    </h1>
+            {cart &&
+              cart.items.map((item) => (
+                <div key={item.id}>
+                  <div className="pl-4 py-4 flex items-start justify-start">
+                    <div className="w-2/12 ">
+                      <Image src={Iphone} alt="Iphone" width={50} height={50} />
+                    </div>
+                    <div className="w-4/12 ">
+                      <h1 className="lg:text-[14px] md:text-[12px] sm:text-[12px] text-[10px] font-SFPro font-medium text-black">
+                        {item.product.productName}
+                      </h1>
+                      <h1 className=" lg:text-[12px] md:text-[10px] sm:text-[10px] text-[8px] font-SFPro font-normal text-black opacity-40">
+                        {item.product.id}
+                      </h1>
+                    </div>
+                    <div className="w-2/12 inline-flex items-center lg:text-[14px] md:text-[12px] sm:text-[12px] text-[10px] font-SFPro gap-2  ">
+                      <button onClick={() => handleQuantityChange(item.id, -1)}>
+                        -
+                      </button>
+                      <h1 className="rounded-md border px-2">
+                        {item.quantity}
+                      </h1>
+                      <button onClick={() => handleQuantityChange(item.id, 1)}>
+                        +
+                      </button>
+                    </div>
+                    <div className="pl-4 w-3/12  justify-start ">
+                      <h1 className="lg:text-[14px] md:text-[12px] sm:text-[12px] text-[10px] font-SFPro font-medium text-black">
+                        Rs. {(item.unitPrice * item.quantity).toFixed(2)}
+                      </h1>
+                    </div>
+                    <div className="w-1/12 inline-flex justify-end ">
+                      <button className="text-red-500 text-[20px]">
+                        <IoIosRemoveCircleOutline />
+                      </button>
+                    </div>
+
                   </div>
-                  <div className="ml-6 inline-flex items-center lg:text-[14px] md:text-[12px] sm:text-[12px] text-[10px] font-SFPro gap-2">
-                    <button onClick={() => handleQuantityChange(item.id, -1)}>
-                      -
-                    </button>
-                    <h1 className="rounded-md border px-2">{item.quantity}</h1>
-                    <button onClick={() => handleQuantityChange(item.id, 1)}>
-                      +
-                    </button>
-                  </div>
-                  <div className="ml-6 w-[80px]   flex justify-self-end">
-                    <h1 className="lg:text-[14px] md:text-[12px] sm:text-[12px] text-[10px] font-SFPro font-medium text-black">
-                      Rs. {(item.price * item.quantity).toFixed(2)}
-                    </h1>
-                  </div>
-                  <div className="ml-6 inline-flex items-end ">
-                    <button className="text-red-500 text-[20px]">
-                      <IoIosRemoveCircleOutline />
-                    </button>
-                  </div>
+                  <Separator orientation="horizontal" />
                 </div>
-                <Separator orientation="horizontal" />
-              </div>
-            ))}
+              ))}
           </ScrollArea>
           <Separator orientation="vertical" />
         </div>
@@ -170,9 +115,9 @@ const Cart = () => {
               <h1 className="lg:text-[16px] md:text-[14px] sm:text-[14px] text-[12px] font-SFPro font-bold text-black">
                 Subtotal
               </h1>
-              <h1 className="lg:text-[16px] md:text-[14px] sm:text-[14px] text-[12px] font-SFPro font-bold text-black">
+              {/* <h1 className="lg:text-[16px] md:text-[14px] sm:text-[14px] text-[12px] font-SFPro font-bold text-black">
                 Rs. {subtotal.toFixed(2)}
-              </h1>
+              </h1> */}
             </div>
             <div className="flex items-center justify-between py-4">
               <h1 className="lg:text-[16px] md:text-[14px] sm:text-[14px] text-[12px] font-SFPro font-thin text-gray-600">
@@ -217,5 +162,6 @@ const Cart = () => {
     </div>
   );
 };
+
 
 export default isAuth(Cart, { allowedRoles: ["USER", "ADMIN"] });
