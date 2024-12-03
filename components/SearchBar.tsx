@@ -12,7 +12,7 @@ const SearchBar = () => {
           <Input
             type="search"
             placeholder="Search"
-            className="pl-10 border-none bg-gray-200 w-full rounded-lg h-8 md:h-8 lg:h-10 font-SFPro lg:text-[14px] md:text-[12px] sm:text-[10px] text-[10px]"
+            className="pl-10 border border-gray-500 bg-gray-100 w-full rounded-sm h-8 md:h-8 lg:h-10 font-SFPro lg:text-[14px] md:text-[12px] sm:text-[10px] text-[10px]"
           />
         </div>
       </div>

@@ -47,9 +47,16 @@ const NavBar = () => {
         <nav>
           <ul className=" flex opacity-50 gap-10 font-SFPro">
             <li>
+
+              <Link href="/about">About</Link>
+            </li>
+            <li>
+             
+
               <Link href="/" className="">
                 Home
               </Link>
+
             </li>
             <li>
               <Link href="/product">Product</Link>
@@ -106,9 +113,12 @@ const NavBar = () => {
         <nav className="absolute left-0 w-full bg-white top-14 lg:hidden z-40">
           <ul className="flex flex-col items-center font-medium text-[14px] space-y-2">
             <li>
-              <Link href="/home" className="p-4 w-full text-center block ">
+              <Link href="/" className="p-4 w-full text-center block ">
                 Home
               </Link>
+            </li>
+            <li>
+              <Link href="/product">Product</Link>
             </li>
             <li>
               <Link href="/about" className="p-4 w-full text-center block">

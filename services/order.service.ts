@@ -23,4 +23,8 @@ export const orderService = {
     const response = await axiosInstance.get("/orders");
     return response.data;
   },
+  getUserOrders: async () => {
+    const response = await axiosInstance.get("/orders/user");
+    return response.data;
+  },
 };
