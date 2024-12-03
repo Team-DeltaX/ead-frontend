@@ -89,7 +89,7 @@ const NavBar = () => {
                 </Link>
               </li>
               <li className="flex justify-center items-center">
-                <button onClick={() => setOpen(true)}>
+                <button data-cy='logoutbutton' onClick={() => setOpen(true)}>
                   <FiLogOut className="md:h-[20px] md:w-[20px] h-[16px] w-[16px]" />
                 </button>
               </li>
@@ -97,6 +97,7 @@ const NavBar = () => {
           </nav>
         ) : (
           <Button
+              data-cy="open-login-dialog"
             className="bg-black hover:bg-gray-700 text-white py-1.5 px-8 rounded focus:border-black font-SFPro"
             onClick={() => setIsDialogOpen(true)}
           >
