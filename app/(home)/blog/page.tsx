@@ -27,7 +27,7 @@ const BlogPage = () => {
       const response = await blogService.getAllBlogs();
       setBlogs(response.data);
     } catch (err) {
-      console.log("Failed to fetch blogs. Please try again later.");
+      console.log("Failed to fetch blogs. Please try again later. "+err);
     } finally {
       setIsLoading(false);
     }

@@ -18,7 +18,7 @@ const ProductCard = ({ product }:{
       <div className="mt-2 text-center">
         <h3 className="text-base font-medium text-gray-900">{product.productName}</h3>
         <p className="text-xs text-gray-500">{product.brand}</p>
-        {/* <p className="text-xs text-gray-500">{product.category}</p> */}
+     
         <p className="mt-1 text-lg font-bold text-gray-800">${product.productPrice}</p>
         
         <button

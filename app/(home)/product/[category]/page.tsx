@@ -33,7 +33,9 @@ const ProductPage = () => {
     setBrands(uniqueBrands);
   }, [data]);
 
-  const handleFilterChange = (e:any) => {
+  const handleFilterChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFilters((prev) => ({
       ...prev,
@@ -79,9 +81,9 @@ const ProductPage = () => {
     startIndex + Items_Per_Page
   );
 
-  const handlePageChange = (page : any) => {
-    setCurrentPage(page);
-  };
+const handlePageChange = (page: number) => {
+  setCurrentPage(page);
+};
 
   return (
     <div className="flex flex-col lg:flex-row lg:mx-28">

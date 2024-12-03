@@ -23,7 +23,7 @@ const Page = () => {
   const params = useParams() as Params;
   const { prodid } = params;
 
-  const parsedProdid = parseInt(prodid, 10); 
+  const parsedProdid = parseInt(prodid, 10);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -31,7 +31,7 @@ const Page = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!parsedProdid) return; 
+    if (!parsedProdid) return;
 
     const fetchProduct = async () => {
       try {
@@ -47,20 +47,20 @@ const Page = () => {
     fetchProduct();
   }, [parsedProdid]);
 
-  const handleAddToCart = () => { 
+  const handleAddToCart = () => {
     if (!isLoggedIn) {
       setIsDialogOpen(true);
     } else {
       // Add to cart
     }
-  }
+  };
 
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   if (!product) {
-    return <div>Product not found</div>; 
+    return <div>Product not found</div>;
   }
 
   return (
@@ -81,7 +81,10 @@ const Page = () => {
             >
               Go Back
             </Button>
-            <Button className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800" onClick={handleAddToCart}>
+            <Button
+              className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800"
+              onClick={handleAddToCart}
+            >
               Add to Cart
             </Button>
           </div>

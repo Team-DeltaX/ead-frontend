@@ -13,7 +13,7 @@ import { AlertDialogComponent } from "@/components/Alert";
 import { useRouter } from "next/navigation";
 
 const NavBar = () => {
-  const { state ,dispatch} = useAuthContext();
+  const { state, dispatch } = useAuthContext();
   const { isLoggedIn } = state;
 
   const router = useRouter();
@@ -47,16 +47,12 @@ const NavBar = () => {
         <nav>
           <ul className=" flex opacity-50 gap-10 font-SFPro">
             <li>
-
               <Link href="/about">About</Link>
             </li>
             <li>
-             
-
               <Link href="/" className="">
                 Home
               </Link>
-
             </li>
             <li>
               <Link href="/product">Product</Link>
@@ -126,10 +122,7 @@ const NavBar = () => {
               </Link>
             </li>
             <li>
-              <Link
-                href="/contactus"
-                className="p-4 w-full text-center block"
-              >
+              <Link href="/contactus" className="p-4 w-full text-center block">
                 Contact Us
               </Link>
             </li>

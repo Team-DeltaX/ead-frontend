@@ -24,7 +24,6 @@ const Sidebar = () => {
 
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
-  // Helper function to check if the link is active
   const isActive = (path: string) => pathname === path;
 
   const handleLogout = () => {

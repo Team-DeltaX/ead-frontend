@@ -28,7 +28,7 @@ const AddressBox: React.FC<AddressBoxProps> = ({
             style={{
               width: "1.25rem",
               height: "1.25rem",
-              accentColor: "black", // Makes the selected color black
+              accentColor: "black", 
             }}
           />
         </div>
@@ -45,7 +45,6 @@ const AddressBox: React.FC<AddressBoxProps> = ({
           </span>
         </div>
       </div>
-      {/* Icon */}
       <div>
         <CheckCircle />
       </div>

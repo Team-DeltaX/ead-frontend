@@ -16,20 +16,30 @@ const PasswordResetForm = ({ setOpen, email, setStep }: {
  }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const PasswordResetFormValidation = z.object({
-    password: z.string().min(3, "Password must be at least 8 characters"),
-  });
+  const PasswordResetFormValidation = z
+    .object({
+      password: z.string().min(3, "Password must be at least 8 characters"),
+      confirmPassword: z
+        .string()
+        .min(3, "Password must be at least 8 characters"),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: "Passwords must match",
+      path: ["confirmPassword"],
+    });
 
   const form = useForm<z.infer<typeof PasswordResetFormValidation>>({
     resolver: zodResolver(PasswordResetFormValidation),
     defaultValues: {
       password: "",
+      confirmPassword:""
     },
   });
 
   const onSubmit = async (values: z.infer<typeof PasswordResetFormValidation>) => {
     const user = {
       password: values.password,
+      confirmPassword: values.confirmPassword
     };
 
     console.log("User data:", user); // Debugging log
@@ -71,24 +81,24 @@ const PasswordResetForm = ({ setOpen, email, setStep }: {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-6">
-      <CustomFormField
-        fieldType={FormFieldType.INPUT}
-        control={form.control}
-        name="password"
-        label="New Password"
-        type="password"
-        placeholder="********"
-      />
-      <CustomFormField
-        fieldType={FormFieldType.INPUT}
-        control={form.control}
-        name="confirmpassword"
-        label="Confirm Password"
-        type="password"
-        placeholder="********"
-      />
-      <SubmitButton isLoading={isLoading}>Update Password</SubmitButton>
-    </form>
+        <CustomFormField
+          fieldType={FormFieldType.INPUT}
+          control={form.control}
+          name="password"
+          label="New Password"
+          type="password"
+          placeholder="********"
+        />
+        <CustomFormField
+          fieldType={FormFieldType.INPUT}
+          control={form.control}
+          name="confirmPassword"
+          label="Confirm Password"
+          type="password"
+          placeholder="********"
+        />
+        <SubmitButton isLoading={isLoading}>Update Password</SubmitButton>
+      </form>
     </Form>
   );
 };

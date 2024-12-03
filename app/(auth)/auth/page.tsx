@@ -1,18 +1,10 @@
 "use client";
-import RegisterForm from '@/components/forms/RegistrationForm';
 import { Card } from '@/components/ui/card';
 import { useRouter } from 'next/navigation';
-import LoginForm from '@/components/forms/LoginForm';
 import RegistrationForm from '@/components/forms/RegistrationForm';
 
 import React from 'react'
 
-const user = {
-  $id: "user123",
-  name: "Samitha Wijenayake",
-  email: "johndoe@gmail.com",
-  phone: "0711402286",
-};
 
 const Page = () => {
 

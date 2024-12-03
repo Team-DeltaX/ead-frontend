@@ -8,7 +8,7 @@ import { Blog } from "@/services/blog.service";
 import { AlertDialogComponent } from "@/components/Alert";
 import isAuth from "@/components/isAuth";
 
-const Page = () => {
+const BlogPage = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -128,4 +128,4 @@ const Page = () => {
   );
 };
 
-export default isAuth(Page, { allowedRoles: ["ADMIN"] });
+export default isAuth(BlogPage, { allowedRoles: ["ADMIN"] });

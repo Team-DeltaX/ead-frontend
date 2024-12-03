@@ -1,12 +1,15 @@
-import React from 'react';
-import { Button } from '../ui/button';
+import React from "react";
+import { Button } from "../ui/button";
 
 interface PaymentAddressProps {
   activeComponent: number;
   setActiveComponent: (step: number) => void;
 }
 
-const PaymentShipping: React.FC<PaymentAddressProps> = ({ activeComponent, setActiveComponent }) => {
+const PaymentShipping: React.FC<PaymentAddressProps> = ({
+  activeComponent,
+  setActiveComponent,
+}) => {
   return (
     <div className="flex items-center justify-center w-[300px] sm:w-[1200px] mx-auto mt-10 space-x-4">
       <div className="px-10">
@@ -79,7 +82,6 @@ const PaymentShipping: React.FC<PaymentAddressProps> = ({ activeComponent, setAc
           </div>
         </div>
 
-        {/* Back/Next buttons */}
         <div className="flex gap-6 justify-end mt-4">
           <Button
             className="px-10 py-6 border border-black text-lg hover:bg-white hover:text-black bg-white text-black"

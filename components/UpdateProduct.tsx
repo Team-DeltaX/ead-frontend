@@ -15,7 +15,8 @@ import { FiPlus, FiTrash2 } from "react-icons/fi";
 import { FaEdit } from "react-icons/fa";
 
 import SelectCategory from "@/components/Categorieselect";
-import BrandSelect from "@/components/Categorieselect";
+import Image from "next/image";
+// import BrandSelect from "@/components/Categorieselect";
 //import { Category } from "@/services/product.service";
 
 export function UpdateProduct() {
@@ -85,7 +86,7 @@ export function UpdateProduct() {
               {/* Image Previews */}
               {images.map((image, index) => (
                 <div key={index} className="relative w-24 h-24 border rounded overflow-hidden">
-                  <img
+                  <Image
                     src={URL.createObjectURL(image)}
                     alt={`Preview ${index + 1}`}
                     className="object-cover w-full h-full"

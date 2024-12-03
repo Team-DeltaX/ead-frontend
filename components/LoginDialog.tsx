@@ -1,25 +1,26 @@
 "use client";
 
-
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import LoginForm from "./forms/LoginForm"
-import Link from "next/link"
-import ForgetPasswordDialog from "./ForgetPasswordDialog"
+} from "@/components/ui/dialog";
+import LoginForm from "./forms/LoginForm";
+import Link from "next/link";
+import ForgetPasswordDialog from "./ForgetPasswordDialog";
 import React, { useState } from "react";
 
-const LoginDialog = ({ isDialogOpen, setIsDialogOpen }: {
+const LoginDialog = ({
+  isDialogOpen,
+  setIsDialogOpen,
+}: {
   isDialogOpen: boolean;
   setIsDialogOpen: (open: boolean) => void;
 }) => {
-
-  const [isForgetPasswordDialogOpen, setIsForgetPasswordDialogOpen] = useState(false);
-  
+  const [isForgetPasswordDialogOpen, setIsForgetPasswordDialogOpen] =
+    useState(false);
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -32,10 +33,14 @@ const LoginDialog = ({ isDialogOpen, setIsDialogOpen }: {
         </DialogHeader>
         <LoginForm setOpen={setIsDialogOpen} />
         <h1 className="justify-center text-sm mt-4 flex items-center">
-           Forgot your password?{" "}
-          <p className="text-blue-500 hover:underline" onClick={() =>{ setIsForgetPasswordDialogOpen(true);
-            setIsDialogOpen(false)
-          }}>
+          Forgot your password?{" "}
+          <p
+            className="text-blue-500 hover:underline"
+            onClick={() => {
+              setIsForgetPasswordDialogOpen(true);
+              setIsDialogOpen(false);
+            }}
+          >
             Reset Password
           </p>
         </h1>
@@ -54,6 +59,4 @@ const LoginDialog = ({ isDialogOpen, setIsDialogOpen }: {
   );
 };
 
-export default LoginDialog
-
-
+export default LoginDialog;

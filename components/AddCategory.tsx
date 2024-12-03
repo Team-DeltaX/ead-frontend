@@ -48,11 +48,17 @@ export function AddCategory() {
     try {
       const response = await categoryService.createCategory(formData);
 
-      toast.success("Category added successfully!");
+      if (response.success) {
+        
+        toast.success("Category added successfully!");
+      } else {
+        toast.error("Error adding category. Please try again.");
+      }
+
 
       
     } catch (error) {
-      toast.error("Error adding category. Please try again.");
+      toast.error("Error adding category. Please try again. "+error);
     } finally {
       setCategoryName("");
       setLoading(false);
@@ -86,7 +92,7 @@ export function AddCategory() {
         <DialogHeader>
           <DialogTitle>Add Category</DialogTitle>
           <DialogDescription>
-            Add new Categories here. Click save when you're done.
+            Add new Categories here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">

@@ -19,26 +19,25 @@ const OrderCard = ({ order }: { order: Order }) => {
                 <h1 className="flex-1 ">{order.orderDate}</h1>
               </div>
               <div className="w-5/12">
-              <h1 className="flex-1 ">
-                Total Amount: Rs. {order.totalAmount}
-              </h1>
+                <h1 className="flex-1 ">
+                  Total Amount: Rs. {order.totalAmount}
+                </h1>
               </div>
               <div className="w-3/12 justify-end items-end justify-items-end">
-              {order.status === "PENDING" ? (
-                <div className="bg-yellow-200  py-1 rounded  text-[10px] text-yellow-700 w-[70px] text-center">
-                  {order.status}
-                </div>
-              ) : order.status === "DELIVERED" ? (
-                <div className="bg-green-200  py-1 rounded  text-[10px] text-green-700 w-[70px] text-center">
-                  {order.status}
-                </div>
-              ) : (
-                <div className="bg-red-200  py-1 rounded  text-[10px] text-red-500 w-[70px] text-center">
-                  {order.status}
-                </div>
-              )}
+                {order.status === "PENDING" ? (
+                  <div className="bg-yellow-200  py-1 rounded  text-[10px] text-yellow-700 w-[70px] text-center">
+                    {order.status}
+                  </div>
+                ) : order.status === "DELIVERED" ? (
+                  <div className="bg-green-200  py-1 rounded  text-[10px] text-green-700 w-[70px] text-center">
+                    {order.status}
+                  </div>
+                ) : (
+                  <div className="bg-red-200  py-1 rounded  text-[10px] text-red-500 w-[70px] text-center">
+                    {order.status}
+                  </div>
+                )}
               </div>
-              
             </div>
           </AccordionTrigger>
           <AccordionContent>
