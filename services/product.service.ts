@@ -35,10 +35,10 @@ export const productService = {
     return response.data;
   },
 
-  // getProductsByBrand: async (productBrand: String) => {
-  //   const response = await axiosInstance.get(`/products/brand/${productBrand}`);
-  //   return response.data;
-  // },
+  getProductsByBrand: async (productBrand: String) => {
+    const response = await axiosInstance.get(`/products/brand/${productBrand}`);
+    return response.data;
+  },
 
   getProductByCategoryName: async(category: string) =>{
     const response = await axiosInstance.get(`/category/${category}`)

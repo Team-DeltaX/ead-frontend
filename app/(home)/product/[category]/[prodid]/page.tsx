@@ -29,7 +29,6 @@ const Page = () => {
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
-
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -42,10 +41,11 @@ const Page = () => {
         setProduct(response.data);
 
         const relatedResponse = await productService.getProductsByBrand(fetchedProduct.productBrand);
-        setRelatedProducts(relatedResponse.data.filter(
-          (prod: Product) => prod.id !== fetchedProduct.id
-        ));
-        
+        setRelatedProducts(
+          relatedResponse.data.filter(
+            (prod: Product) => prod.productBrand === fetchedProduct.productBrand && prod.id !== fetchedProduct.id
+          )
+        );     
       } catch (error) {
         console.error("Failed to fetch product:", error);
       } finally {
@@ -131,42 +131,7 @@ const Page = () => {
           </div>
         </div>
       </div>
-      {/* <div className="mt-8">
-        <h2 className="text-2xl font-bold mb-6">Related Products</h2>
-        {relatedProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {relatedProducts.map((relatedProduct) => (
-              <div
-                key={relatedProduct.id}
-                className="max-w-sm p-4 border rounded-lg shadow-md bg-[#F6F6F6]"
-              >
-                <img
-                  src={relatedProduct.image}
-                  alt={relatedProduct.name}
-                  className="w-full object-cover rounded-lg p-4"
-                />
-                <div className="mt-4 text-center">
-                  <h3 className="text-base font-medium text-gray-900">
-                    {relatedProduct.name}
-                  </h3>
-                  <p className="text-xs text-gray-500">{relatedProduct.brand}</p>
-                  <p className="mt-1 text-lg font-bold text-gray-800">
-                    ${relatedProduct.price}
-                  </p>
-                  <button
-                    className="mt-2 px-4 py-1 bg-black text-white rounded-lg hover:bg-gray-800"
-                    onClick={() => router.push(`/product/${relatedProduct.id}`)}
-                  >
-                    Buy Now
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-gray-600">No related products available.</p>
-        )}
-      </div> */}
+
        <div className="mt-8">
         <h2 className="text-2xl font-bold mb-6">Related Products</h2>
         {relatedProducts.length > 0 ? (
@@ -199,7 +164,7 @@ const Page = () => {
                   <button
                     className="mt-2 px-4 py-1 bg-black text-white rounded-lg hover:bg-gray-800"
                     onClick={() =>
-                      router.push(`/product/${relatedProduct.id}`)
+                      router.push(`/product/${product.category.name}/${relatedProduct.id}`)
                     }
                   >
                     Buy Now
