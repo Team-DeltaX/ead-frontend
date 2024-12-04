@@ -55,10 +55,12 @@ const Products: React.FC = () => {
         <div className="overflow-y-auto h-[calc(100vh-200px)] border border-gray-300 rounded-xl shadow-lg">
           {isLoading ? (
             <div>
-              <div className="text-center pt-4 text-gray-500 font-semibold mb-4">Loading ...</div>
-            <div className="flex items-center justify-center min-h-full">
-              <div className="spinner border-t-4 border-b-4 border-gray-900 w-16 h-16 rounded-full animate-spin"></div>
-            </div>
+              <div className="text-center pt-4 text-gray-500 font-semibold mb-4">
+                Loading ...
+              </div>
+              <div className="flex items-center justify-center min-h-full">
+                <div className="spinner border-t-4 border-b-4 border-gray-900 w-16 h-16 rounded-full animate-spin"></div>
+              </div>
             </div>
           ) : error ? (
             <div className="text-center py-4 text-red-500">{error}</div>
@@ -66,10 +68,18 @@ const Products: React.FC = () => {
             <table className="w-full text-left">
               <thead className="sticky top-0 bg-gray-200 shadow-sm">
                 <tr>
-                  <th className="px-6 py-3 text-gray-600 font-semibold">Product Name</th>
-                  <th className="px-4 py-2 text-gray-600 font-semibold"><Categorycard /></th>
-                  <th className="px-4 py-2 text-gray-600 font-semibold">Price / Rs.</th>
-                  <th className="px-4 py-2 text-gray-600 font-semibold">Quantity</th>
+                  <th className="px-6 py-3 text-gray-600 font-semibold">
+                    Product Name
+                  </th>
+                  <th className="px-4 py-2 text-gray-600 font-semibold">
+                    <Categorycard />
+                  </th>
+                  <th className="px-4 py-2 text-gray-600 font-semibold">
+                    Price / Rs.
+                  </th>
+                  <th className="px-4 py-2 text-gray-600 font-semibold">
+                    Quantity
+                  </th>
                   <th className="px-4 py-2 text-gray-600 font-semibold text-right"></th>
                 </tr>
               </thead>
@@ -80,7 +90,7 @@ const Products: React.FC = () => {
                       <td className="px-6 py-2">{product.productName}</td>
                       <td className="px-4 py-2">{product.category.name}</td>
                       <td className="px-4 py-2 ">{product.productPrice}</td>
-                      <td className="px-6 py-2 ">{product.productQuantity}</td>
+                      <td className="px-6 py-2 ">{product.inventory}</td>
                       <td className="px-4 py-2 text-right">
                         <div className="flex justify-end space-x-2">
                           <UpdateProduct />

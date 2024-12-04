@@ -9,8 +9,9 @@ export interface Product {
   category: Category;
   brand?: string;
   productPrice: number;
-  productQuantity: number;
+  inventory: number;
   productDescription: string;
+  productBrand:string;
   images?: Image[];
 }
 
