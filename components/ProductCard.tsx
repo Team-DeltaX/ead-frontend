@@ -1,11 +1,9 @@
-import { Product } from '@/services/product.service';
-import { useRouter } from 'next/navigation'
+import { Product } from "@/services/product.service";
+import { useRouter } from "next/navigation";
 import React from "react";
 
-const ProductCard = ({ product }:{
-  product: Product
-}) => {
-  const router = useRouter()
+const ProductCard = ({ product }: { product: Product }) => {
+  const router = useRouter();
 
   return (
     <div className="max-w-sm p-4 border rounded-lg shadow-md bg-[#F6F6F6]">
@@ -14,24 +12,37 @@ const ProductCard = ({ product }:{
         alt={product.name}
         className="w-full object-cover rounded-lg p-4"
       /> */}
-      
+      <img
+        src={
+          product.images?.length === 0
+            ? // ? "/assets/image/default_product.png"
+              "https://wbco.sa/storage/images/documents/_res/wrh/def_product.png"
+            : product.images
+        }
+        alt={"product image"}
+        className="w-full object-cover rounded-lg p-4"
+      />
       <div className="mt-2 text-center">
-        <h3 className="text-base font-medium text-gray-900">{product.productName}</h3>
-        <p className="text-xs text-gray-500">{product.brand}</p>
-     
-        <p className="mt-1 text-lg font-bold text-gray-800">${product.productPrice}</p>
-        
+        <h3 className="text-base font-medium text-gray-900">
+          {product.productName}
+        </h3>
+        <p className="text-xs text-gray-500">{product.productBrand}</p>
+
+        <p className="mt-1 text-lg font-bold text-gray-800">
+          ${product.productPrice}
+        </p>
+
         <button
           className="mt-2 px-4 py-1 bg-black text-white rounded-lg hover:bg-gray-800"
-          onClick={()=>{           
+          onClick={() => {
             router.push(`/product/${product.category.name}/${product.id}`);
           }}
         >
           Buy Now
-        </button>     
+        </button>
       </div>
     </div>
   );
 };
 
-export default ProductCard
+export default ProductCard;

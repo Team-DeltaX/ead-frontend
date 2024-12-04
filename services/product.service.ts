@@ -7,7 +7,7 @@ export interface Product {
   id?: number;
   productName: string;
   category: Category;
-  brand?: string;
+  productBrand?: string;
   productPrice: number;
   productQuantity: number;
   productDescription: string;
@@ -34,6 +34,12 @@ export const productService = {
     const response = await axiosInstance.get(`/products/${id}`);
     return response.data;
   },
+
+  // getProductsByBrand: async (productBrand: String) => {
+  //   const response = await axiosInstance.get(`/products/brand/${productBrand}`);
+  //   return response.data;
+  // },
+
   getProductByCategoryName: async(category: string) =>{
     const response = await axiosInstance.get(`/category/${category}`)
     return response.data;
