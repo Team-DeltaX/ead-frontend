@@ -19,6 +19,7 @@ import { Category } from "@/services/category.service";
 import { AlertDialogComponent } from "./Alert";
 import toast from "react-hot-toast";
 import Image from "next/image";
+import { imageService } from "@/services/image.service";
 
 export function DialogDemo() {
   const [productName, setProductName] = useState("");
@@ -54,6 +55,14 @@ export function DialogDemo() {
           });
 
           console.log("Response:", response);
+
+          if (response.success) {
+            const imageRespose = await imageService.addImage({
+              productId: response.data.id,
+              images: images,
+            });
+            console.log("Image Response:", imageRespose);
+          }
 
           // Reset form fields after successful creation
           setProductName("");
