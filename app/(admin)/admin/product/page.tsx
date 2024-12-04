@@ -20,6 +20,7 @@ const Products: React.FC = () => {
         setIsLoading(true);
         const response = await productService.getAllProducts();
         setProducts(response.data);
+        console.log(response)
         setError(null);
       } catch (err) {
         setError("Failed to fetch products. Please try again later. "+err);
