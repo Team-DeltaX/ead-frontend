@@ -30,7 +30,7 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (!error.response) {
-      console.error("Network error or no response received:", error.message);
+      console.log("Network error or no response received:", error.message);
       return Promise.reject(
         new Error("Network error. Please try again later.")
       );

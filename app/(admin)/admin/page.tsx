@@ -74,21 +74,21 @@ const Dashboard: React.FC = () => {
       <div className="grid grid-cols-3 gap-4 mb-4">
         <div className="bg-white shadow-lg border border-gray-200 rounded-2xl p-6 text-center transition-transform hover:scale-105">
           <h3 className="text-gray-500 font-semibold uppercase">Today</h3>
-          <p className="text-4xl font-semibold text-gray-800 mt-2">
+          <p data-cy="today-orders" className="text-4xl font-semibold text-gray-800 mt-2">
             {orders?.today || 0}
           </p>
           <p className="text-gray-400 mt-1">2 orders today</p>
         </div>
         <div className="bg-white shadow-lg border border-gray-200 rounded-2xl p-6 text-center transition-transform hover:scale-105">
           <h3 className="text-gray-500 font-semibold uppercase">This Week</h3>
-          <p className="text-4xl font-semibold text-gray-800 mt-2">
+          <p data-cy="thisweek-orders" className="text-4xl font-semibold text-gray-800 mt-2">
             {orders?.thisWeek || 0}
           </p>
           <p className="text-gray-400 mt-1">12 orders this week</p>
         </div>
         <div className="bg-white shadow-lg border border-gray-200 rounded-2xl p-6 text-center transition-transform hover:scale-105">
           <h3 className="text-gray-500 font-semibold uppercase">This Month</h3>
-          <p className="text-4xl font-semibold text-gray-800 mt-2">
+          <p data-cy="thismonth-orders" className="text-4xl font-semibold text-gray-800 mt-2">
             {orders?.thisMonth || 0}
           </p>
           <p className="text-gray-400 mt-1">32 orders this month</p>
@@ -99,7 +99,7 @@ const Dashboard: React.FC = () => {
       <div className="grid grid-cols-3 gap-4 mb-10">
         <div className="bg-white shadow-lg border border-gray-200 rounded-2xl p-6 text-center transition-transform hover:scale-105">
           <h3 className="text-gray-500 font-semibold uppercase">Today</h3>
-          <p className="text-4xl font-semibold text-gray-900 mt-2">
+          <p data-cy="today-rev" className="text-4xl font-semibold text-gray-900 mt-2">
             <span className="text-3xl">Rs. </span>
             {revenue?.todayRev || 0}
           </p>
@@ -107,7 +107,7 @@ const Dashboard: React.FC = () => {
         </div>
         <div className="bg-white shadow-lg border border-gray-200 rounded-2xl p-6 text-center transition-transform hover:scale-105">
           <h3 className="text-gray-500 font-semibold uppercase">This Week</h3>
-          <p className="text-4xl font-semibold text-gray-900 mt-2">
+          <p data-cy="thisweek-rev" className="text-4xl font-semibold text-gray-900 mt-2">
             <span className="text-3xl">Rs. </span>
             {revenue?.thisWeekRev || 0}
           </p>
@@ -115,7 +115,7 @@ const Dashboard: React.FC = () => {
         </div>
         <div className="bg-white shadow-lg border border-gray-200 rounded-2xl p-6 text-center transition-transform hover:scale-105">
           <h3 className="text-gray-500 font-semibold uppercase">This Month</h3>
-          <p className="text-4xl font-semibold text-gray-900 mt-2">
+          <p data-cy="thismonth-rev" className="text-4xl font-semibold text-gray-900 mt-2">
             <span className="text-3xl">Rs. </span>
             {revenue?.thisMonthRev || 0}
           </p>
@@ -126,13 +126,13 @@ const Dashboard: React.FC = () => {
       <div className="grid grid-cols-2 gap-4">
         <div className="bg-white shadow-lg border border-gray-200 rounded-2xl p-6 text-center transition-transform hover:scale-105">
           <h3 className="text-gray-500 font-semibold ">Total Orders</h3>
-          <p className="text-4xl font-semibold text-gray-800 mt-2">
+          <p data-cy="totalorders" className="text-4xl font-semibold text-gray-800 mt-2">
             {orders?.totalOrders || 0}
           </p>
         </div>
         <div className="bg-white shadow-lg border border-gray-200 rounded-2xl p-6 text-center transition-transform hover:scale-105">
           <h3 className="text-gray-500 font-semibold ">Total Revenue</h3>
-          <p className="text-4xl font-semibold text-gray-800 mt-2">
+          <p data-cy="totalrev" className="text-4xl font-semibold text-gray-800 mt-2">
             <span className="text-3xl">Rs. </span>
             {revenue?.totalRev || 0}
           </p>

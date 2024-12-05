@@ -77,8 +77,8 @@ const NavBar = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/profile">
-                  <FiUser className="md:h-[20px] md:w-[20px] h-[16px] w-[16px]" />
+                <Link    href="/profile">
+                  <FiUser data-cy='profileicon' className="md:h-[20px] md:w-[20px] h-[16px] w-[16px]" />
                 </Link>
               </li>
               <li className="flex justify-center items-center">
