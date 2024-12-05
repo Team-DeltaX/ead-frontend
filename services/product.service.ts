@@ -1,6 +1,6 @@
 import axiosInstance from "./axiosInstance";
 import { Category } from "./category.service";
-import { Image } from "./image.service";
+import { ImageInterface } from "./image.service";
 
 
 export interface Images{
@@ -14,9 +14,10 @@ export interface Product {
   category: Category;
   productBrand?: string;
   productPrice: number;
-  productQuantity: number;
+  inventory: number;
   productDescription: string;
-  images?: Images[]
+  productBrand: string;
+  images?: ImageInterface[];
 }
 
 export const productService = {

@@ -27,11 +27,7 @@ export const blogService = {
   },
 
   getBlogById: async (id: number) => {
-    try {
-      const response = await axiosInstance.get(`/blogs/${id}`);
-      return response.data;
-    } catch (error: any) {
-      throw new Error(error.response.data.message);
-    }
+    const response = await axiosInstance.get(`/blogs/${id}`);
+    return response.data;
   },
 };

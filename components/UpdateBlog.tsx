@@ -25,9 +25,9 @@ export function UpdateBlog({
   blog: Blog;
   fetchblog: () => void;
 }) {
-  const [blogTitle, setBlogTitle] = useState(blog.title || ""); // Default to an empty string
-  const [image, setImage] = useState(blog.imageUrl || ""); // Default to an empty string
-  const [content, setContent] = useState(blog.content || ""); // Default to an empty string
+  const [blogTitle, setBlogTitle] = useState(blog.title || "");
+  const [image, setImage] = useState(blog.imageUrl || ""); 
+  const [content, setContent] = useState(blog.content || ""); 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -68,12 +68,7 @@ export function UpdateBlog({
         fetchblog();
         toast.success("Blog updated successfully!");
       }
-      // Update the local blogs state if needed
-      // setBlogs((prevBlogs) =>
-      //   prevBlogs.map((blog) =>
-      //     blog.id === response.data.id ? { ...blog, ...updatedBlog } : blog
-      //   )
-      // );
+      
     } catch (error) {
       toast.error("An unexpected error occurred. " + error);
     } finally {
@@ -85,9 +80,9 @@ export function UpdateBlog({
 
   const handleClose = () => {
     setIsDialogOpen(false);
-    setBlogTitle(blog.title || ""); // Reset to the original blog title or empty
-    setImage(blog.imageUrl || ""); // Reset to the original blog image or empty
-    setContent(blog.content || ""); // Reset to the original blog content or empty
+    setBlogTitle(blog.title || "");
+    setImage(blog.imageUrl || ""); 
+    setContent(blog.content || ""); 
     setError("");
   };
 

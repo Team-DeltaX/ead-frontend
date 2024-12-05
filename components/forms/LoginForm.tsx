@@ -82,7 +82,7 @@ const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
         }
       );
     } catch (error) {
-      console.error("Login error:", error);
+       toast.error("Error logging in. Please try again. "+error);
     } finally {
       setIsLoading(false); // Ensure loading state is reset
     }

@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 
 const BaseUrl = process.env.BASE_URL || "http://localhost:8080/api/v1";
 
-// Create an Axios instance with a base URL and default headers
 const axiosInstance = axios.create({
   baseURL: BaseUrl,
   headers: {
@@ -13,11 +12,9 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-// Add token to the header only in authenticated routes
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = getAuthToken();
-    console.log("Token:", token);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -30,13 +27,10 @@ axiosInstance.interceptors.request.use(
 );
 
 axiosInstance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
     if (!error.response) {
-      // Handle network or other unexpected errors
-      console.error("Network error or no response received:", error.message);
+      console.log("Network error or no response received:", error.message);
       return Promise.reject(
         new Error("Network error. Please try again later.")
       );
@@ -50,8 +44,10 @@ axiosInstance.interceptors.response.use(
         break;
       case 401:
         toast.error(data?.message || "Authentication required.");
-
-        // Optionally, handle logout or redirect to login
+        setTimeout(() => {
+          sessionStorage.clear(); // Clear session storage
+          window.location.href = "/"; // Redirect to home
+        }, 2000);
         break;
       case 403:
         toast.error(data?.message || "Access denied.");

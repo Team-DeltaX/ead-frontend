@@ -46,7 +46,14 @@ const OrdersTable: React.FC = () => {
       <h1 className="text-2xl ml-2 mb-4">Orders</h1>
       <div className="overflow-x-auto rounded-xl">
         {isLoading ? (
-          <p className="text-center">Loading...</p>
+          <div>
+          <div className="text-center pt-4 text-gray-500 font-semibold mb-4">
+            Loading ...
+          </div>
+          <div className="flex items-center justify-center min-h-full">
+            <div className="spinner border-t-4 border-b-4 border-gray-900 w-16 h-16 rounded-full animate-spin"></div>
+          </div>
+        </div>
         ) : error ? (
           <p className="text-red-500 text-center">{error}</p>
         ) : (

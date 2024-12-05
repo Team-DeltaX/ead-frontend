@@ -19,60 +19,89 @@ import { Category } from "@/services/category.service";
 import { AlertDialogComponent } from "./Alert";
 import toast from "react-hot-toast";
 import Image from "next/image";
+import { imageService } from "@/services/image.service";
 
-export function DialogDemo() {
+export function DialogDemo({ fetchdata }: { fetchdata: () => void }) {
   const [productName, setProductName] = useState("");
   const [category, setCategory] = useState<Category | null>(null);
   const [price, setPrice] = useState<number>(0);
   const [quantity, setQuantity] = useState<number>(0);
   const [description, setDescription] = useState("");
+  const [brand, setBrand] = useState("");
   const [images, setImages] = useState<File[]>([]);
-  // const [loading, setLoading] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isalertOpen, setIsAlertOpen] = useState(false);
-  // const [error, setError] = useState("");
 
   const handleSubmit = async () => {
     console.log(productName, category, price, quantity, description);
-    if (!productName || !category || !price || !quantity || !description) {
-      // setError("Please fill all the fields");
+
+    if (
+      !productName ||
+      !category ||
+      !price ||
+      !quantity ||
+      !description ||
+      !brand
+    ) {
       toast.error("Please fill all the fields");
       return;
     }
 
-    // const formData: Product = {
-    //   productName: productName,
-    //   category: category,
-    //   productPrice: price,
-    //   productQuantity: quantity,
-    //   productDescription: description,
-    // };
-    // images.forEach((image, index) => {
-    //   formData.append(`images[${index}]`, image);
-    // });
+    if (images.length === 0) {
+      toast.error("Please add at least one image");
+      return;
+    }
+    if (images.length > 4) {
+      toast.error("Maximum 4 images are allowed");
+      return;
+    }
+    
 
-    // setLoading(true);
     try {
-      const response = await productService.createProduct({
-        productName,
-        category,
-        productPrice: price,
-        productQuantity: quantity,
-        productDescription: description,
-      });
+      await toast.promise(
+        (async () => {
+          const response = await productService.createProduct({
+            productName,
+            category,
+            productPrice: price,
+            inventory: quantity,
+            productBrand: brand,
+            productDescription: description,
+          });
 
-      alert("Product added successfully!");
-      console.log("Response:", response.data);
+          console.log("Response:", response);
+
+          if (response.success) {
+            const imageRespose = await imageService.addImage({
+              productId: response.data.id,
+              images: images,
+            });
+            console.log("Image Response:", imageRespose);
+          }
+
+          // Reset form fields after successful creation
+          setProductName("");
+          setCategory(null);
+          setBrand("");
+          setPrice(0);
+          setQuantity(0);
+          setDescription("");
+          setImages([]);
+          fetchdata();
+
+          return "Product added successfully!";
+        })(),
+        {
+          loading: "Adding product...",
+          success: (message) => message,
+          error: (error) =>
+            error?.message || "Failed to add product. Please try again.",
+        }
+      );
     } catch (error) {
       console.error("Error adding product:", error);
-      alert("Error adding product. Please try again.");
     } finally {
-      setProductName("");
-      setCategory(null);
-      setPrice(0);
-      setQuantity(0);
-      setDescription("");
-      setImages([]);
-      // setLoading(false);
+      setIsDialogOpen(false);
     }
   };
 
@@ -88,9 +117,24 @@ export function DialogDemo() {
   const removeImage = (index: number) => {
     setImages(images.filter((_, i) => i !== index));
   };
+  const handleClose = () => {
+    setIsDialogOpen(false);
+    setProductName("");
+    setCategory(null);
+    setPrice(0);
+    setQuantity(0);
+    setDescription("");
+    setImages([]);
+  };
 
   return (
-    <Dialog>
+    <Dialog
+      open={isDialogOpen}
+      onOpenChange={(open) => {
+        if (!open) handleClose();
+        setIsDialogOpen(open);
+      }}
+    >
       <DialogTrigger asChild>
         <Button
           variant="outline"
@@ -114,6 +158,7 @@ export function DialogDemo() {
             </Label>
             <Input
               onChange={(e) => setProductName(e.target.value)}
+              value={productName}
               id="name"
               placeholder="Enter product name"
               className="col-span-3"
@@ -128,17 +173,37 @@ export function DialogDemo() {
               setSelectedCategory={setCategory}
             />
           </div>
-
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Product Brand
+            </Label>
+            <Input
+              onChange={(e) => setBrand(e.target.value)}
+              value={brand}
+              id="brand"
+              placeholder="Enter brand name"
+              className="col-span-3"
+            />
+          </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="price" className="text-right">
               Price
             </Label>
             <Input
-              onChange={(e) => setPrice(Number(e.target.value))}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (Number(value) >= 0) {
+                  setPrice(Number(value));
+                } else if (value === "") {
+                  setPrice(0);
+                }
+              }}
               id="price"
               placeholder="Enter price"
               type="number"
+              min="0"
               className="col-span-3"
+              value={price}
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
@@ -146,10 +211,19 @@ export function DialogDemo() {
               Quantity
             </Label>
             <Input
-              onChange={(e) => setQuantity(Number(e.target.value))}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (Number(value) >= 0) {
+                  setQuantity(Number(value));
+                } else if (value === "") {
+                  setQuantity(0);
+                }
+              }}
+              value={quantity}
               id="quantity"
               placeholder="Enter quantity"
               type="number"
+              min="0"
               className="col-span-3"
             />
           </div>
@@ -159,6 +233,7 @@ export function DialogDemo() {
             </Label>
             <Input
               onChange={(e) => setDescription(e.target.value)}
+              value={description}
               id="description"
               placeholder="Enter product description"
               className="col-span-3"
@@ -178,6 +253,8 @@ export function DialogDemo() {
                     src={URL.createObjectURL(image)}
                     alt={`Preview ${index + 1}`}
                     className="object-cover w-full h-full"
+                    width={100}
+                    height={100}
                   />
                   <button
                     onClick={() => removeImage(index)}
@@ -189,24 +266,30 @@ export function DialogDemo() {
                 </div>
               ))}
               {/* Add Image Button */}
-              <label className="flex items-center justify-center w-24 h-24 border-2  border-dashed border-gray-400 rounded cursor-pointer">
-                <input
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  onChange={handleImageChange}
-                  className="hidden"
-                />
-                <div className="flex flex-col items-center">
-                  <FiPlus className="text-xl text-gray-500" />
-                  <span className="text-sm text-gray-500">Add image</span>
-                </div>
-              </label>
+              {images.length < 4 && (
+                <label className="flex items-center justify-center w-24 h-24 border-2 border-dashed border-gray-400 rounded cursor-pointer">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleImageChange}
+                    className="hidden"
+                  />
+                  <div className="flex flex-col items-center">
+                    <FiPlus className="text-xl text-gray-500" />
+                    <span className="text-sm text-gray-500">Add image</span>
+                  </div>
+                </label>
+              )}
             </div>
           </div>
         </div>
         <DialogFooter>
-          <AlertDialogComponent open={isalertOpen} setOpen={setIsAlertOpen} handleOk={handleSubmit} />
+          <AlertDialogComponent
+            open={isalertOpen}
+            setOpen={setIsAlertOpen}
+            handleOk={handleSubmit}
+          />
           <Button onClick={handleSubmit}>Add Product</Button>
         </DialogFooter>
       </DialogContent>
