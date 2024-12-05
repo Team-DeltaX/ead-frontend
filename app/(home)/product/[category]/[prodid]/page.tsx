@@ -73,7 +73,7 @@ const Page = () => {
         toast.promise(
           (async () => {
             if (product?.id) {
-            const response = await cartService.increaseCartItem(product.id);
+            const response = await cartService.addToCart(product.id);
           
             if(response.success){
               return "Product added to cart";
@@ -90,7 +90,8 @@ const Page = () => {
           }
         )       
       }
-    catch(error){
+      catch (error) {
+        console.log("Error adding product to cart:", error);
       toast.error("Failed to add product to cart");
     }
     }

@@ -10,6 +10,7 @@ import isAuth from "@/components/isAuth";
 import { Cart, cartService } from "@/services/cart.service";
 import Spinner from "@/components/Spinner";
 import { CgUnavailable } from "react-icons/cg";
+import toast from "react-hot-toast";
 
 const ProductCart = () => {
   const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
@@ -24,17 +25,15 @@ const ProductCart = () => {
       const fetchedCart = response.data;
       setIsLoading(false);
       console.log("Fetched cart:", fetchedCart);
-      
-        const totalAmount = fetchedCart.items.reduce(
-          (total: number, item: { unitPrice: number; quantity: number }) => {
-            return (
-              total + (item.unitPrice ? item.unitPrice * item.quantity : 0)
-            );
-          },
-          0
-        );
 
-        setData({ ...fetchedCart, totalAmount });
+      const totalAmount = fetchedCart.items.reduce(
+        (total: number, item: { unitPrice: number; quantity: number }) => {
+          return total + (item.unitPrice ? item.unitPrice * item.quantity : 0);
+        },
+        0
+      );
+
+      setData({ ...fetchedCart, totalAmount });
     } catch (error) {
       console.error("Error fetching cart items:", error);
     }
@@ -64,11 +63,14 @@ const ProductCart = () => {
     });
 
     try {
-      await cartService.updateItemQuantity(
-        cart.id,
+      const response = await cartService.updateItemQuantity(
         productId,
         updatedItems.find((item) => item.id === id)?.quantity || 1
       );
+
+      if (response.success) {
+        toast.success("update quantity");
+      }
       // getCartItems();
     } catch (error) {
       console.error("Error updating item quantity:", error);
@@ -89,7 +91,7 @@ const ProductCart = () => {
   }, []);
 
   useEffect(() => {
-    console.log("dataaaaaaaa",data)
+    console.log("dataaaaaaaa", data);
     setCart(data);
   }, [data]);
 
