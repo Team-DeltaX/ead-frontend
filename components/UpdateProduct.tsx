@@ -20,6 +20,7 @@ import { Product } from "@/services/product.service";
 import { productService } from "@/services/product.service";
 import { Category } from "@/services/category.service";
 import { AlertDialogComponent } from "./Alert";
+import { ImageInterface, imageService } from "@/services/image.service";
 
 export function UpdateProduct({
   product,
@@ -29,6 +30,10 @@ export function UpdateProduct({
   fetchproduct: () => void;
 }) {
   const [images, setImages] = useState<File[]>([]);
+  const [existImages, setExistImages] = useState<ImageInterface[]>(
+    product.images || []
+  );
+  const [removedImageIds, setRemovedImageIds] = useState<number[]>([]);
   const [productName, setProductName] = useState(product.productName || "");
   const [category, setCategory] = useState<Category | null>(
     product.category || null
@@ -39,7 +44,7 @@ export function UpdateProduct({
     product.productDescription || ""
   );
   const [brand, setBrand] = useState(product.productBrand || "");
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  // const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -56,48 +61,74 @@ export function UpdateProduct({
       return false;
     }
 
-    if (images.length === 0) {
+    if (images.length === 0 && existImages.length === 0) {
       toast.error("Please add at least one image");
       return false;
     }
+    if (images.length+existImages.length > 4) {
+      toast.error("You can only add up to 4 images");
+      return false;
+    }
+    
 
     setIsAlertOpen(true);
     return true;
   };
   const handleSubmit = async () => {
     if (!validateInput()) return;
-    setLoading(true);
-
+    
     try {
-      const updatedProduct: Product = {
-        productName,
-        category: category!,
-        productPrice: price,
-        inventory: quantity,
-        productDescription: description,
-        productBrand: brand,
-        images: images.map((image, index) => ({
-          imageId: index,
-          imageName: image.name,
-          image: image,
-        })),
-      };
-      const response = await productService.updateProduct(updatedProduct);
-
-      if (response.success) {
-        fetchproduct();
-        toast.success("Product updated successfully");
-      }
+      await toast.promise(
+        (async () => {
+          if (!category) {
+            throw new Error("Category is required");
+          }
+  
+          const response = await productService.updateProduct({
+            id: product.id,
+            productName,
+            category,
+            productPrice: price,
+            inventory: quantity,
+            productBrand: brand,
+            productDescription: description,
+          });
+  
+          if (response.success) {
+            if (images.length > 0) {
+              await imageService.addImage({
+                productId: response.data.id,
+                images: images,
+              });
+            }
+            if (removedImageIds.length > 0) {
+              for (const id of removedImageIds) {
+                await imageService.removeImage(id);
+              }
+            }
+  
+            fetchproduct();
+            return "Product updated successfully!";
+          } else {
+            throw new Error("Failed to update product");
+          }
+        })(),
+        {
+          loading: "Updating product...",
+          success: (message) => message,
+          error: (error) =>
+            error?.message || "Failed to update product. Please try again.",
+        }
+      );
     } catch (error) {
-      toast.error("An unexpected error occurred. " + error);
+      console.error("Error updating product:", error);
     } finally {
-      setLoading(false);
-      setIsDialogOpen(false);
       handleClose();
     }
   };
+  
   const handleClose = () => {
-    setIsDialogOpen(false);
+    // setIsDialogOpen(false);
     setProductName(product.productName || "");
     setCategory(product.category || null);
     setBrand(product.productBrand || "");
@@ -118,6 +149,11 @@ export function UpdateProduct({
   // Handler to remove an image from the list
   const removeImage = (index: number) => {
     setImages(images.filter((_, i) => i !== index));
+  };
+
+  const removeExistImage = (id: number) => {
+    setRemovedImageIds((prev) => [...prev, id]);
+    setExistImages((prev) => prev.filter((image) => image.imageId !== id));
   };
 
   return (
@@ -205,7 +241,7 @@ export function UpdateProduct({
               className="col-span-3"
               onChange={(e) => {
                 const value = e.target.value;
-                if ( Number(value) >= 0) {
+                if (Number(value) >= 0) {
                   setQuantity(Number(value));
                 } else if (value === "") {
                   setQuantity(0);
@@ -229,6 +265,28 @@ export function UpdateProduct({
           {/* Image Upload Section */}
           <div className="grid grid-cols-1 items-center gap-4">
             <div className="flex gap-4 overflow-x-auto">
+              {existImages &&
+                existImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className="relative w-24 h-24 border rounded overflow-hidden"
+                  >
+                    <Image
+                      src={image.imageUrl}
+                      alt={`Preview ${index + 1}`}
+                      className="object-cover w-full h-full"
+                      width={400}
+                      height={500}
+                    />
+                    <button
+                      onClick={() => removeExistImage(image.imageId)}
+                      className="absolute top-1 right-1 bg-black text-white p-1 rounded-full hover:bg-red-600"
+                      aria-label="Remove image"
+                    >
+                      <FiTrash2 className="text-xs" />
+                    </button>
+                  </div>
+                ))}
               {/* Image Previews */}
               {images.map((image, index) => (
                 <div
@@ -239,6 +297,8 @@ export function UpdateProduct({
                     src={URL.createObjectURL(image)}
                     alt={`Preview ${index + 1}`}
                     className="object-cover w-full h-full"
+                    width={400}
+                    height={500}
                   />
                   <button
                     onClick={() => removeImage(index)}
@@ -250,7 +310,7 @@ export function UpdateProduct({
                 </div>
               ))}
               {/* Add Image Button */}
-              <label className="flex items-center justify-center w-24 h-24 border-2 border-dashed border-gray-400 rounded cursor-pointer">
+              {(images.length + existImages.length < 4) && (<label className="flex items-center justify-center w-24 h-24 border-2 border-dashed border-gray-400 rounded cursor-pointer">
                 <input
                   type="file"
                   accept="image/*"
@@ -262,7 +322,7 @@ export function UpdateProduct({
                   <FiPlus className="text-xl text-gray-500" />
                   <span className="text-sm text-gray-500">Add image</span>
                 </div>
-              </label>
+              </label>)}
             </div>
           </div>
         </div>
