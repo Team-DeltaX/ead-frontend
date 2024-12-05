@@ -3,11 +3,16 @@ import { Category } from "./category.service";
 import { ImageInterface } from "./image.service";
 
 
+export interface Images{
+  imageId:number,
+  imageName:string,
+  imageUrl:string,
+}
 export interface Product {
   id?: number;
   productName: string;
   category: Category;
-  brand?: string;
+  productBrand?: string;
   productPrice: number;
   inventory: number;
   productDescription: string;
@@ -35,8 +40,17 @@ export const productService = {
     const response = await axiosInstance.get(`/products/${id}`);
     return response.data;
   },
+
+  getProductsByBrand: async (productBrand: String) => {
+    const response = await axiosInstance.get(`/products/brand/${productBrand}`);
+    return response.data;
+  },
+
+
   getProductByCategoryName: async(category: string) =>{
     const response = await axiosInstance.get(`/category/${category}`)
     return response.data;
   }
+
+
 };
