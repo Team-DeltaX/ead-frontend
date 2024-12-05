@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AddressBox from "./AddressBox";
 import NewAddressDialog from "./NewAddressDialog";
 import { Button } from "../ui/button";
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 interface PaymentAddressProps {
   activeComponent: number;
@@ -18,6 +19,12 @@ const PaymentAddress: React.FC<PaymentAddressProps> = ({
   activeComponent,
   setActiveComponent,
 }) => {
+  
+  const { state } = useAuthContext();
+
+  const { user} = state;
+
+
   const [addressDetails, setAddressDetails] = useState<Address[]>([
     {
       customerName: "Chathura",

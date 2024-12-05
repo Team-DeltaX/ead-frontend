@@ -14,6 +14,7 @@ const BlogPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [id, setId] = useState<number | undefined>(undefined);
+  const [searchTerm, setSearchTerm] = useState(""); 
 
   const fetchBlogs = async () => {
     try {
@@ -42,6 +43,11 @@ const BlogPage = () => {
     fetchBlogs();
   }, []);
 
+  // Filter blogs based on the search term
+  const filteredBlogs = blogs.filter((blog) =>
+    blog.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div>
       <div className="bg-gray-100 min-h-screen">
@@ -57,6 +63,8 @@ const BlogPage = () => {
             <input
               type="text"
               placeholder="Search blogs..."
+              value={searchTerm} 
+              onChange={(e) => setSearchTerm(e.target.value)} 
               className="w-full border border-gray-300 rounded pl-10 pr-3 py-2 focus:outline-none focus:border-black shadow-sm"
             />
           </div>
@@ -65,14 +73,14 @@ const BlogPage = () => {
           <div className="overflow-y-auto h-[calc(100vh-200px)] border border-gray-300 rounded-xl shadow-lg">
             {isLoading ? (
               <div>
-              <div className="text-center pt-4 text-gray-500 font-semibold mb-4">Loading ...</div>
-            <div className="flex items-center justify-center min-h-full">
-              <div className="spinner border-t-4 border-b-4 border-gray-900 w-16 h-16 rounded-full animate-spin"></div>
-            </div>
-            </div>
+                <div className="text-center pt-4 text-gray-500 font-semibold mb-4">Loading ...</div>
+                <div className="flex items-center justify-center min-h-full">
+                  <div className="spinner border-t-4 border-b-4 border-gray-900 w-16 h-16 rounded-full animate-spin"></div>
+                </div>
+              </div>
             ) : error ? (
               <div className="text-center py-4 text-red-500">{error}</div>
-            ) : blogs.length > 0 ? (
+            ) : filteredBlogs.length > 0 ? ( 
               <table className="w-full text-left">
                 <thead className="sticky top-0 bg-gray-200 shadow-sm">
                   <tr>
@@ -86,7 +94,7 @@ const BlogPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {blogs.map((blog: Blog) => (
+                  {filteredBlogs.map((blog: Blog) => (
                     <tr key={blog.id} className="border-b">
                       <td className="px-6 py-2">{blog.title}</td>
                       <td className="px-4 py-2">
