@@ -52,8 +52,8 @@ export const cartService = {
     return response.data; 
   },
 
-  removeCartItem: async (cartId: number, itemId: number) => {
-    const response = await axiosInstance.delete(`cartItems/carts/${cartId}/items/${itemId}`);
-    return response.data;
-  },
+//   removeCartItem: async (cartId: number, itemId: number) => {
+//     const response = await axiosInstance.delete(`cartItems/carts/${cartId}/items/${itemId}`);
+//     return response.data;
+//   },
 };
