@@ -1,6 +1,5 @@
 import axiosInstance from "./axiosInstance";
 import { Product } from "./product.service";
-import { User } from "./user.service";
 
 export interface CartItem {
   id: number;
@@ -30,10 +29,10 @@ export const cartService = {
         });
         return response.data;
     },
-    removeCartItem: async (cartItemId: number) => {
-        const response = await axiosInstance.delete(`/cart/${cartItemId}`);
-        return response.data;
-    },
+    // removeCartItem: async (cartItemId: number) => {
+    //     const response = await axiosInstance.delete(`/cart/${cartItemId}`);
+    //     return response.data;
+    // },
     checkout: async () => {
         const response = await axiosInstance.post("/cart/checkout");
         return response.data;
@@ -52,8 +51,8 @@ export const cartService = {
     return response.data; 
   },
 
-//   removeCartItem: async (cartId: number, itemId: number) => {
-//     const response = await axiosInstance.delete(`cartItems/carts/${cartId}/items/${itemId}`);
-//     return response.data;
-//   },
+  removeCartItem: async (cartId: number, itemId: number) => {
+    const response = await axiosInstance.delete(`cartItems/carts/${cartId}/items/${itemId}`);
+    return response.data;
+  },
 };
