@@ -48,7 +48,7 @@ const SelectCategory = ({
         }
       }
     }>
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger data-cy="category-select-trigger" className="w-[180px]">
         <SelectValue placeholder={isLoading ? "Loading..." : "Select a category"} />
       </SelectTrigger>
       <SelectContent>

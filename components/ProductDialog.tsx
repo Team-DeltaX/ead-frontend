@@ -93,7 +93,7 @@ export function DialogDemo({ fetchdata }: { fetchdata: () => void }) {
         })(),
         {
           loading: "Adding product...",
-          success: (message) => message,
+          success: (message) =>   {return <div data-cy="success-toast">{message}</div>;},
           error: (error) =>
             error?.message || "Failed to add product. Please try again.",
         }
@@ -137,6 +137,7 @@ export function DialogDemo({ fetchdata }: { fetchdata: () => void }) {
     >
       <DialogTrigger asChild>
         <Button
+          data-cy="add-new-product-btn"
           variant="outline"
           className="font-semibold mt-1 bg-gray-500 hover:bg-gray-600 hover:text-gray-200 text-white py-2 px-4 rounded focus:border-black"
         >
@@ -157,6 +158,7 @@ export function DialogDemo({ fetchdata }: { fetchdata: () => void }) {
               Product Name
             </Label>
             <Input
+              name="productName"
               onChange={(e) => setProductName(e.target.value)}
               value={productName}
               id="name"
@@ -169,6 +171,7 @@ export function DialogDemo({ fetchdata }: { fetchdata: () => void }) {
               Category
             </Label>
             <SelectCategory
+             
               selectedCategory={category}
               setSelectedCategory={setCategory}
             />
@@ -178,6 +181,7 @@ export function DialogDemo({ fetchdata }: { fetchdata: () => void }) {
               Product Brand
             </Label>
             <Input
+              name='brandname'
               onChange={(e) => setBrand(e.target.value)}
               value={brand}
               id="brand"
@@ -190,6 +194,7 @@ export function DialogDemo({ fetchdata }: { fetchdata: () => void }) {
               Price
             </Label>
             <Input
+              name="productPrice"
               onChange={(e) => {
                 const value = e.target.value;
                 if (Number(value) >= 0) {
@@ -211,6 +216,7 @@ export function DialogDemo({ fetchdata }: { fetchdata: () => void }) {
               Quantity
             </Label>
             <Input
+              name="quantity"
               onChange={(e) => {
                 const value = e.target.value;
                 if (Number(value) >= 0) {
@@ -232,6 +238,7 @@ export function DialogDemo({ fetchdata }: { fetchdata: () => void }) {
               Description
             </Label>
             <Input
+              name="description"
               onChange={(e) => setDescription(e.target.value)}
               value={description}
               id="description"
@@ -290,7 +297,7 @@ export function DialogDemo({ fetchdata }: { fetchdata: () => void }) {
             setOpen={setIsAlertOpen}
             handleOk={handleSubmit}
           />
-          <Button onClick={handleSubmit}>Add Product</Button>
+          <Button data-cy="add-product-button" onClick={handleSubmit}>Add Product</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

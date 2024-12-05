@@ -110,6 +110,7 @@ const BlogPage = () => {
                             setOpen={setIsAlertOpen}
                           />
                           <button
+                            data-cy='deletebutton'
                             onClick={() => {
                               if (blog.id !== undefined) {
                                 setIsAlertOpen(true);

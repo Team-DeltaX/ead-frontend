@@ -86,6 +86,7 @@ export function AddBlog({ fetchdata }: { fetchdata: () => void }) {
     >
       <DialogTrigger asChild>
         <Button
+          data-cy="add-blog-button"
           variant="outline"
           className="font-semibold mt-1 bg-gray-500 hover:bg-gray-600 hover:text-gray-200 text-white py-2 px-4 rounded focus:border-black"
         >
@@ -108,6 +109,7 @@ export function AddBlog({ fetchdata }: { fetchdata: () => void }) {
             <div className="col-span-3">
               <Input
                 id="name"
+                name="title"
                 placeholder="Enter blog title"
                 className={`w-full ${error ? "border-red-500" : ""}`}
                 onChange={(e) => setBlogTitle(e.target.value)}
@@ -121,6 +123,7 @@ export function AddBlog({ fetchdata }: { fetchdata: () => void }) {
             <div className="col-span-3">
               <Input
                 id="image"
+                name="image" 
                 placeholder="Enter image url"
                 className={`w-full ${error ? "border-red-500" : ""}`}
                 onChange={(e) => setImage(e.target.value)}
@@ -133,6 +136,7 @@ export function AddBlog({ fetchdata }: { fetchdata: () => void }) {
             </Label>
             <div className="col-span-3">
               <Textarea
+               name="content"
                 placeholder="Enter content of blog"
                 className={`w-full ${error ? "border-red-500" : ""}`}
                 onChange={(e) => setContent(e.target.value)}
@@ -149,6 +153,7 @@ export function AddBlog({ fetchdata }: { fetchdata: () => void }) {
           />
 
           <Button
+           data-cy="save-blog"
             type="submit"
             onClick={validateInput}
             disabled={loading}
