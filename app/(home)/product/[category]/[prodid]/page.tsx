@@ -117,6 +117,8 @@ const Page = () => {
                 }
                 alt="main product image"
                 className="w-[300px] rounded-lg object-cover"
+                width={300}
+                height={300}
               />
             </div>
           )}
