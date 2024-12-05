@@ -30,23 +30,32 @@ export function DialogDemo({ fetchdata }: { fetchdata: () => void }) {
   const [brand, setBrand] = useState("");
   const [images, setImages] = useState<File[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  // const [loading, setLoading] = useState(false);
   const [isalertOpen, setIsAlertOpen] = useState(false);
-  // const [error, setError] = useState("");
 
   const handleSubmit = async () => {
     console.log(productName, category, price, quantity, description);
 
-    if (!productName || !category || !price || !quantity || !description) {
+    if (
+      !productName ||
+      !category ||
+      !price ||
+      !quantity ||
+      !description ||
+      !brand
+    ) {
       toast.error("Please fill all the fields");
       return;
     }
 
-    if(images.length === 0) {
+    if (images.length === 0) {
       toast.error("Please add at least one image");
       return;
     }
+    if (images.length > 4) {
+      toast.error("Maximum 4 images are allowed");
+      return;
+    }
+    
 
     try {
       await toast.promise(
@@ -79,7 +88,7 @@ export function DialogDemo({ fetchdata }: { fetchdata: () => void }) {
           setDescription("");
           setImages([]);
           fetchdata();
-          
+
           return "Product added successfully!";
         })(),
         {
@@ -116,15 +125,16 @@ export function DialogDemo({ fetchdata }: { fetchdata: () => void }) {
     setQuantity(0);
     setDescription("");
     setImages([]);
-  }
+  };
 
   return (
     <Dialog
-    open={isDialogOpen}
+      open={isDialogOpen}
       onOpenChange={(open) => {
         if (!open) handleClose();
         setIsDialogOpen(open);
-      }}>
+      }}
+    >
       <DialogTrigger asChild>
         <Button
           variant="outline"
@@ -182,7 +192,7 @@ export function DialogDemo({ fetchdata }: { fetchdata: () => void }) {
             <Input
               onChange={(e) => {
                 const value = e.target.value;
-                if ( Number(value) >= 0) {
+                if (Number(value) >= 0) {
                   setPrice(Number(value));
                 } else if (value === "") {
                   setPrice(0);
@@ -203,7 +213,7 @@ export function DialogDemo({ fetchdata }: { fetchdata: () => void }) {
             <Input
               onChange={(e) => {
                 const value = e.target.value;
-                if ( Number(value) >= 0) {
+                if (Number(value) >= 0) {
                   setQuantity(Number(value));
                 } else if (value === "") {
                   setQuantity(0);
@@ -256,19 +266,21 @@ export function DialogDemo({ fetchdata }: { fetchdata: () => void }) {
                 </div>
               ))}
               {/* Add Image Button */}
-              <label className="flex items-center justify-center w-24 h-24 border-2  border-dashed border-gray-400 rounded cursor-pointer">
-                <input
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  onChange={handleImageChange}
-                  className="hidden"
-                />
-                <div className="flex flex-col items-center">
-                  <FiPlus className="text-xl text-gray-500" />
-                  <span className="text-sm text-gray-500">Add image</span>
-                </div>
-              </label>
+              {images.length < 4 && (
+                <label className="flex items-center justify-center w-24 h-24 border-2 border-dashed border-gray-400 rounded cursor-pointer">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleImageChange}
+                    className="hidden"
+                  />
+                  <div className="flex flex-col items-center">
+                    <FiPlus className="text-xl text-gray-500" />
+                    <span className="text-sm text-gray-500">Add image</span>
+                  </div>
+                </label>
+              )}
             </div>
           </div>
         </div>
