@@ -79,8 +79,25 @@ const ProductCart = () => {
 
   const removeCartItem = async (cartId: number, productId: number) => {
     try {
-      await cartService.removeCartItem(cartId, productId);
-      getCartItems();
+      await toast.promise(
+        (async () => {
+          const response = await cartService.removeCartItem(cartId, productId);
+
+          if (response.success) {
+            getCartItems();
+
+            return "Item removed from cart successfully!";
+          }
+          return "Error in removing cart item";
+        })(),
+        {
+          loading: "Removing item from cart...",
+          success: (message) => message,
+          error: (error) =>
+            error?.message ||
+            "Failed to remove item from cart. Please try again.",
+        }
+      );
     } catch (error) {
       console.error("Error removing item from cart:", error);
     }
