@@ -44,4 +44,8 @@ export const cartService = {
         const response = await axiosInstance.post("/cart/checkout");
         return response.data;
     },
+    increaseCartItem: async (productId: number) => {
+        const response = await axiosInstance.put(`cartItems/increse?productId=${productId}`);
+        return response.data; 
+      }
 };

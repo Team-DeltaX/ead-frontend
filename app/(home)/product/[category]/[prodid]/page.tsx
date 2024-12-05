@@ -10,6 +10,7 @@ import LoginDialog from "@/components/LoginDialog";
 import { Button } from "@/components/ui/button";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import Spinner from "@/components/Spinner";
+import { cartService } from "@/services/cart.service";
 
 type Params = {
   prodid: string;
@@ -133,7 +134,7 @@ const Page = () => {
             </Button>
             <Button
               className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800"
-              onClick={() => router.push("")}
+              onClick={() => cartService.increaseCartItem(product.id)}
             >
               Add to Cart
             </Button>

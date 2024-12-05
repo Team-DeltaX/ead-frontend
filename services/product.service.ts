@@ -45,8 +45,11 @@ export const productService = {
     return response.data;
   },
 
+
   getProductByCategoryName: async(category: string) =>{
     const response = await axiosInstance.get(`/category/${category}`)
     return response.data;
   }
+
+
 };
