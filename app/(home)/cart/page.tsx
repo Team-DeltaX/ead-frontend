@@ -134,7 +134,7 @@ const ProductCart = () => {
                       <div className="pl-4 py-4 flex items-start justify-start">
                         <div className="w-2/12">
                           <Image
-                            src={Iphone}
+                            src={item.product.images?.[0]?.imageUrl || Iphone}
                             alt="Iphone"
                             width={50}
                             height={50}
