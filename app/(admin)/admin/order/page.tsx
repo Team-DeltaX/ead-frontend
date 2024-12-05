@@ -74,10 +74,10 @@ const OrdersTable: React.FC = () => {
                     key={order.id}
                     className="border-b border-gray-200 hover:bg-gray-100"
                   >
-                    <td className="font-semibold py-3 px-6">
+                    <td className="font-semibold py-3 px-6" data-cy={`order-date-${order.id}`}>
                       {order.orderDate}
                     </td>
-                    <td className="py-3 px-6">
+                    <td className="py-3 px-6" data-cy={`order-user-${order.id}`}>
                       {order.user ? (
                         <div>
                           <p className="font-semibold">
@@ -95,7 +95,7 @@ const OrdersTable: React.FC = () => {
                         <p>Unknown</p>
                       )}
                     </td>
-                    <td className="py-3 px-6">
+                    <td className="py-3 px-6"  data-cy={`order-items-${order.id}`}>
                       {order.orderItems && order.orderItems.map((item) => (
                         <div key={item.productId}>
                           <div className="flex  items-center">
@@ -112,7 +112,7 @@ const OrdersTable: React.FC = () => {
                       ))}
                     </td>
 
-                    <td className="font-semibold py-3 px-8">
+                    <td className="font-semibold py-3 px-8" data-cy={`order-status-${order.id}`}>
                       Rs.{order.totalAmount.toFixed(2)}
                     </td>
                     <td className="py-3 px-8">{renderBadge(order.status)}</td>

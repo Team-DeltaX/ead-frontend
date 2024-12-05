@@ -35,7 +35,7 @@ export function AlertDialogComponent({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleOkAsync ? handleOkAsync : handleOk}>
+          <AlertDialogAction data-cy="alert-continue" onClick={handleOkAsync ? handleOkAsync : handleOk}>
             Continue
           </AlertDialogAction>
         </AlertDialogFooter>

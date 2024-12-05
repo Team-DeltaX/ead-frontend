@@ -1,0 +1,30 @@
+{
+    "data":[
+    {
+      "id": 1,
+      "title": "Introduction to Next.js",
+      "content": "Next.js is a React framework that enables server-side rendering..."
+    },
+    {
+      "id": 2,
+      "title": "Building a Blog with React",
+      "content": "In this tutorial, we will build a simple blog application using React and TypeScript..."
+    },
+    {
+      "id": 3,
+      "title": "Understanding State Management",
+      "content": "State management is crucial in modern web applications. We'll cover Redux and Context API..."
+    },
+    {
+      "id": 4,
+      "title": "Getting Started with Cypress",
+      "content": "Cypress is a powerful end-to-end testing tool that simplifies UI testing..."
+    },
+    {
+      "id": 5,
+      "title": "Deploying Applications to Vercel",
+      "content": "Vercel is a popular hosting service for frontend applications. We'll go through deployment steps..."
+    }
+]
+}
+  

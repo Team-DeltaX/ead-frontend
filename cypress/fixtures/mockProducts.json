@@ -1,0 +1,162 @@
+{
+    "data": [
+      {
+        "id": 1,
+        "productName": "Calculator",
+        "productDescription": "This is a good calculator. Black color.",
+        "productPrice": 544.00,
+        "productBrand": "Apple",
+        "inventory": 40,
+        "category": {
+          "id": 1,
+          "name": "Electronics"
+        },
+        "images": [
+          {
+            "imageId": 12,
+            "imageName": "active.png",
+            "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733388427/spurqi4ugrpuck5u7g2b.png"
+          },
+          {
+            "imageId": 14,
+            "imageName": "samiya.jpg",
+            "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733388508/ivddztqotzbop6i4idkb.jpg"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "productName": "Wireless Headphones",
+        "productDescription": "Noise-cancelling headphones with premium sound quality.",
+        "productPrice": 2999.99,
+        "productBrand": "Sony",
+        "inventory": 25,
+        "category": {
+          "id": 1,
+          "name": "Electronics"
+        },
+        "images": [
+          {
+            "imageId": 15,
+            "imageName": "headphones1.png",
+            "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733388520/headphones1.png"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "productName": "Smartphone",
+        "productDescription": "Latest model with 128GB storage and 8GB RAM.",
+        "productPrice": 69999.00,
+        "productBrand": "Samsung",
+        "inventory": 10,
+        "category": {
+          "id": 1,
+          "name": "Electronics"
+        },
+        "images": [
+          {
+            "imageId": 16,
+            "imageName": "smartphone.jpg",
+            "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733388555/smartphone.jpg"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "productName": "Office Chair",
+        "productDescription": "Ergonomic office chair with lumbar support.",
+        "productPrice": 5999.00,
+        "productBrand": "IKEA",
+        "inventory": 15,
+        "category": {
+          "id": 2,
+          "name": "Furniture"
+        },
+        "images": [
+          {
+            "imageId": 17,
+            "imageName": "chair.jpg",
+            "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733388571/chair.jpg"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "productName": "Gaming Laptop",
+        "productDescription": "High-performance laptop with NVIDIA RTX 3060.",
+        "productPrice": 129999.00,
+        "productBrand": "Dell",
+        "inventory": 8,
+        "category": {
+          "id": 1,
+          "name": "Electronics"
+        },
+        "images": [
+          {
+            "imageId": 18,
+            "imageName": "gaming-laptop.png",
+            "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733388600/gaming-laptop.png"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "productName": "Coffee Table",
+        "productDescription": "Wooden coffee table with a modern design.",
+        "productPrice": 3499.00,
+        "productBrand": "HomeCenter",
+        "inventory": 12,
+        "category": {
+          "id": 2,
+          "name": "Furniture"
+        },
+        "images": [
+          {
+            "imageId": 19,
+            "imageName": "coffee-table.jpg",
+            "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733388623/coffee-table.jpg"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "productName": "Water Bottle",
+        "productDescription": "Insulated water bottle that keeps drinks cold for 24 hours.",
+        "productPrice": 999.00,
+        "productBrand": "Hydro Flask",
+        "inventory": 50,
+        "category": {
+          "id": 3,
+          "name": "Accessories"
+        },
+        "images": [
+          {
+            "imageId": 20,
+            "imageName": "water-bottle.jpg",
+            "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733388650/water-bottle.jpg"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "productName": "Bluetooth Speaker",
+        "productDescription": "Portable speaker with powerful sound and long battery life.",
+        "productPrice": 1999.00,
+        "productBrand": "JBL",
+        "inventory": 30,
+        "category": {
+          "id": 1,
+          "name": "Electronics"
+        },
+        "images": [
+          {
+            "imageId": 21,
+            "imageName": "bluetooth-speaker.png",
+            "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733388670/bluetooth-speaker.png"
+          }
+        ]
+      }
+    ]
+  }
+  

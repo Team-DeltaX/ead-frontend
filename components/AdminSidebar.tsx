@@ -53,6 +53,7 @@ const Sidebar = () => {
         <ul className="space-y-4 p-4">
           <li>
             <Link
+              
               href="/admin"
               className={`flex items-center p-2 rounded gap-3 ${
                 isActive("/admin")
@@ -66,6 +67,7 @@ const Sidebar = () => {
           </li>
           <li>
             <Link
+              data-cy="link-admin-products"
               href="/admin/product"
               className={`flex items-center p-2 rounded gap-3 ${
                 isActive("/admin/product")
@@ -79,6 +81,7 @@ const Sidebar = () => {
           </li>
           <li>
             <Link
+              data-cy="link-admin-orders"
               href="/admin/order"
               className={`flex items-center p-2 rounded gap-3 ${
                 isActive("/admin/order")
@@ -92,6 +95,7 @@ const Sidebar = () => {
           </li>
           <li>
             <Link
+            data-cy="link-admin-blog"
               href="/admin/blog"
               className={`flex items-center p-2 rounded gap-3 ${
                 isActive("/admin/blog")
