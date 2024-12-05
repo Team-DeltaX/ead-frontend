@@ -30,15 +30,12 @@ export function DialogDemo({ fetchdata }: { fetchdata: () => void }) {
   const [brand, setBrand] = useState("");
   const [images, setImages] = useState<File[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  // const [loading, setLoading] = useState(false);
   const [isalertOpen, setIsAlertOpen] = useState(false);
-  // const [error, setError] = useState("");
 
   const handleSubmit = async () => {
     console.log(productName, category, price, quantity, description);
 
-    if (!productName || !category || !price || !quantity || !description) {
+    if (!productName || !category || !price || !quantity || !description || !brand) {
       toast.error("Please fill all the fields");
       return;
     }

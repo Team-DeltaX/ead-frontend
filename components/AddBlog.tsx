@@ -36,8 +36,8 @@ export function AddBlog({ fetchdata }: { fetchdata: () => void }) {
       toast.error("Blog content must be at least 5000 characters long.");
       return false;
     }
-    if (image.length > 500) {
-      toast.error("Image url must be at least 500 characters long.");
+    if (image.length > 1000) {
+      toast.error("Image url must be at least 1000 characters long.");
       return false;
     }
     setIsAlertOpen(true);

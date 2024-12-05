@@ -13,14 +13,99 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FiPlus, FiTrash2 } from "react-icons/fi";
 import { FaEdit } from "react-icons/fa";
-
+import { toast } from "react-hot-toast";
 import SelectCategory from "@/components/Categorieselect";
 import Image from "next/image";
-// import BrandSelect from "@/components/Categorieselect";
-//import { Category } from "@/services/product.service";
+import { Product } from "@/services/product.service";
+import { productService } from "@/services/product.service";
+import { Category } from "@/services/category.service";
+import { AlertDialogComponent } from "./Alert";
 
-export function UpdateProduct() {
+export function UpdateProduct({
+  product,
+  fetchproduct,
+}: {
+  product: Product;
+  fetchproduct: () => void;
+}) {
   const [images, setImages] = useState<File[]>([]);
+  const [productName, setProductName] = useState(product.productName || "");
+  const [category, setCategory] = useState<Category | null>(
+    product.category || null
+  );
+  const [price, setPrice] = useState<number>(product.productPrice || 0);
+  const [quantity, setQuantity] = useState<number>(product.inventory || 0);
+  const [description, setDescription] = useState(
+    product.productDescription || ""
+  );
+  const [brand, setBrand] = useState(product.productBrand || "");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const validateInput = () => {
+    if (
+      !productName.trim() ||
+      !category ||
+      !price ||
+      !quantity ||
+      !description ||
+      !brand
+    ) {
+      toast.error("Please fill all the fields");
+      return false;
+    }
+
+    if (images.length === 0) {
+      toast.error("Please add at least one image");
+      return false;
+    }
+
+    setIsAlertOpen(true);
+    return true;
+  };
+  const handleSubmit = async () => {
+    if (!validateInput()) return;
+    setLoading(true);
+
+    try {
+      const updatedProduct: Product = {
+        productName,
+        category: category!,
+        productPrice: price,
+        inventory: quantity,
+        productDescription: description,
+        productBrand: brand,
+        images: images.map((image, index) => ({
+          imageId: index,
+          imageName: image.name,
+          image: image,
+        })),
+      };
+      const response = await productService.updateProduct(updatedProduct);
+
+      if (response.success) {
+        fetchproduct();
+        toast.success("Product updated successfully");
+      }
+    } catch (error) {
+      toast.error("An unexpected error occurred. " + error);
+    } finally {
+      setLoading(false);
+      setIsDialogOpen(false);
+      handleClose();
+    }
+  };
+  const handleClose = () => {
+    setIsDialogOpen(false);
+    setProductName(product.productName || "");
+    setCategory(product.category || null);
+    setBrand(product.productBrand || "");
+    setPrice(product.productPrice || 0);
+    setQuantity(product.inventory || 0);
+    setDescription(product.productDescription || "");
+    setImages([]);
+  };
 
   // Handler to add selected images to the state
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,42 +127,103 @@ export function UpdateProduct() {
           variant="outline"
           className="flex items-center px-3 py-1 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300"
         >
-            <FaEdit/>
-            Edit
+          <FaEdit />
+          Edit
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle className="font-semibold">Edit Product</DialogTitle>
           <DialogDescription>
-          Update the product details below click save to update the product.
+            Update the product details below click save to update the product.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           {/* Product Details Inputs */}
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">Product Name</Label>
-            <Input id="name" placeholder="Enter product name" className="col-span-3" />
+            <Label htmlFor="name" className="text-right">
+              Product Name
+            </Label>
+            <Input
+              id="name"
+              value={productName}
+              placeholder="Enter product name"
+              className="col-span-3"
+              onChange={(e) => setProductName(e.target.value)}
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="category" className="text-right">Category</Label>
-            <SelectCategory selectedCategory={null} setSelectedCategory={() => {}} />
-          </div>
-          {/* <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="brand" className="text-right">Brand</Label>
-            <BrandSelect />
-          </div> */}
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="price" className="text-right">Price</Label>
-            <Input id="price" placeholder="Enter price" type="number" className="col-span-3" />
+            <Label htmlFor="category" className="text-right">
+              Category
+            </Label>
+            <SelectCategory
+              selectedCategory={category}
+              setSelectedCategory={setCategory}
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="quantity" className="text-right">Quantity</Label>
-            <Input id="quantity" placeholder="Enter quantity" type="number" className="col-span-3" />
+            <Label htmlFor="name" className="text-right">
+              Product Brand
+            </Label>
+            <Input
+              onChange={(e) => setBrand(e.target.value)}
+              value={brand}
+              id="brand"
+              placeholder="Enter brand name"
+              className="col-span-3"
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="description" className="text-right">Description</Label>
-            <Input id="description" placeholder="Enter product description" className="col-span-3" />
+            <Label htmlFor="price" className="text-right">
+              Price
+            </Label>
+            <Input
+              id="price"
+              value={price}
+              placeholder="Enter price"
+              type="number"
+              className="col-span-3"
+              onChange={(e) => {
+                const value = e.target.value;
+                if (Number(value) >= 0) {
+                  setPrice(Number(value));
+                } else if (value === "") {
+                  setPrice(0);
+                }
+              }}
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="quantity" className="text-right">
+              Quantity
+            </Label>
+            <Input
+              id="quantity"
+              value={quantity}
+              placeholder="Enter quantity"
+              type="number"
+              className="col-span-3"
+              onChange={(e) => {
+                const value = e.target.value;
+                if ( Number(value) >= 0) {
+                  setQuantity(Number(value));
+                } else if (value === "") {
+                  setQuantity(0);
+                }
+              }}
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="description" className="text-right">
+              Description
+            </Label>
+            <Input
+              id="description"
+              value={description}
+              placeholder="Enter product description"
+              className="col-span-3"
+              onChange={(e) => setDescription(e.target.value)}
+            />
           </div>
 
           {/* Image Upload Section */}
@@ -85,7 +231,10 @@ export function UpdateProduct() {
             <div className="flex gap-4 overflow-x-auto">
               {/* Image Previews */}
               {images.map((image, index) => (
-                <div key={index} className="relative w-24 h-24 border rounded overflow-hidden">
+                <div
+                  key={index}
+                  className="relative w-24 h-24 border rounded overflow-hidden"
+                >
                   <Image
                     src={URL.createObjectURL(image)}
                     alt={`Preview ${index + 1}`}
@@ -118,7 +267,20 @@ export function UpdateProduct() {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Save Changes</Button>
+          <AlertDialogComponent
+            open={isAlertOpen}
+            setOpen={setIsAlertOpen}
+            handleOk={handleSubmit}
+          />
+
+          <Button
+            type="submit"
+            onClick={validateInput}
+            disabled={loading}
+            className={loading ? "opacity-50 cursor-not-allowed" : ""}
+          >
+            {loading ? "Saving..." : "Save Changes"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -93,7 +93,7 @@ const Products: React.FC = () => {
                       <td className="px-6 py-2 ">{product.inventory}</td>
                       <td className="px-4 py-2 text-right">
                         <div className="flex justify-end space-x-2">
-                          <UpdateProduct />
+                          <UpdateProduct fetchproduct={fetchProducts} product={product}/>
                         </div>
                       </td>
                     </tr>
