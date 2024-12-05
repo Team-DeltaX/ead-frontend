@@ -82,6 +82,7 @@ export function AddCategory() {
     >
       <DialogTrigger asChild>
         <Button
+         data-cy="add-category-btn"
           variant="outline"
           className="font-semibold mt-1 bg-gray-500 hover:bg-gray-600 hover:text-gray-200 text-white py-2 px-4 rounded focus:border-black"
         >
@@ -102,6 +103,7 @@ export function AddCategory() {
             </Label>
             <div className="col-span-3">
               <Input
+                data-cy="category-name-input"
                 id="name"
                 value={categoryName}
                 className={`w-full ${error ? "border-red-500" : ""}`}
@@ -119,6 +121,7 @@ export function AddCategory() {
             handleOk={handleSubmit}
           />
           <Button
+           data-cy='add-category-submit'
             type="submit"
             onClick={validateInput}
             disabled={loading}

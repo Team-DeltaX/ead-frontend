@@ -6,7 +6,7 @@
         "productDescription": "This is a good calculator. Black color.",
         "productPrice": 544.00,
         "productBrand": "Apple",
-        "inventory": 40,
+        "inventory": 70,
         "category": {
           "id": 1,
           "name": "Electronics"
@@ -20,7 +20,7 @@
           {
             "imageId": 14,
             "imageName": "samiya.jpg",
-            "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733388508/ivddztqotzbop6i4idkb.jpg"
+            "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733388427/spurqi4ugrpuck5u7g2b.png"
           }
         ]
       },

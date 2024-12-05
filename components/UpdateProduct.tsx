@@ -160,6 +160,7 @@ export function UpdateProduct({
     <Dialog>
       <DialogTrigger asChild>
         <Button
+          data-cy="update-product-btn"
           variant="outline"
           className="flex items-center px-3 py-1 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300"
         >
@@ -182,6 +183,7 @@ export function UpdateProduct({
             </Label>
             <Input
               id="name"
+              name="productName"
               value={productName}
               placeholder="Enter product name"
               className="col-span-3"
@@ -189,7 +191,7 @@ export function UpdateProduct({
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="category" className="text-right">
+            <Label  htmlFor="category" className="text-right">
               Category
             </Label>
             <SelectCategory
@@ -215,6 +217,7 @@ export function UpdateProduct({
             </Label>
             <Input
               id="price"
+              name="productPrice"
               value={price}
               placeholder="Enter price"
               type="number"
@@ -235,6 +238,7 @@ export function UpdateProduct({
             </Label>
             <Input
               id="quantity"
+              name="quantity"
               value={quantity}
               placeholder="Enter quantity"
               type="number"
