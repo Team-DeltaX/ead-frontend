@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import Spinner from "@/components/Spinner";
 import { cartService } from "@/services/cart.service";
+import Image from "next/image";
 
 type Params = {
   prodid: string;
@@ -87,27 +88,31 @@ const Page = () => {
       <div className="flex items-center flex-wrap justify-center ">
         <div className="w-full sm:w-1/2 flex items-center justify-center mb-8 sm:mb-0">
           {product.images?.length === 0 ? (
-            <img
+            <Image
               src="https://wbco.sa/storage/images/documents/_res/wrh/def_product.png"
                // ? "/assets/image/default_product.png"
               alt="default product"
               className="w-[300px] rounded-lg object-cover"
+              width={300}
+              height={300}
             />
           ) : (
             <div className="flex flex-col sm:flex-row sm:space-x-3">
               <div className="flex sm:flex-col space-y-1 sm:space-y-0 sm:w-[100px]">
-                {product.images.slice(1, 3).map((image, index) => (
-                  <img
+                {product.images?.slice(1, 3).map((image, index) => (
+                  <Image
                     key={index}
                     src={image.imageUrl}
                     alt={`product image ${index + 1}`}
                     className="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] rounded-lg object-cover"
+                    width={100}
+                    height={100}
                   />
                 ))}
               </div>
-              <img
+              <Image
                 src={
-                  product.images[0]?.imageUrl ||
+                  product.images?.[0]?.imageUrl ||
                   "https://wbco.sa/storage/images/documents/_res/wrh/def_product.png"
                 }
                 alt="main product image"
@@ -134,7 +139,7 @@ const Page = () => {
             </Button>
             <Button
               className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800"
-              onClick={() => cartService.increaseCartItem(product.id)}
+              onClick={() => product.id && cartService.increaseCartItem(product.id)}
             >
               Add to Cart
             </Button>
@@ -171,15 +176,12 @@ const Page = () => {
                 key={relatedProduct.id}
                 className="max-w-sm p-3 border rounded-lg shadow-md bg-[#F6F6F6]"
               >
-                <img
-                  src={
-                    relatedProduct.images?.length === 0
-                      ? // ? "/assets/image/default_product.png"
-                        "https://wbco.sa/storage/images/documents/_res/wrh/def_product.png"
-                      : relatedProduct.images[0].imageUrl
-                  }
+                <Image
+                  src={relatedProduct.images?.[0]?.imageUrl|| "https://wbco.sa/storage/images/documents/_res/wrh/def_product.png"}
                   alt={relatedProduct.productName}
                   className="w-full h-48 object-cover rounded-2xl p-1"
+                  width={300}
+                  height={300}
                 />
                 <div className="mt-4 text-center">
                   <h3 className="text-base font-medium text-gray-900">

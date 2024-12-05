@@ -12,7 +12,6 @@ export interface Product {
   id?: number;
   productName: string;
   category: Category;
-  productBrand?: string;
   productPrice: number;
   inventory: number;
   productDescription: string;

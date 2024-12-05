@@ -7,52 +7,30 @@ const ProductCard = ({ product }: { product: Product }) => {
   const router = useRouter();
 
   return (
-    <div className="max-w-sm  border rounded-lg shadow-md bg-[#F6F6F6] w-[250px]">
-      <div
-        className={`${
-          product.images?.length === 0 ? "flex items-center justify-center" : ""
-        }`}
-      >
-        <img
-          src={
-            product.images?.length === 0
-              ? // ? "/assets/image/default_product.png"
-                "https://wbco.sa/storage/images/documents/_res/wrh/def_product.png"
-              : product.images[0].imageUrl
-          }
-          alt={"product image"}
-          className="w-full h-48 object-cover rounded-2xl p-2"
-        />
-      </div>
-
-      <div className="mt-1 text-center p-4">
-        <h3 className="text-base font-medium text-gray-900">
-          {product.productName}
-        </h3>
-        <p className="text-xs text-gray-500">{product.productBrand}</p>
-    <div className="max-w-sm p-4 border rounded-lg shadow-md bg-[#F6F6F6]">
+    <div className="max-w-sm border rounded-lg shadow-md bg-[#F6F6F6] w-[250px]">
+    
       {product.images && (
         <Image
-          src={product.images[0]?.imageUrl || ""}
+          src={product.images[0]?.imageUrl || "https://wbco.sa/storage/images/documents/_res/wrh/def_product.png"}
           alt={product.productName}
-          className="w-full object-cover rounded-lg p-4"
+          className="w-full h-48 object-cover rounded-2xl p-2 "
           width={300}
           height={300}
         />
       )}
 
-      <div className="mt-2 text-center">
+      <div className="mt-2 py-3 text-center">
         <h3 className="text-base font-medium text-gray-900">
           {product.productName}
         </h3>
-        <p className="text-xs text-gray-500">{product.brand}</p>
+        <p className="text-xs text-gray-500">{product.productBrand}</p>
 
         <p className="mt-1 text-lg font-bold text-gray-800">
           ${product.productPrice}
         </p>
 
         <button
-          className="mt-2 px-4 py-1 bg-black text-white rounded-lg hover:bg-gray-800"
+          className="mt-2  px-3 py-1 bg-black text-white rounded-lg hover:bg-gray-800"
           onClick={() => {
             router.push(`/product/${product.category.name}/${product.id}`);
           }}
