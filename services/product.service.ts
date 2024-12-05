@@ -40,7 +40,7 @@ export const productService = {
     return response.data;
   },
 
-  getProductsByBrand: async (productBrand: String) => {
+  getProductsByBrand: async (productBrand: string) => {
     const response = await axiosInstance.get(`/products/brand/${productBrand}`);
     return response.data;
   },

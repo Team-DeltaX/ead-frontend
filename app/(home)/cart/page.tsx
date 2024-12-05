@@ -23,15 +23,18 @@ const ProductCart = () => {
       const response = await cartService.getCartItems();
       const fetchedCart = response.data;
       setIsLoading(false);
+      console.log("Fetched cart:", fetchedCart);
+      
+        const totalAmount = fetchedCart.items.reduce(
+          (total: number, item: { unitPrice: number; quantity: number }) => {
+            return (
+              total + (item.unitPrice ? item.unitPrice * item.quantity : 0)
+            );
+          },
+          0
+        );
 
-      const totalAmount = fetchedCart.items.reduce(
-        (total: number, item: { unitPrice: number; quantity: number }) => {
-          return total + (item.unitPrice ? item.unitPrice * item.quantity : 0);
-        },
-        0
-      );
-
-      setData({ ...fetchedCart, totalAmount });
+        setData({ ...fetchedCart, totalAmount });
     } catch (error) {
       console.error("Error fetching cart items:", error);
     }
@@ -72,20 +75,21 @@ const ProductCart = () => {
     }
   };
 
-  const removeCartItem = async (cartId: number,productId: number) => {
+  const removeCartItem = async (cartId: number, productId: number) => {
     try {
       await cartService.removeCartItem(cartId, productId);
       getCartItems();
     } catch (error) {
       console.error("Error removing item from cart:", error);
     }
-  }
+  };
 
   useEffect(() => {
     getCartItems();
   }, []);
 
   useEffect(() => {
+    console.log("dataaaaaaaa",data)
     setCart(data);
   }, [data]);
 
@@ -156,11 +160,16 @@ const ProductCart = () => {
                         </div>
                         <div className="w-1/12 inline-flex justify-end">
                           <button className="text-red-500 text-[20px]">
-                            <IoIosRemoveCircleOutline onClick={() => {
-                              if (cart.id !== undefined && item.product.id !== undefined) {
-                                removeCartItem(cart.id, item.product.id);
-                              }
-                            }}/>
+                            <IoIosRemoveCircleOutline
+                              onClick={() => {
+                                if (
+                                  cart.id !== undefined &&
+                                  item.product.id !== undefined
+                                ) {
+                                  removeCartItem(cart.id, item.product.id);
+                                }
+                              }}
+                            />
                           </button>
                         </div>
                       </div>
