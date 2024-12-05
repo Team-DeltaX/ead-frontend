@@ -6,23 +6,25 @@ const ProductCard = ({ product }: { product: Product }) => {
   const router = useRouter();
 
   return (
-    <div className="max-w-sm p-4 border rounded-lg shadow-md bg-[#F6F6F6]">
-      {/* <img
-        src={product.images[0].url}
-        alt={product.name}
-        className="w-full object-cover rounded-lg p-4"
-      /> */}
-      <img
-        src={
-          product.images?.length === 0
-            ? // ? "/assets/image/default_product.png"
-              "https://wbco.sa/storage/images/documents/_res/wrh/def_product.png"
-            : product.images
-        }
-        alt={"product image"}
-        className="w-full object-cover rounded-lg p-4"
-      />
-      <div className="mt-2 text-center">
+    <div className="max-w-sm  border rounded-lg shadow-md bg-[#F6F6F6] w-[250px]">
+      <div
+        className={`${
+          product.images?.length === 0 ? "flex items-center justify-center" : ""
+        }`}
+      >
+        <img
+          src={
+            product.images?.length === 0
+              ? // ? "/assets/image/default_product.png"
+                "https://wbco.sa/storage/images/documents/_res/wrh/def_product.png"
+              : product.images[0].imageUrl
+          }
+          alt={"product image"}
+          className="w-full h-48 object-cover rounded-2xl p-2"
+        />
+      </div>
+
+      <div className="mt-1 text-center p-4">
         <h3 className="text-base font-medium text-gray-900">
           {product.productName}
         </h3>

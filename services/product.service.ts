@@ -3,6 +3,11 @@ import { Category } from "./category.service";
 import { Image } from "./image.service";
 
 
+export interface Images{
+  imageId:number,
+  imageName:string,
+  imageUrl:string,
+}
 export interface Product {
   id?: number;
   productName: string;
@@ -11,7 +16,7 @@ export interface Product {
   productPrice: number;
   productQuantity: number;
   productDescription: string;
-  images?: Image[];
+  images?: Images[]
 }
 
 export const productService = {

@@ -9,6 +9,7 @@ import { useParams } from "next/navigation";
 import LoginDialog from "@/components/LoginDialog";
 import { Button } from "@/components/ui/button";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import Spinner from "@/components/Spinner";
 
 type Params = {
   prodid: string;
@@ -40,12 +41,16 @@ const Page = () => {
         const fetchedProduct = response.data;
         setProduct(response.data);
 
-        const relatedResponse = await productService.getProductsByBrand(fetchedProduct.productBrand);
+        const relatedResponse = await productService.getProductsByBrand(
+          fetchedProduct.productBrand
+        );
         setRelatedProducts(
           relatedResponse.data.filter(
-            (prod: Product) => prod.productBrand === fetchedProduct.productBrand && prod.id !== fetchedProduct.id
+            (prod: Product) =>
+              prod.productBrand === fetchedProduct.productBrand &&
+              prod.id !== fetchedProduct.id
           )
-        );     
+        );
       } catch (error) {
         console.error("Failed to fetch product:", error);
       } finally {
@@ -65,7 +70,11 @@ const Page = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center  md:min-h-[450px]">
+        <Spinner />
+      </div>
+    );
   }
 
   if (!product) {
@@ -75,18 +84,38 @@ const Page = () => {
   return (
     <div className="max-w-5xl mx-auto p-8">
       <div className="flex items-center flex-wrap justify-center ">
-        <div className="w-1/2 flex items-center justify-center mb-8 sm:mb-0">
-        <img
-          src={
-            product.images?.length === 0
-              // ? "/assets/image/default_product.png"
-              ?"https://wbco.sa/storage/images/documents/_res/wrh/def_product.png"
-              : product.images
-          }
-          alt={"product image"}
-          className="w-[300px] rounded-lg object-cover"
-        />
+        <div className="w-full sm:w-1/2 flex items-center justify-center mb-8 sm:mb-0">
+          {product.images?.length === 0 ? (
+            <img
+              src="https://wbco.sa/storage/images/documents/_res/wrh/def_product.png"
+               // ? "/assets/image/default_product.png"
+              alt="default product"
+              className="w-[300px] rounded-lg object-cover"
+            />
+          ) : (
+            <div className="flex flex-col sm:flex-row sm:space-x-3">
+              <div className="flex sm:flex-col space-y-1 sm:space-y-0 sm:w-[100px]">
+                {product.images.slice(1, 3).map((image, index) => (
+                  <img
+                    key={index}
+                    src={image.imageUrl}
+                    alt={`product image ${index + 1}`}
+                    className="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] rounded-lg object-cover"
+                  />
+                ))}
+              </div>
+              <img
+                src={
+                  product.images[0]?.imageUrl ||
+                  "https://wbco.sa/storage/images/documents/_res/wrh/def_product.png"
+                }
+                alt="main product image"
+                className="w-[300px] rounded-lg object-cover"
+              />
+            </div>
+          )}
         </div>
+
         <div className="sm:pl-8 sm:w-1/2 flex flex-col gap-1 rounded-lg  ">
           <h1 className="text-2xl font-bold">{product.productName}</h1>
           <p className="text-gray-500">{product.productBrand}</p>
@@ -97,7 +126,7 @@ const Page = () => {
 
           <div className="flex mt-6 space-x-4">
             <Button
-              className="px-6 py-2 sm:px-4 bg-white text-black rounded-lg border border-black hover:bg-gray-400"
+              className="px-6 py-2 sm:px-4 bg-white text-black rounded-lg border border-black hover:bg-gray-500 hover:text-white"
               onClick={() => router.push("/product")}
             >
               Go Back
@@ -132,24 +161,24 @@ const Page = () => {
         </div>
       </div>
 
-       <div className="mt-8">
+      <div className="mt-8">
         <h2 className="text-2xl font-bold mb-6">Related Products</h2>
         {relatedProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {relatedProducts.map((relatedProduct) => (
               <div
                 key={relatedProduct.id}
-                className="max-w-sm p-4 border rounded-lg shadow-md bg-[#F6F6F6]"
+                className="max-w-sm p-3 border rounded-lg shadow-md bg-[#F6F6F6]"
               >
                 <img
-                 src={
-                  product.images?.length === 0
-                    // ? "/assets/image/default_product.png"
-                    ?"https://wbco.sa/storage/images/documents/_res/wrh/def_product.png"
-                    : product.images
-                }
+                  src={
+                    relatedProduct.images?.length === 0
+                      ? // ? "/assets/image/default_product.png"
+                        "https://wbco.sa/storage/images/documents/_res/wrh/def_product.png"
+                      : relatedProduct.images[0].imageUrl
+                  }
                   alt={relatedProduct.productName}
-                  className="w-full object-cover rounded-lg p-4"
+                  className="w-full h-48 object-cover rounded-2xl p-1"
                 />
                 <div className="mt-4 text-center">
                   <h3 className="text-base font-medium text-gray-900">
@@ -164,7 +193,9 @@ const Page = () => {
                   <button
                     className="mt-2 px-4 py-1 bg-black text-white rounded-lg hover:bg-gray-800"
                     onClick={() =>
-                      router.push(`/product/${product.category.name}/${relatedProduct.id}`)
+                      router.push(
+                        `/product/${product.category.name}/${relatedProduct.id}`
+                      )
                     }
                   >
                     Buy Now
