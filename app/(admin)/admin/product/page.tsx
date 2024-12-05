@@ -13,13 +13,13 @@ const Products: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const fetchProducts = async () => {
     try {
       setIsLoading(true);
       const response = await productService.getAllProducts();
       setProducts(response.data);
-      console.log(response);
       setError(null);
     } catch (err) {
       setError("Failed to fetch products. Please try again later. " + err);
@@ -27,9 +27,16 @@ const Products: React.FC = () => {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
     fetchProducts();
   }, []);
+
+  // Filtered products based on search term
+  const filteredProducts = products.filter((product) =>
+    product.productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    product.category.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -45,9 +52,10 @@ const Products: React.FC = () => {
           <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
           <input
             type="text"
-            placeholder="Search products..."
+            placeholder="Search products by name or category ..."
             className="w-full border border-gray-300 rounded pl-10 pr-3 py-2 focus:outline-none focus:border-black shadow-sm"
-            // Disabled since search functionality is removed
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)} // Update search term
           />
         </div>
       </div>
@@ -84,16 +92,16 @@ const Products: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {products.length > 0 ? (
-                  products.map((product) => (
+                {filteredProducts.length > 0 ? (
+                  filteredProducts.map((product) => (
                     <tr key={product.id} className="border-b">
                       <td className="px-6 py-2">{product.productName}</td>
                       <td className="px-4 py-2">{product.category.name}</td>
-                      <td className="px-4 py-2 ">{product.productPrice}</td>
-                      <td className="px-6 py-2 ">{product.inventory}</td>
+                      <td className="px-4 py-2">{product.productPrice}</td>
+                      <td className="px-6 py-2">{product.inventory}</td>
                       <td className="px-4 py-2 text-right">
                         <div className="flex justify-end space-x-2">
-                          <UpdateProduct />
+                          <UpdateProduct fetchproduct={fetchProducts} product={product} />
                         </div>
                       </td>
                     </tr>
