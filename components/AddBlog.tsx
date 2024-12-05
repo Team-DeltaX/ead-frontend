@@ -28,15 +28,18 @@ export function AddBlog({ fetchdata }: { fetchdata: () => void }) {
   // Validation logic
   const validateInput = () => {
     if (!blogTitle.trim() || !image.trim() || !content.trim()) {
-      setError("Please fill all the fields");
+      toast.error("Please fill all the fields");
       return false;
     }
 
     if (content.length > 5000) {
-      setError("Blog content must be at least 5000 characters long.");
+      toast.error("Blog content must be at least 5000 characters long.");
       return false;
     }
-    setError("");
+    if (image.length > 500) {
+      toast.error("Image url must be at least 500 characters long.");
+      return false;
+    }
     setIsAlertOpen(true);
     return true;
   };

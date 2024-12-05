@@ -14,21 +14,20 @@ const Products: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const fetchProducts = async () => {
+    try {
+      setIsLoading(true);
+      const response = await productService.getAllProducts();
+      setProducts(response.data);
+      console.log(response);
+      setError(null);
+    } catch (err) {
+      setError("Failed to fetch products. Please try again later. " + err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setIsLoading(true);
-        const response = await productService.getAllProducts();
-        setProducts(response.data);
-        console.log(response)
-        setError(null);
-      } catch (err) {
-        setError("Failed to fetch products. Please try again later. "+err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchProducts();
   }, []);
 
@@ -37,7 +36,7 @@ const Products: React.FC = () => {
       <div className="flex flex-row justify-between items-center p-3 bg-gray-100">
         <div className="text-2xl ml-2">Products</div>
         <div className="flex gap-6">
-          <DialogDemo />
+          <DialogDemo fetchdata={fetchProducts} />
           <AddCategory />
         </div>
       </div>

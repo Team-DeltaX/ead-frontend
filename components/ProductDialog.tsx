@@ -21,7 +21,7 @@ import toast from "react-hot-toast";
 import Image from "next/image";
 import { imageService } from "@/services/image.service";
 
-export function DialogDemo() {
+export function DialogDemo({ fetchdata }: { fetchdata: () => void }) {
   const [productName, setProductName] = useState("");
   const [category, setCategory] = useState<Category | null>(null);
   const [price, setPrice] = useState<number>(0);
@@ -29,6 +29,7 @@ export function DialogDemo() {
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState("");
   const [images, setImages] = useState<File[]>([]);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   // const [loading, setLoading] = useState(false);
   const [isalertOpen, setIsAlertOpen] = useState(false);
@@ -39,6 +40,11 @@ export function DialogDemo() {
 
     if (!productName || !category || !price || !quantity || !description) {
       toast.error("Please fill all the fields");
+      return;
+    }
+
+    if(images.length === 0) {
+      toast.error("Please add at least one image");
       return;
     }
 
@@ -67,11 +73,13 @@ export function DialogDemo() {
           // Reset form fields after successful creation
           setProductName("");
           setCategory(null);
+          setBrand("");
           setPrice(0);
           setQuantity(0);
           setDescription("");
           setImages([]);
-
+          fetchdata();
+          
           return "Product added successfully!";
         })(),
         {
@@ -83,7 +91,8 @@ export function DialogDemo() {
       );
     } catch (error) {
       console.error("Error adding product:", error);
-      toast.error("Error adding product. Please try again.");
+    } finally {
+      setIsDialogOpen(false);
     }
   };
 
@@ -99,9 +108,23 @@ export function DialogDemo() {
   const removeImage = (index: number) => {
     setImages(images.filter((_, i) => i !== index));
   };
+  const handleClose = () => {
+    setIsDialogOpen(false);
+    setProductName("");
+    setCategory(null);
+    setPrice(0);
+    setQuantity(0);
+    setDescription("");
+    setImages([]);
+  }
 
   return (
-    <Dialog>
+    <Dialog
+    open={isDialogOpen}
+      onOpenChange={(open) => {
+        if (!open) handleClose();
+        setIsDialogOpen(open);
+      }}>
       <DialogTrigger asChild>
         <Button
           variant="outline"
@@ -159,7 +182,7 @@ export function DialogDemo() {
             <Input
               onChange={(e) => {
                 const value = e.target.value;
-                if (!isNaN(Number(value)) && Number(value) >= 0) {
+                if ( Number(value) >= 0) {
                   setPrice(Number(value));
                 } else if (value === "") {
                   setPrice(0);
@@ -180,7 +203,7 @@ export function DialogDemo() {
             <Input
               onChange={(e) => {
                 const value = e.target.value;
-                if (!isNaN(Number(value)) && Number(value) >= 0) {
+                if ( Number(value) >= 0) {
                   setQuantity(Number(value));
                 } else if (value === "") {
                   setQuantity(0);
