@@ -74,7 +74,7 @@ export const productService = {
   },
 
   getProductByCategoryName: async (category: string) => {
-    const response = await axiosInstance.get(`/category/${category}`);
+    const response = await axiosInstance.get(`/products/category/${category}`);
     return response.data;
   },
 };
