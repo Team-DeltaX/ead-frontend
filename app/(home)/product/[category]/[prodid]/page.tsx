@@ -50,7 +50,8 @@ const Page = () => {
         setRelatedProducts(
           relatedResponse.data.filter(
             (prod: Product) =>
-              prod.productBrand === fetchedProduct.productBrand &&
+              prod.productBrand.toLowerCase() ===
+                fetchedProduct.productBrand.toLowerCase() &&
               prod.id !== fetchedProduct.id
           )
         );
@@ -124,8 +125,8 @@ const Page = () => {
             />
           ) : (
             <div className="flex flex-col sm:flex-row sm:space-x-3">
-              <div className="flex sm:flex-col space-y-1 sm:space-y-0 sm:w-[100px]">
-                {product.images?.slice(1, 3).map((image, index) => (
+              <div className="flex flex-col space-y-6 gap-4 sm:space-y-0 sm:w-[100px]">
+                {product.images?.slice(1, 4).map((image, index) => (
                   <Image
                     key={index}
                     src={image.imageUrl}
