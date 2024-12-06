@@ -24,8 +24,19 @@ export const productService = {
     const response = await axiosInstance.post("/products", product);
     return response.data;
   },
-  getAllProducts: async () => {
-    const response = await axiosInstance.get("/products");
+  // getAllProducts: async () => {
+  //   const response = await axiosInstance.get("/products");
+  //   return response.data;
+  // },
+  getAllProducts: async (
+    order: string = "asc",
+    limit: number = 100,
+    offset: number = 0,
+    sortBy: string = "id"
+  ) => {
+    const response = await axiosInstance.get(
+      `/products?order=${order}&limit=${limit}&offset=${offset}&sortBy=${sortBy}`
+    );
     return response.data;
   },
   updateProduct: async (product: Product) => {
@@ -45,11 +56,8 @@ export const productService = {
     return response.data;
   },
 
-
-  getProductByCategoryName: async(category: string) =>{
-    const response = await axiosInstance.get(`/category/${category}`)
+  getProductByCategoryName: async (category: string) => {
+    const response = await axiosInstance.get(`/category/${category}`);
     return response.data;
-  }
-
-
+  },
 };
