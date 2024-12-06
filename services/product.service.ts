@@ -19,6 +19,23 @@ export interface Product {
   images?: ImageInterface[];
 }
 
+export interface ProductResponse {
+  message: string;
+  data: ProductPagination;
+  success: boolean;
+}
+
+export interface ProductPagination {
+  count: number;
+  limit: number;
+  offset: number;
+  orderBy: string;
+  sortBy: string;
+  products: Product[];
+}
+
+
+
 export const productService = {
   createProduct: async (product: Product) => {
     const response = await axiosInstance.post("/products", product);
@@ -37,7 +54,7 @@ export const productService = {
     const response = await axiosInstance.get(
       `/products?order=${order}&limit=${limit}&offset=${offset}&sortBy=${sortBy}`
     );
-    return response.data;
+    return response.data as ProductResponse;
   },
   updateProduct: async (product: Product) => {
     const response = await axiosInstance.put(
