@@ -6,6 +6,7 @@ import Script from "next/script";
 import { Cart } from "@/services/cart.service";
 import {Address} from '../../services/payment.service';
 import { FaShippingFast } from "react-icons/fa";
+import { CreateOrder, orderService } from "@/services/order.service";
 
 declare global {
   interface Window {
@@ -136,38 +137,27 @@ const PaymentCard: React.FC<PaymentAddressProps> = ({
     window.payhere.startPayment(paymentData);
   };
 
- const payment = async () => {
-  try {
+  const payment = async () => {
     window.payhere.onCompleted(async (paymentId: string) => {
-      const response = await fetch('/api/orders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          orderId: paymentData.order_id,
-          paymentId: paymentId,
-          amount: paymentData.amount,
-          cart: cart.items,
-          shippingCost: shippingCost,
-          addressDetails: selectedAddress
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('Order submission failed');
+      try {
+        const orderData: CreateOrder = {
+          totalAmount: finalTotal,
+          shippingAddress: selectedAddress?.addressLine || '',
+          shippingMethod: shippingCost === 0 ? 'Free Shipping' : 'Standard Shipping'
+        };
+  
+        const order = await orderService.addOrder(orderData);
+        
+        // Optional: You might want to add order items separately if your backend requires it
+        // This depends on your specific backend implementation
+        console.log('Order created successfully:', order);
+      } catch (error) {
+        console.error('Error creating order:', error);
       }
-
-      const result = await response.json();
-      console.log('Order submitted successfully', result);
     });
-
+  
     window.payhere.startPayment(paymentData);
-  } catch (error) {
-    console.error('Payment or order submission error:', error);
-  }
-};
-
+  };
   return (
     <>
       <Script
