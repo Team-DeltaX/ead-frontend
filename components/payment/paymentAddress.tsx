@@ -2,40 +2,49 @@ import React, { useState } from "react";
 import AddressBox from "./AddressBox";
 import NewAddressDialog from "./NewAddressDialog";
 import { Button } from "../ui/button";
-import { useAuthContext } from "@/hooks/useAuthContext";
+import {Address} from '../../services/payment.service'
+
+
+
 
 interface PaymentAddressProps {
+  addressDetails: Address[]; // Receive address details as a prop
+  setAddressDetails: React.Dispatch<React.SetStateAction<Address[]>>; // Receive state updater function as a prop
   activeComponent: number;
   setActiveComponent: (step: number) => void;
 }
 
-interface Address {
-  customerName: string;
-  addressLine: string;
-  phoneNumber: string;
-}
+
 
 const PaymentAddress: React.FC<PaymentAddressProps> = ({
+  addressDetails,
+  setAddressDetails,
   activeComponent,
   setActiveComponent,
 }) => {
   
-  const { state } = useAuthContext();
+  
 
-  const { user} = state;
+  
 
 
-  const [addressDetails, setAddressDetails] = useState<Address[]>([
-    {
-      customerName: "Chathura",
-      addressLine: "Colombo",
-      phoneNumber: "0786654234",
-    },
-  ]);
+
+
+ 
 
   // Function to add a new address to the list
-  const handleNewAddress = (newAddress: Address) => {
-    setAddressDetails([...addressDetails, newAddress]);
+  const handleNewAddress = (newAddress: {
+    customerName: string;
+    addressLine: string;
+    phoneNumber: string;
+    selected:boolean;
+  }) => {
+    setAddressDetails((prevAddressDetails) => [
+      ...prevAddressDetails.map((address, index) =>
+        index === 0 ? { ...address, selected: false } : address
+      ),
+      { ...newAddress, selected: true }, // New address is selected by default
+    ]);
   };
 
   return (
@@ -50,19 +59,20 @@ const PaymentAddress: React.FC<PaymentAddressProps> = ({
               customerName={address.customerName}
               addressLine={address.addressLine}
               phoneNumber={address.phoneNumber}
+              isSelected={address.selected}
             />
           ))}
         </div>
         {/* Add new address */}
         <div className="flex flex-col items-center justify-center mt-4 ">
-          <NewAddressDialog onAddNewAddress={handleNewAddress} />
+          <NewAddressDialog addressDetails={addressDetails} onAddNewAddress={handleNewAddress} />
           <h2 className="text-sm font-semibold">Add new Address</h2>
         </div>
         {/* Back/Next Button */}
         <div className="flex gap-6 justify-end mt-3 sm:mt-0">
           <Button
             className="px-10 py-6 border border-black text-lg hover:bg-white hover:text-black bg-white text-black"
-            onClick={() => setActiveComponent(activeComponent - 1)}
+            onClick={() => setActiveComponent(1)}
           >
             Back
           </Button>

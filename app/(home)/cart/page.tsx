@@ -228,6 +228,7 @@ const ProductCart = () => {
             </div>
           </div>
           <PaymentDialog
+            cart={cart}
             isOpen={paymentDialogOpen}
             onOpenChange={setPaymentDialogOpen}
           />

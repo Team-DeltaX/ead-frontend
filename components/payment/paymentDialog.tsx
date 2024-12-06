@@ -12,14 +12,48 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import { Cart } from '@/services/cart.service';
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 interface PaymentDialogProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void; // Callback to update the open state
+  cart:Cart
 }
 
-export function PaymentDialog({ isOpen, onOpenChange }: PaymentDialogProps) {
+interface Address {
+  customerName: string;
+  addressLine: string;
+  phoneNumber: string;
+  selected: boolean;
+}
+
+export function PaymentDialog({ cart,isOpen, onOpenChange }: PaymentDialogProps) {
     const [activeComponent, setActiveComponent] = useState(1);
+    const [shippingCost,setShippingCost]=useState(0);
+
+
+
+    console.log('cart',cart); 
+    const { state } = useAuthContext();
+
+    const { user} = state;
+  
+
+    const [addressDetails, setAddressDetails] = useState<Address[]>(
+      user
+        ? [
+            {
+              customerName: user.firstName,
+              addressLine: user.address,
+              phoneNumber: user.phone,
+              selected: true,
+            },
+          ]
+        : []
+    );
+
+
   return (
     <Dialog open={isOpen}  onOpenChange={onOpenChange}>
       {/* <DialogTrigger asChild>
@@ -38,9 +72,9 @@ export function PaymentDialog({ isOpen, onOpenChange }: PaymentDialogProps) {
       <StepIndicator activeStep={activeComponent} />
       {/*conditaional rendering*/}
       {/* Conditional Rendering of Components */}
-      {activeComponent === 1 && <PaymentAddress activeComponent={activeComponent} setActiveComponent={setActiveComponent}/>}
-      {activeComponent === 2 && <PaymentShipping activeComponent={activeComponent} setActiveComponent={setActiveComponent}/>}
-      {activeComponent === 3 && <PaymentCard  onOpenChange={onOpenChange}  activeComponent={activeComponent} setActiveComponent={setActiveComponent}/>}
+      {activeComponent === 1 && <PaymentAddress addressDetails={addressDetails} setAddressDetails={setAddressDetails}  activeComponent={activeComponent} setActiveComponent={setActiveComponent}/>}
+      {activeComponent === 2 && <PaymentShipping cart={cart} shippingCost={shippingCost} setShippingCost={setShippingCost} activeComponent={activeComponent} setActiveComponent={setActiveComponent}/>}
+      {activeComponent === 3 && <PaymentCard shippingCost={shippingCost} addressDetails={addressDetails}  cart={cart}  onOpenChange={onOpenChange}  activeComponent={activeComponent} setActiveComponent={setActiveComponent}/>}
 
     </div>
         <DialogFooter>
