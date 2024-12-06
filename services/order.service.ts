@@ -8,6 +8,8 @@ export interface Order {
   user: User;
   orderDate?: string;
   status: string;
+  shippingAddress: string;
+  shippingMethod: string;
   orderItems: OrderItem[];
 }
 
