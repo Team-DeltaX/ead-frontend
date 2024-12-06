@@ -10,6 +10,7 @@ import isAuth from "@/components/isAuth";
 import { Cart, cartService } from "@/services/cart.service";
 import Spinner from "@/components/Spinner";
 import { CgUnavailable } from "react-icons/cg";
+import toast from "react-hot-toast";
 
 const ProductCart = () => {
   const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
@@ -23,6 +24,7 @@ const ProductCart = () => {
       const response = await cartService.getCartItems();
       const fetchedCart = response.data;
       setIsLoading(false);
+      console.log("Fetched cart:", fetchedCart);
 
       const totalAmount = fetchedCart.items.reduce(
         (total: number, item: { unitPrice: number; quantity: number }) => {
@@ -61,31 +63,52 @@ const ProductCart = () => {
     });
 
     try {
-      await cartService.updateItemQuantity(
-        cart.id,
+      const response = await cartService.updateItemQuantity(
         productId,
         updatedItems.find((item) => item.id === id)?.quantity || 1
       );
+
+      if (response.success) {
+        toast.success("update quantity");
+      }
       // getCartItems();
     } catch (error) {
       console.error("Error updating item quantity:", error);
     }
   };
 
-  const removeCartItem = async (cartId: number,productId: number) => {
+  const removeCartItem = async (cartId: number, productId: number) => {
     try {
-      await cartService.removeCartItem(cartId, productId);
-      getCartItems();
+      await toast.promise(
+        (async () => {
+          const response = await cartService.removeCartItem(cartId, productId);
+
+          if (response.success) {
+            getCartItems();
+
+            return "Item removed from cart successfully!";
+          }
+          return "Error in removing cart item";
+        })(),
+        {
+          loading: "Removing item from cart...",
+          success: (message) => message,
+          error: (error) =>
+            error?.message ||
+            "Failed to remove item from cart. Please try again.",
+        }
+      );
     } catch (error) {
       console.error("Error removing item from cart:", error);
     }
-  }
+  };
 
   useEffect(() => {
     getCartItems();
   }, []);
 
   useEffect(() => {
+    console.log("dataaaaaaaa", data);
     setCart(data);
   }, [data]);
 
@@ -111,7 +134,7 @@ const ProductCart = () => {
                       <div className="pl-4 py-4 flex items-start justify-start">
                         <div className="w-2/12">
                           <Image
-                            src={Iphone}
+                            src={item.product.images?.[0]?.imageUrl || Iphone}
                             alt="Iphone"
                             width={50}
                             height={50}
@@ -156,11 +179,16 @@ const ProductCart = () => {
                         </div>
                         <div className="w-1/12 inline-flex justify-end">
                           <button className="text-red-500 text-[20px]">
-                            <IoIosRemoveCircleOutline onClick={() => {
-                              if (cart.id !== undefined && item.product.id !== undefined) {
-                                removeCartItem(cart.id, item.product.id);
-                              }
-                            }}/>
+                            <IoIosRemoveCircleOutline
+                              onClick={() => {
+                                if (
+                                  cart.id !== undefined &&
+                                  item.product.id !== undefined
+                                ) {
+                                  removeCartItem(cart.id, item.product.id);
+                                }
+                              }}
+                            />
                           </button>
                         </div>
                       </div>

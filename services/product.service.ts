@@ -19,14 +19,42 @@ export interface Product {
   images?: ImageInterface[];
 }
 
+export interface ProductResponse {
+  message: string;
+  data: ProductPagination;
+  success: boolean;
+}
+
+export interface ProductPagination {
+  count: number;
+  limit: number;
+  offset: number;
+  orderBy: string;
+  sortBy: string;
+  products: Product[];
+}
+
+
+
 export const productService = {
   createProduct: async (product: Product) => {
     const response = await axiosInstance.post("/products", product);
     return response.data;
   },
-  getAllProducts: async () => {
-    const response = await axiosInstance.get("/products");
-    return response.data;
+  // getAllProducts: async () => {
+  //   const response = await axiosInstance.get("/products");
+  //   return response.data;
+  // },
+  getAllProducts: async (
+    order: string = "asc",
+    limit: number = 100,
+    offset: number = 0,
+    sortBy: string = "id"
+  ) => {
+    const response = await axiosInstance.get(
+      `/products?order=${order}&limit=${limit}&offset=${offset}&sortBy=${sortBy}`
+    );
+    return response.data as ProductResponse;
   },
   updateProduct: async (product: Product) => {
     const response = await axiosInstance.put(
@@ -40,16 +68,13 @@ export const productService = {
     return response.data;
   },
 
-  getProductsByBrand: async (productBrand: String) => {
+  getProductsByBrand: async (productBrand: string) => {
     const response = await axiosInstance.get(`/products/brand/${productBrand}`);
     return response.data;
   },
 
-
-  getProductByCategoryName: async(category: string) =>{
-    const response = await axiosInstance.get(`/category/${category}`)
+  getProductByCategoryName: async (category: string) => {
+    const response = await axiosInstance.get(`/category/${category}`);
     return response.data;
-  }
-
-
+  },
 };

@@ -1,13 +1,14 @@
 import axiosInstance from "./axiosInstance";
 import { User } from "./user.service";
 
-
 export interface Order {
   id: number;
   totalAmount: number;
   user: User;
   orderDate?: string;
   status: string;
+  shippingAddress: string;
+  shippingMethod: string;
   orderItems: OrderItem[];
 }
 
@@ -18,6 +19,12 @@ export interface OrderItem {
   price: number;
 }
 
+export interface CreateOrder {
+  totalAmount: number;
+  shippingAddress: string;
+  shippingMethod: string;
+}
+
 export const orderService = {
   getAllOrders: async () => {
     const response = await axiosInstance.get("/orders");
@@ -25,6 +32,10 @@ export const orderService = {
   },
   getUserOrders: async () => {
     const response = await axiosInstance.get("/orders/user");
+    return response.data;
+  },
+  addOrder: async (order: CreateOrder) => {
+    const response = await axiosInstance.post("/orders", order);
     return response.data;
   },
 };
