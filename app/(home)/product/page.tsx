@@ -29,9 +29,9 @@ const Page = () => {
       setIsLoading(true);
       const response = await productService.getAllProducts();
       console.log("Fetched data:", response);
-      if (response?.data) {
-        setData(response.data);
-        setOriginalData(response.data);
+      if (response?.success) {
+        setData(response.data.products);
+        setOriginalData(response.data.products);
       } else {
         setData([]);
         console.warn("Unexpected data format:", response);

@@ -12,6 +12,7 @@ import { useAuthContext } from "@/hooks/useAuthContext";
 import Spinner from "@/components/Spinner";
 import { cartService } from "@/services/cart.service";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 type Params = {
   prodid: string;
@@ -49,7 +50,8 @@ const Page = () => {
         setRelatedProducts(
           relatedResponse.data.filter(
             (prod: Product) =>
-              prod.productBrand === fetchedProduct.productBrand &&
+              prod.productBrand.toLowerCase() ===
+                fetchedProduct.productBrand.toLowerCase() &&
               prod.id !== fetchedProduct.id
           )
         );
@@ -67,7 +69,32 @@ const Page = () => {
     if (!isLoggedIn) {
       setIsDialogOpen(true);
     } else {
-      // Add to cart
+      try{
+      
+        toast.promise(
+          (async () => {
+            if (product?.id) {
+            const response = await cartService.addToCart(product.id);
+          
+            if(response.success){
+              return "Product added to cart";
+            }else{
+              return "Failed to add product to cart";
+            }
+          }
+          })(),
+          {
+            loading: "Adding product to cart...",	
+            success: (message) => message || "Product added to cart",
+            error: (error) =>
+              error?.message || "Failed to add product. Please try again.",
+          }
+        )       
+      }
+      catch (error) {
+        console.log("Error adding product to cart:", error);
+      toast.error("Failed to add product to cart");
+    }
     }
   };
 
@@ -98,8 +125,8 @@ const Page = () => {
             />
           ) : (
             <div className="flex flex-col sm:flex-row sm:space-x-3">
-              <div className="flex sm:flex-col space-y-1 sm:space-y-0 sm:w-[100px]">
-                {product.images?.slice(1, 3).map((image, index) => (
+              <div className="flex flex-col space-y-6 gap-4 sm:space-y-0 sm:w-[100px]">
+                {product.images?.slice(1, 4).map((image, index) => (
                   <Image
                     key={index}
                     src={image.imageUrl}
@@ -117,6 +144,8 @@ const Page = () => {
                 }
                 alt="main product image"
                 className="w-[300px] rounded-lg object-cover"
+                width={300}
+                height={300}
               />
             </div>
           )}
@@ -139,7 +168,7 @@ const Page = () => {
             </Button>
             <Button
               className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800"
-              onClick={() => product.id && cartService.increaseCartItem(product.id)}
+              onClick={handleAddToCart}
             >
               Add to Cart
             </Button>

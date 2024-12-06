@@ -19,7 +19,7 @@ const Products: React.FC = () => {
     try {
       setIsLoading(true);
       const response = await productService.getAllProducts();
-      setProducts(response.data);
+      setProducts(response.data.products);
       setError(null);
     } catch (err) {
       setError("Failed to fetch products. Please try again later. " + err);
@@ -83,7 +83,7 @@ const Products: React.FC = () => {
                     <Categorycard />
                   </th>
                   <th className="px-4 py-2 text-gray-600 font-semibold">
-                    Price / Rs.
+                    Price / $
                   </th>
                   <th className="px-4 py-2 text-gray-600 font-semibold">
                     Quantity

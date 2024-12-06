@@ -100,7 +100,7 @@ const Dashboard: React.FC = () => {
         <div className="bg-white shadow-lg border border-gray-200 rounded-2xl p-6 text-center transition-transform hover:scale-105">
           <h3 className="text-gray-500 font-semibold uppercase">Today</h3>
           <p data-cy="today-rev" className="text-4xl font-semibold text-gray-900 mt-2">
-            <span className="text-3xl">Rs. </span>
+            <span className="text-3xl">$ </span>
             {revenue?.todayRev || 0}
           </p>
           <p className="text-gray-400 mt-1">Revenue today</p>
@@ -108,7 +108,7 @@ const Dashboard: React.FC = () => {
         <div className="bg-white shadow-lg border border-gray-200 rounded-2xl p-6 text-center transition-transform hover:scale-105">
           <h3 className="text-gray-500 font-semibold uppercase">This Week</h3>
           <p data-cy="thisweek-rev" className="text-4xl font-semibold text-gray-900 mt-2">
-            <span className="text-3xl">Rs. </span>
+            <span className="text-3xl">$ </span>
             {revenue?.thisWeekRev || 0}
           </p>
           <p className="text-gray-400 mt-1">Revenue this week</p>
@@ -116,7 +116,7 @@ const Dashboard: React.FC = () => {
         <div className="bg-white shadow-lg border border-gray-200 rounded-2xl p-6 text-center transition-transform hover:scale-105">
           <h3 className="text-gray-500 font-semibold uppercase">This Month</h3>
           <p data-cy="thismonth-rev" className="text-4xl font-semibold text-gray-900 mt-2">
-            <span className="text-3xl">Rs. </span>
+            <span className="text-3xl">$ </span>
             {revenue?.thisMonthRev || 0}
           </p>
           <p className="text-gray-400 mt-1">Revenue this month</p>
@@ -133,7 +133,7 @@ const Dashboard: React.FC = () => {
         <div className="bg-white shadow-lg border border-gray-200 rounded-2xl p-6 text-center transition-transform hover:scale-105">
           <h3 className="text-gray-500 font-semibold ">Total Revenue</h3>
           <p data-cy="totalrev" className="text-4xl font-semibold text-gray-800 mt-2">
-            <span className="text-3xl">Rs. </span>
+            <span className="text-3xl">$ </span>
             {revenue?.totalRev || 0}
           </p>
         </div>

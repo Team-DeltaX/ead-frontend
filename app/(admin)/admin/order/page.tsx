@@ -113,7 +113,7 @@ const OrdersTable: React.FC = () => {
                     </td>
 
                     <td className="font-semibold py-3 px-8">
-                      Rs.{order.totalAmount.toFixed(2)}
+                      $ {order.totalAmount.toFixed(2)}
                     </td>
                     <td className="py-3 px-8">{renderBadge(order.status)}</td>
                   </tr>
