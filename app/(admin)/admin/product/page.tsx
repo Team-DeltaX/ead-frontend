@@ -83,7 +83,7 @@ const Products: React.FC = () => {
                     <Categorycard />
                   </th>
                   <th className="px-4 py-2 text-gray-600 font-semibold">
-                    Price / Rs.
+                    Price / $
                   </th>
                   <th className="px-4 py-2 text-gray-600 font-semibold">
                     Quantity
