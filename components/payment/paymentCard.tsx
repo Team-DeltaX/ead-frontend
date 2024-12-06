@@ -137,27 +137,26 @@ const PaymentCard: React.FC<PaymentAddressProps> = ({
     window.payhere.startPayment(paymentData);
   };
 
-  const payment = async () => {
-    window.payhere.onCompleted(async (paymentId: string) => {
-      try {
-        const orderData: CreateOrder = {
-          totalAmount: finalTotal,
-          shippingAddress: selectedAddress?.addressLine || '',
-          shippingMethod: shippingCost === 0 ? 'Free Shipping' : 'Standard Shipping'
-        };
+  // const payment = async () => {
+  //   window.payhere.onCompleted(async (paymentId: string) => {
+  //     try {
+  //       const orderData: CreateOrder = {
+  //         totalAmount: finalTotal,
+  //         shippingAddress: selectedAddress?.addressLine || '',
+  //         shippingMethod: shippingCost === 0 ? 'Free Shipping' : 'Standard Shipping'
+  //       };
   
-        const order = await orderService.addOrder(orderData);
+  //       const order = await orderService.addOrder(orderData);
         
-        // Optional: You might want to add order items separately if your backend requires it
-        // This depends on your specific backend implementation
-        console.log('Order created successfully:', order);
-      } catch (error) {
-        console.error('Error creating order:', error);
-      }
-    });
+       
+  //       console.log('Order created successfully:', order);
+  //     } catch (error) {
+  //       console.error('Error creating order:', error);
+  //     }
+  //   });
   
-    window.payhere.startPayment(paymentData);
-  };
+  //   window.payhere.startPayment(paymentData);
+  // };
   return (
     <>
       <Script
@@ -239,7 +238,7 @@ const PaymentCard: React.FC<PaymentAddressProps> = ({
                     className="px-10 py-6 text-lg hover:bg-green-500 hover:text-white bg-green-500 text-white border-b-2"
                     onClick={() => {
                       onOpenChange(false);
-                      payment();
+                      paymentDone();
                     }}
                   >
                     PayNow
