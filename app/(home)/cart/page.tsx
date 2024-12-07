@@ -127,7 +127,7 @@ const ProductCart = () => {
         <div className="flex justify-center items-center h-screen">
           <Spinner />
         </div>
-      ) : cart ? (
+      ) : cart && cart.items.length > 0 ? (
         <div className="xl:px-32 lg:px-32 md:px-18 px-5 xl:py-8 lg:py-8 md:py-5 sm:py-2 py-2">
           <div>
             <h1 className="lg:text-[18px] md:text-[16px] sm:text-[14px] text-[14px] font-SFPro font-bold">
