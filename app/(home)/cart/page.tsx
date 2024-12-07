@@ -273,7 +273,8 @@ const ProductCart = () => {
           <PaymentDialog
             cart={cart}
             isOpen={paymentDialogOpen}
-            onOpenChange={setPaymentDialogOpen}
+              onOpenChange={setPaymentDialogOpen}
+              fetchData={getCartItems}
           />
         </div>
       ) : (

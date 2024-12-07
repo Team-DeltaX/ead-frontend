@@ -61,10 +61,6 @@ axiosInstance.interceptors.response.use(
       default:
         toast.error(data?.message || "An unexpected error occurred.");
     }
-
-    return Promise.reject(
-      new Error(data?.message || "An error occurred. Please try again.")
-    );
   }
 );
 

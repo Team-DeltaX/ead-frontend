@@ -1,11 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import AddressBox from "./AddressBox";
 import NewAddressDialog from "./NewAddressDialog";
 import { Button } from "../ui/button";
-import {Address} from '../../services/payment.service'
-
-
-
+import { Address } from "../../services/payment.service";
 
 interface PaymentAddressProps {
   addressDetails: Address[]; // Receive address details as a prop
@@ -14,30 +11,18 @@ interface PaymentAddressProps {
   setActiveComponent: (step: number) => void;
 }
 
-
-
 const PaymentAddress: React.FC<PaymentAddressProps> = ({
   addressDetails,
   setAddressDetails,
   activeComponent,
   setActiveComponent,
 }) => {
-  
-  
-
-  
-
-
-
-
- 
-
   // Function to add a new address to the list
   const handleNewAddress = (newAddress: {
     customerName: string;
     addressLine: string;
     phoneNumber: string;
-    selected:boolean;
+    selected: boolean;
   }) => {
     setAddressDetails((prevAddressDetails) => [
       ...prevAddressDetails.map((address, index) =>
@@ -65,7 +50,10 @@ const PaymentAddress: React.FC<PaymentAddressProps> = ({
         </div>
         {/* Add new address */}
         <div className="flex flex-col items-center justify-center mt-4 ">
-          <NewAddressDialog addressDetails={addressDetails} onAddNewAddress={handleNewAddress} />
+          <NewAddressDialog
+            addressDetails={addressDetails}
+            onAddNewAddress={handleNewAddress}
+          />
           <h2 className="text-sm font-semibold">Add new Address</h2>
         </div>
         {/* Back/Next Button */}

@@ -18,7 +18,8 @@ import { useAuthContext } from "@/hooks/useAuthContext";
 interface PaymentDialogProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void; // Callback to update the open state
-  cart:Cart
+  cart: Cart
+  fetchData: () => void;
 }
 
 interface Address {
@@ -28,7 +29,7 @@ interface Address {
   selected: boolean;
 }
 
-export function PaymentDialog({ cart,isOpen, onOpenChange }: PaymentDialogProps) {
+export function PaymentDialog({ cart,isOpen, onOpenChange , fetchData}: PaymentDialogProps) {
     const [activeComponent, setActiveComponent] = useState(1);
     const [shippingCost,setShippingCost]=useState(0);
 
@@ -74,7 +75,7 @@ export function PaymentDialog({ cart,isOpen, onOpenChange }: PaymentDialogProps)
       {/* Conditional Rendering of Components */}
       {activeComponent === 1 && <PaymentAddress addressDetails={addressDetails} setAddressDetails={setAddressDetails}  activeComponent={activeComponent} setActiveComponent={setActiveComponent}/>}
       {activeComponent === 2 && <PaymentShipping cart={cart} shippingCost={shippingCost} setShippingCost={setShippingCost} activeComponent={activeComponent} setActiveComponent={setActiveComponent}/>}
-      {activeComponent === 3 && <PaymentCard shippingCost={shippingCost} addressDetails={addressDetails}  cart={cart}  onOpenChange={onOpenChange}  activeComponent={activeComponent} setActiveComponent={setActiveComponent}/>}
+      {activeComponent === 3 && <PaymentCard shippingCost={shippingCost} addressDetails={addressDetails}  cart={cart}  onOpenChange={onOpenChange}  activeComponent={activeComponent} setActiveComponent={setActiveComponent} fetchData={fetchData} />}
 
     </div>
         <DialogFooter>
