@@ -127,7 +127,7 @@ const ProductCart = () => {
         <div className="flex justify-center items-center h-screen">
           <Spinner />
         </div>
-      ) : cart ? (
+      ) : cart && cart.items.length > 0 ? (
         <div className="xl:px-32 lg:px-32 md:px-18 px-5 xl:py-8 lg:py-8 md:py-5 sm:py-2 py-2">
           <div>
             <h1 className="lg:text-[18px] md:text-[16px] sm:text-[14px] text-[14px] font-SFPro font-bold">
@@ -137,8 +137,7 @@ const ProductCart = () => {
           <div className="grid md:grid-cols-2 grid-cols-1 py-4 gap-4">
             <div className="flex">
               <ScrollArea className="h-[450px] rounded-md w-full pr-6">
-                {cart &&
-                  cart.items.length > 0 &&
+                {cart && cart.items.length > 0 ? (
                   cart.items.map((item) => (
                     <div key={item.id}>
                       <div className="pl-4 py-4 flex items-start justify-start">
@@ -205,7 +204,19 @@ const ProductCart = () => {
                       </div>
                       <Separator orientation="horizontal" />
                     </div>
-                  ))}
+                  ))
+                ) : (
+                  <div className="flex flex-col justify-center items-center md:min-h-[500px]">
+                    <div className="flex justify-center items-center mb-1">
+                      <CgUnavailable className=" text-[15px] sm:text-[15px] md:text-[18px] lg:text-[20px] text-gray-500" />
+                    </div>
+                    <div>
+                      <h2 className="text-[12px] sm:text-[12px] md:text-[14px] lg:text-[15px] text-gray-500 font-SFPro">
+                        Cart is Empty
+                      </h2>
+                    </div>
+                  </div>
+                )}
               </ScrollArea>
               <Separator orientation="vertical" />
             </div>
