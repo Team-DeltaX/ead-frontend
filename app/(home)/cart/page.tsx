@@ -132,14 +132,15 @@ const ProductCart = () => {
                   cart.items.map((item) => (
                     <div key={item.id}>
                       <div className="pl-4 py-4 flex items-start justify-start">
-                        <div className="w-2/12">
+                        <div className="w-[60px] h-[70px] bg-black mr-8 relative overflow-hidden">
                           <Image
                             src={item.product.images?.[0]?.imageUrl || Iphone}
                             alt="Iphone"
-                            width={50}
-                            height={50}
+                            layout="fill"
+                            objectFit="cover"
                           />
                         </div>
+
                         <div className="w-4/12">
                           <h1 className="lg:text-[14px] md:text-[12px] sm:text-[12px] text-[10px] font-SFPro font-medium text-black">
                             {item.product.productName}
@@ -171,7 +172,7 @@ const ProductCart = () => {
                         </div>
                         <div className="pl-4 w-3/12">
                           <h1 className="lg:text-[14px] md:text-[12px] sm:text-[12px] text-[10px] font-SFPro font-medium text-black">
-                            Rs.{" "}
+                            $.{" "}
                             {item.unitPrice && item.quantity
                               ? (item.unitPrice * item.quantity).toFixed(2)
                               : "0.00"}
@@ -208,7 +209,7 @@ const ProductCart = () => {
                     Subtotal
                   </h1>
                   <h1 className="lg:text-[16px] md:text-[14px] sm:text-[14px] text-[12px] font-SFPro font-bold text-black">
-                    Rs.{" "}
+                    $.{" "}
                     {cart
                       ? cart.totalAmount !== undefined
                         ? cart.totalAmount.toFixed(2)
@@ -221,34 +222,27 @@ const ProductCart = () => {
                     Estimated Tax
                   </h1>
                   <h1 className="lg:text-[16px] md:text-[14px] sm:text-[14px] text-[12px] font-SFPro font-thin text-gray-600">
-                    Rs. 99.99
+                    $. 2.99
                   </h1>
                 </div>
-                <div className="flex items-center justify-between py-4">
-                  <h1 className="lg:text-[16px] md:text-[14px] sm:text-[14px] text-[12px] font-SFPro font-medium text-gray-600">
-                    Estimated Shipping & Handling
-                  </h1>
-                  <h1 className="lg:text-[16px] md:text-[14px] sm:text-[14px] text-[12px] font-SFPro font-medium text-gray-600">
-                    Rs. 99.99
-                  </h1>
-                </div>
+
                 <Separator orientation="horizontal" />
                 <div className="flex items-center justify-between py-4">
                   <h1 className="lg:text-[16px] md:text-[14px] sm:text-[14px] text-[12px] font-SFPro font-bold text-black">
                     Total
                   </h1>
                   <h1 className="lg:text-[16px] md:text-[14px] sm:text-[14px] text-[12px] font-SFPro font-bold text-black">
-                    Rs.{" "}
+                    $.{" "}
                     {cart
                       ? cart.totalAmount !== undefined
-                        ? (cart.totalAmount + 99.99 + 99.99).toFixed(2)
+                        ? (cart.totalAmount + 2.99).toFixed(2)
                         : "0.00"
                       : "0.00"}
                   </h1>
                 </div>
                 <button
                   onClick={() => setPaymentDialogOpen(true)}
-                  className="bg-black text-white py-3 rounded-lg w-full mt-4"
+                  className="bg-black text-white py-3 rounded-lg w-full mt-4 font-bold"
                 >
                   Proceed to Checkout
                 </button>
@@ -267,7 +261,7 @@ const ProductCart = () => {
           </div>
           <div>
             <h2 className="text-[12px] sm:text-[12px] md:text-[14px] lg:text-[15px] text-gray-500 font-SFPro">
-              User Data not available
+              Cart Data not available
             </h2>
           </div>
         </div>

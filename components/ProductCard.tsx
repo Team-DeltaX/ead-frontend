@@ -13,7 +13,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         <Image
           src={product.images[0]?.imageUrl || "https://wbco.sa/storage/images/documents/_res/wrh/def_product.png"}
           alt={product.productName}
-          className="w-full h-48 object-cover rounded-2xl p-2 "
+          className="w-full h-48 object-cover rounded-lg  "
           width={300}
           height={300}
         />
