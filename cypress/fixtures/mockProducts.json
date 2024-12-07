@@ -1,0 +1,165 @@
+{
+    "data": {
+      "count": 32,
+      "limit": 100,
+      "offset": 0,
+      "orderBy": null,
+      "sortBy": null,
+      "products": [
+        {
+          "id": 1,
+          "productName": "Calculator",
+          "productDescription": "this is good.black colour",
+          "productPrice": 546.00,
+          "productBrand": "Apple",
+          "inventory": 40,
+          "category": {
+            "id": 1,
+            "name": "Electronics"
+          },
+          "images": [
+            {
+              "imageId": 12,
+              "imageName": "active.png",
+              "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733388427/spurqi4ugrpuck5u7g2b.png"
+            },
+            {
+              "imageId": 14,
+              "imageName": "samiya .jpg",
+              "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733388508/ivddztqotzbop6i4idkb.jpg"
+            },
+            {
+              "imageId": 17,
+              "imageName": "download.jpg",
+              "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733393592/o7odc7oe7lmvorqkqgxb.jpg"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "productName": "Apple iPhone 13",
+          "productDescription": "this is good.blue color",
+          "productPrice": 1204.00,
+          "productBrand": "Apple",
+          "inventory": 6,
+          "category": {
+            "id": 1,
+            "name": "Electronics"
+          },
+          "images": [
+            {
+              "imageId": 15,
+              "imageName": "logo.png",
+              "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733393073/la3fgrqlq4bhz6dwsxuh.png"
+            },
+            {
+              "imageId": 16,
+              "imageName": "galaxy-s21-ultra-phantom-silver.jpg",
+              "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733393099/rmagtjesbm4xwb85jgf9.jpg"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "productName": "Apple iPhone 14",
+          "productDescription": "this is good.blue color",
+          "productPrice": 1104.00,
+          "productBrand": "Apple",
+          "inventory": 1,
+          "category": {
+            "id": 1,
+            "name": "Electronics"
+          },
+          "images": [
+            {
+              "imageId": 2,
+              "imageName": "Snapseed 5.jpg",
+              "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733313405/pbaqzayve2lxb7pxudks.jpg"
+            },
+            {
+              "imageId": 23,
+              "imageName": "samiya .jpg",
+              "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733452547/clhtncacgpnwsymkzygt.jpg"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "productName": "Apple iPhone 14",
+          "productDescription": "this is good.blue color",
+          "productPrice": 1104.00,
+          "productBrand": "Apple",
+          "inventory": 1,
+          "category": {
+            "id": 1,
+            "name": "Electronics"
+          },
+          "images": [
+            {
+              "imageId": 19,
+              "imageName": "samiya .jpg",
+              "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733452471/qp6sjtzgrvyxufjye9th.jpg"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "productName": "Apple iPhone 14",
+          "productDescription": "this is good.blue color",
+          "productPrice": 1104.00,
+          "productBrand": "Apple",
+          "inventory": 1,
+          "category": {
+            "id": 1,
+            "name": "Electronics"
+          },
+          "images": [
+            {
+              "imageId": 24,
+              "imageName": "samiya .jpg",
+              "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733452563/lbhou4pfnzuedl5lelat.jpg"
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "productName": "TV",
+          "productDescription": "this is good.blue color,BiG",
+          "productPrice": 800.00,
+          "productBrand": "Samsung",
+          "inventory": 200,
+          "category": {
+            "id": 1,
+            "name": "Electronics"
+          },
+          "images": [
+            {
+              "imageId": 1,
+              "imageName": "Snapseed 6.jpg",
+              "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733313401/grzgbdd1uxilaj5ljyzw.jpg"
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "productName": "Smart Sunglass",
+          "productDescription": "this is smart",
+          "productPrice": 450.34,
+          "productBrand": "apple",
+          "inventory": 1,
+          "category": {
+            "id": 1,
+            "name": "Electronics"
+          },
+          "images": [
+            {
+              "imageId": 20,
+              "imageName": "samiya .jpg",
+              "imageUrl": "http://res.cloudinary.com/dwgeetnoj/image/upload/v1733452487/zwmtqedkqxdjd8ouefkl.jpg"
+            }
+          ]
+        }
+      ]
+    }
+  }
+  

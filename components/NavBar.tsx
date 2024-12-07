@@ -52,7 +52,7 @@ const NavBar = () => {
               </Link>
             </li>
             <li>
-              <Link href="/product">Product</Link>
+              <Link data-cy='productbutton' href="/product">Product</Link>
             </li>
             <li>
               <Link href="/about">About</Link>
