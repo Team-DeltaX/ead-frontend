@@ -118,9 +118,7 @@ const Home = () => {
         </Carousel>
       </div>
       <div className="xl:px-32 lg:px-32 md:px-18 px-5 my-10">
-        {/* <h1 className="text-[12px] sm:text-[14px] md:text-[14px] lg:text-[16px] font-SFPro font-bold text-black">
-          Browse By Category
-        </h1> */}
+        
         <div className="text-center grid ">
           <h1 className="font-normal text-black text-[20px] sm:text-[25px] md:text-[30px] lg:text-[35px] xl:text-[35px] font-SFPro">
             Browse By Category

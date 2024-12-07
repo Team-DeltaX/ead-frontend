@@ -53,7 +53,6 @@ const Page = () => {
   const startIndex = (currentPage - 1) * Items_Per_Page;
   const currentProducts = data.slice(startIndex, startIndex + Items_Per_Page);
 
-  //filter base on category
   useEffect(() => {
     const uniqueCategories = Array.from(
       new Set(originalData.map((item) => item.category.name))
