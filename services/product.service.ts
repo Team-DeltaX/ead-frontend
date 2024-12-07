@@ -17,6 +17,7 @@ export interface Product {
   productDescription: string;
   productBrand: string;
   images?: ImageInterface[];
+  createdAt?: string;
 }
 
 export interface ProductResponse {

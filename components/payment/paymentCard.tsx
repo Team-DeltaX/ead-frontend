@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import md5 from "crypto-js/md5";
 import Script from "next/script";
 import { Cart } from "@/services/cart.service";
-import {Address} from '../../services/payment.service';
+import { Address } from "../../services/payment.service";
 import { CreateOrder, orderService } from "@/services/order.service";
 
 declare global {
@@ -42,14 +42,11 @@ interface PaymentAddressProps {
   activeComponent: number;
   setActiveComponent: (step: number) => void;
   onOpenChange: (open: boolean) => void;
-  cart:Cart;
+  cart: Cart;
   addressDetails: Address[]; // Receive address details as a prop
-  shippingCost:number;
-
+  shippingCost: number;
+  fetchData: () => void;
 }
-
-
-
 
 const PaymentCard: React.FC<PaymentAddressProps> = ({
   shippingCost,
@@ -58,14 +55,12 @@ const PaymentCard: React.FC<PaymentAddressProps> = ({
   activeComponent,
   setActiveComponent,
   onOpenChange,
+  fetchData,
 }) => {
-
   const selectedAddress = addressDetails.find((address) => address.selected); // Find the selected address
 
-  const subtotal=cart.totalAmount;
-  const finalTotal=subtotal+shippingCost+99.99;
-
-
+  const subtotal = cart.totalAmount;
+  const finalTotal = subtotal + shippingCost + 99.99;
 
   const orderId = "123456";
   const name = "Iphone16";
@@ -112,18 +107,18 @@ const PaymentCard: React.FC<PaymentAddressProps> = ({
 
   useEffect(() => {
     const loadPayHereScript = () => {
-      const script = document.createElement('script');
-      script.src = 'https://www.payhere.lk/lib/payhere.js';
+      const script = document.createElement("script");
+      script.src = "https://www.payhere.lk/lib/payhere.js";
       script.async = true;
       script.onload = () => {
-        console.log('PayHere script loaded');
+        console.log("PayHere script loaded");
       };
       script.onerror = () => {
-        console.error('Failed to load PayHere script');
+        console.error("Failed to load PayHere script");
       };
       document.body.appendChild(script);
     };
-  
+
     if (!window.payhere) {
       loadPayHereScript();
     }
@@ -134,37 +129,38 @@ const PaymentCard: React.FC<PaymentAddressProps> = ({
     script.src = "https://www.payhere.lk/lib/payhere.js";
     script.async = true;
     document.body.appendChild(script);
-  
+
     const initializePayHere = () => {
       if (window.payhere) {
         window.payhere.onCompleted = async (paymentId) => {
           try {
             const orderData: CreateOrder = {
               totalAmount: finalTotal,
-              shippingAddress: selectedAddress?.addressLine || '',
-              shippingMethod: shippingCost === 0 ? 'Free Shipping' : 'Standard Shipping',
+              shippingAddress: selectedAddress?.addressLine || "",
+              shippingMethod:
+                shippingCost === 0 ? "Free Shipping" : "Standard Shipping",
             };
-  
+
             const order = await orderService.addOrder(orderData);
-            console.log('Order created successfully:', order);
+            fetchData();
+            console.log("Order created successfully:", order);
           } catch (error) {
-            console.error('Error creating order:', error);
+            console.error("Error creating order:", error);
           }
           console.log("Payment completed. Payment Id:", paymentId);
         };
       } else {
         console.log("Waiting for PayHere to initialize...");
-        setTimeout(initializePayHere, 100); 
+        setTimeout(initializePayHere, 100);
       }
     };
-  
+
     script.onload = initializePayHere;
-  
+
     return () => {
       document.body.removeChild(script);
     };
-  }, [finalTotal,selectedAddress,shippingCost]);
-
+  }, [finalTotal, selectedAddress, shippingCost]);
 
   // const paymentDone = () => {
   //   console.log("paymentDone");
@@ -174,7 +170,6 @@ const PaymentCard: React.FC<PaymentAddressProps> = ({
   // };
 
   const payment = async () => {
-
     window.payhere.startPayment(paymentData);
 
     // window.payhere.onCompleted(async (paymentId: string) => {
@@ -186,16 +181,14 @@ const PaymentCard: React.FC<PaymentAddressProps> = ({
     //       shippingAddress: selectedAddress?.addressLine || '',
     //       shippingMethod: shippingCost === 0 ? 'Free Shipping' : 'Standard Shipping'
     //     };
-  
+
     //     const order = await orderService.addOrder(orderData);
-        
-       
+
     //     console.log('Order created successfully:', order);
     //   } catch (error) {
     //     console.error('Error creating order:', error);
     //   }
     // });
-  
   };
   return (
     <>
@@ -213,7 +206,10 @@ const PaymentCard: React.FC<PaymentAddressProps> = ({
               {cart.items.map((product, index) => (
                 <PaymentSummaryProduct
                   key={index}
-                  image={product.product.images?.[0]?.imageUrl || "/path/to/default-image.jpg"} // Fallback to a default image
+                  image={
+                    product.product.images?.[0]?.imageUrl ||
+                    "/path/to/default-image.jpg"
+                  } // Fallback to a default image
                   name={product.product.productName || "Unnamed Product"} // Fallback to a default name
                   price={product.unitPrice || 0} // Fallback to 0 for price
                 />
@@ -228,14 +224,19 @@ const PaymentCard: React.FC<PaymentAddressProps> = ({
               <div className="p-4 bg-gray-200 rounded-md">
                 <span className="text-gray-400">Address</span>
                 <br />
-                <span className="text-sm "> {selectedAddress
+                <span className="text-sm ">
+                  {" "}
+                  {selectedAddress
                     ? `${selectedAddress.addressLine}`
-                    : "No address selected"}</span>
+                    : "No address selected"}
+                </span>
                 <br />
                 <div className="mt-2">
                   <span className="text-gray-400">Shipment cost</span>
                   <br />
-                  <span>{shippingCost==0 ?'Free':'$'+shippingCost} </span>
+                  <span>
+                    {shippingCost == 0 ? "Free" : "$" + shippingCost}{" "}
+                  </span>
                 </div>
                 <div className="mt-4">
                   <div className="flex justify-between">
