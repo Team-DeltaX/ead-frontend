@@ -7,7 +7,7 @@ const ProductCard = ({ product }: { product: Product }) => {
   const router = useRouter();
 
   return (
-    <div className="max-w-sm border rounded-lg shadow-md bg-[#F6F6F6] w-[250px]">
+    <div data-cy={`product-card-${product.id}`} className="max-w-sm border rounded-lg shadow-md bg-[#F6F6F6] w-[250px]">
     
       {product.images && (
         <Image
@@ -20,12 +20,12 @@ const ProductCard = ({ product }: { product: Product }) => {
       )}
 
       <div className="mt-2 py-3 text-center">
-        <h3 className="text-base font-medium text-gray-900">
+        <h3 data-cy={`product-name-${product.id}`} className="text-base font-medium text-gray-900">
           {product.productName}
         </h3>
-        <p className="text-xs text-gray-500">{product.productBrand}</p>
+        <p data-cy={`product-brand-${product.id}`} className="text-xs text-gray-500">{product.productBrand}</p>
 
-        <p className="mt-1 text-lg font-bold text-gray-800">
+        <p data-cy={`product-price-${product.id}`} className="mt-1 text-lg font-bold text-gray-800">
           ${product.productPrice}
         </p>
 
