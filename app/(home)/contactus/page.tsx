@@ -42,17 +42,10 @@ export default function ContactUs() {
                 Learn more about our team and job openings
               </p>
             </div>
-            <button
-              className="mt-9 w-full bg-black text-white px-8 py-3 rounded-lg shadow-md hover:bg-gray-600 transition-all duration-300"
-              onClick={() => alert("Navigating to Careers!")}
-            >
-              Next
-            </button>
           </div>
         </div>
 
-        <div className="flex flex-col ">
-        
+        <div className="flex flex-col ">     
           <div className="mb-8">
             <h2 className="text-xl font-semibold text-blue-500 ">
               Send a Message
