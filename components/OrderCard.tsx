@@ -5,9 +5,32 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Order } from "@/services/order.service";
+import { Order, orderService } from "@/services/order.service";
+import toast from "react-hot-toast";
 
-const OrderCard = ({ order }: { order: Order }) => {
+const OrderCard = ({ order,
+  fetchData
+}: {
+  order: Order
+  fetchData: () => void
+  }) => {
+
+  const handleConfirmDelivery = async (status: string) => {
+    toast.promise(
+      (async () => {
+        await orderService.updateOrder(order.id, status);
+        fetchData();
+        return "Order status updated successfully";
+      })(),
+      {
+        loading: "Updating order status...",
+        success: (message) => message,
+        error: "Failed to update order status",
+      }
+    );
+  }
+
+
   return (
     <div className="font-SFPro text-semibold">
       <Accordion type="single" collapsible className="w-full">
@@ -62,17 +85,22 @@ const OrderCard = ({ order }: { order: Order }) => {
               </div>
             ))}
 
-            {/* confirm deliver */}
-            <div className="flex justify-end mt-2">
-              <button className="bg-green-500 text-white px-4 py-1 rounded">
-                Confirm Delivery
-              </button>
-            </div>
+            <div className="flex flex-row gap-3 justify-end">
+              <div className="flex justify-end mt-2">
+                <button className="bg-green-500 text-white px-4 py-1 rounded"
+                  onClick={() => handleConfirmDelivery("DELIVERED")}
+                >
+                  Confirm Delivery
+                </button>
+              </div>
 
-            <div className="flex justify-end mt-2">
-              <button className="bg-red-500 text-white px-4 py-1 rounded">
-                Cancel Order
-              </button>
+              <div className="flex justify-end mt-2">
+                <button className="bg-red-500 text-white px-4 py-1 rounded"
+                onClick={() => handleConfirmDelivery("CANCELLED")}
+                >
+                  Cancel Order
+                </button>
+              </div>
             </div>
           </AccordionContent>
         </AccordionItem>

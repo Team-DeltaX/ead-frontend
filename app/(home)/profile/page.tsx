@@ -132,7 +132,11 @@ const Profile = () => {
               <Separator />
             </div>
             {orders.map((order) => (
-              <OrderCard key={order.id} order={order} />
+              <OrderCard
+                key={order.id}
+                order={order}
+                fetchData={getUserOrdersList}
+              />
             ))}
           </div>
         </div>
