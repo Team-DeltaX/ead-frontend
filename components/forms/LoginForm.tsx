@@ -40,9 +40,10 @@ const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
     console.log("User data:", user); // Debugging log
 
     setIsLoading(true);
-    try {
-      await toast.promise(
-        (async () => {
+    // try {
+    await toast.promise(
+      (async () => {
+        try {
           const response = await authService.login(user);
 
           console.log("Backend response:", response); // Debugging log
@@ -62,7 +63,6 @@ const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
             });
 
             setOpen(false); // Close the modal
-          
 
             if (response.data.role.toLowerCase() === "admin") {
               // Redirect to admin dashboard
@@ -74,18 +74,21 @@ const LoginForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
               response?.error || "Invalid credentials. Please try again."
             );
           }
-        })(),
-        {
-          loading: "Logging in...",
-          success: (message) => message,
-          error: (error) => error?.message || "An unexpected error occurred.",
+        } catch (error: unknown) {
+          const errorMessage =
+            error instanceof Error
+              ? error.message
+              : "An unexpected error occurred.";
+          return Promise.reject(new Error(errorMessage));
         }
-      );
-    } catch (error) {
-       toast.error("Error logging in. Please try again. "+error);
-    } finally {
-      setIsLoading(false); // Ensure loading state is reset
-    }
+      })(),
+      {
+        loading: "Logging in...",
+        success: (message) => message,
+        error: (error) => error?.message || "An unexpected error occurred.",
+      }
+    );
+    setIsLoading(false); // Ensure loading state is reset
   };
 
   return (
