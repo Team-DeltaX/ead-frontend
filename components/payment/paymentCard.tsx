@@ -130,33 +130,53 @@ const PaymentCard: React.FC<PaymentAddressProps> = ({
     }
   }, []);
 
-  const paymentDone = () => {
-    console.log("paymentDone");
-    console.log(paymentData);
-
-    window.payhere.startPayment(paymentData);
-  };
-
-  // const payment = async () => {
-  //   window.payhere.onCompleted(async (paymentId: string) => {
-  //     try {
-  //       const orderData: CreateOrder = {
-  //         totalAmount: finalTotal,
-  //         shippingAddress: selectedAddress?.addressLine || '',
-  //         shippingMethod: shippingCost === 0 ? 'Free Shipping' : 'Standard Shipping'
-  //       };
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://www.payhere.lk/lib/payhere.js';
+    script.async = true;
+    script.onload = () => {
+      if (window.payhere) {
+        window.payhere.onCompleted = function onCompleted(paymentId) {
+          console.log("Payment completed. Payment Id:" + paymentId);
+        };
+      }
+    };
+    document.body.appendChild(script);
   
-  //       const order = await orderService.addOrder(orderData);
-        
-       
-  //       console.log('Order created successfully:', order);
-  //     } catch (error) {
-  //       console.error('Error creating order:', error);
-  //     }
-  //   });
-  
+    // Cleanup function
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []); // Empty dependency array means this runs once on mount
+
+
+  // const paymentDone = () => {
+  //   console.log("paymentDone");
+  //   console.log(paymentData);
+
   //   window.payhere.startPayment(paymentData);
   // };
+
+  const payment = async () => {
+    window.payhere.onCompleted(async (paymentId: string) => {
+      try {
+        const orderData: CreateOrder = {
+          totalAmount: finalTotal,
+          shippingAddress: selectedAddress?.addressLine || '',
+          shippingMethod: shippingCost === 0 ? 'Free Shipping' : 'Standard Shipping'
+        };
+  
+        const order = await orderService.addOrder(orderData);
+        
+       
+        console.log('Order created successfully:', order);
+      } catch (error) {
+        console.error('Error creating order:', error);
+      }
+    });
+  
+    window.payhere.startPayment(paymentData);
+  };
   return (
     <>
       <Script
@@ -238,7 +258,7 @@ const PaymentCard: React.FC<PaymentAddressProps> = ({
                     className="px-10 py-6 text-lg hover:bg-green-500 hover:text-white bg-green-500 text-white border-b-2"
                     onClick={() => {
                       onOpenChange(false);
-                      paymentDone();
+                      payment();
                     }}
                   >
                     PayNow
