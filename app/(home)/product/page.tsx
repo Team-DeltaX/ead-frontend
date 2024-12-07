@@ -51,7 +51,7 @@ const Page = () => {
   const totalItem = data.length;
   const totalPages = Math.ceil(totalItem / Items_Per_Page);
   const startIndex = (currentPage - 1) * Items_Per_Page;
-  const currentProducts = data.slice(startIndex, startIndex + Items_Per_Page);
+
 
   useEffect(() => {
     const uniqueCategories = Array.from(
@@ -80,9 +80,7 @@ const Page = () => {
   });
 
   // search products based on productName
-  const [searchValue, setSearchValue] = useState<string>("");
   const handleSearch = (value: string) => {
-    setSearchValue(value);
     const filtered = originalData.filter((product) =>
       product.productName.toLowerCase().includes(value.toLowerCase())
     );

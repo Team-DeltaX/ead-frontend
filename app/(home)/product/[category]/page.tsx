@@ -21,28 +21,25 @@ const Page = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
 
   const fetchProductsByCategory = async () => {
 
     if (!categoryName) return;
-    setLoading(true);
+    setIsLoading(true);
     try {
       const response = await productService.getProductByCategoryName(categoryName);
       if (response?.success) {
         setProducts(response.data || []);
         setData(response.data || []);
-        console.log("Fetched products by category:", response.data);
-        setIsLoading(false);
+        
       } else {
-        console.warn("Failed to fetch products for category:", categoryName);
         setProducts([]);
         setData([]);
       }
     } catch (error) {
-      console.error("Error fetching products by category:", error);
+      console.log("Error fetching data:", error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   }
   useEffect(() => {
@@ -56,9 +53,7 @@ const Page = () => {
   const currentProducts = data.slice(startIndex, startIndex + Items_Per_Page);
 
   // search products based on productName
-  const [searchValue, setSearchValue] = useState<string>("");
   const handleSearch = (value: string) => {
-    setSearchValue(value);
     const filtered = products.filter((product) =>
       product.productName.toLowerCase().includes(value.toLowerCase())
     );

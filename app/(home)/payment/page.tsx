@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import StepIndicator from '@/components/payment/StepIndicator';
 import PaymentAddress from '@/components/payment/paymentAddress';
 import PaymentShipping from '@/components/payment/paymentShipping';
-// import PaymentCard from '@/components/payment/paymentCard';
 
 function PaymentPage() {
   const [activeComponent, setActiveComponent] = useState(1);

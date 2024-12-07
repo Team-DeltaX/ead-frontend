@@ -76,7 +76,7 @@ export function UpdateProduct({
   };
   const handleSubmit = async () => {
     if (!validateInput()) return;
-    
+    setLoading(true);
     try {
       await toast.promise(
         (async () => {
@@ -124,6 +124,7 @@ export function UpdateProduct({
       console.error("Error updating product:", error);
     } finally {
       handleClose();
+      setLoading(false);
     }
   };
   
