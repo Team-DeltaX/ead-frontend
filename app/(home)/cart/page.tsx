@@ -11,7 +11,6 @@ import { Cart, cartService } from "@/services/cart.service";
 import Spinner from "@/components/Spinner";
 import { CgUnavailable } from "react-icons/cg";
 import toast from "react-hot-toast";
-
 const ProductCart = () => {
   const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
   const [data, setData] = useState<Cart | null>(null);
@@ -23,19 +22,29 @@ const ProductCart = () => {
       setIsLoading(true);
       const response = await cartService.getCartItems();
       const fetchedCart = response.data;
-      setIsLoading(false);
-      console.log("Fetched cart:", fetchedCart);
+      if (response.success && fetchedCart) {
+        console.log("Fetched cart:", fetchedCart);
 
-      const totalAmount = fetchedCart.items.reduce(
-        (total: number, item: { unitPrice: number; quantity: number }) => {
-          return total + (item.unitPrice ? item.unitPrice * item.quantity : 0);
-        },
-        0
-      );
+        const totalAmount = fetchedCart.items.reduce(
+          (total: number, item: { unitPrice: number; quantity: number }) => {
+            return (
+              total + (item.unitPrice ? item.unitPrice * item.quantity : 0)
+            );
+          },
+          0
+        );
 
-      setData({ ...fetchedCart, totalAmount });
+        setData({ ...fetchedCart, totalAmount });
+      } else {
+        setData(null);
+        setCart(null);
+      }
     } catch (error) {
+      setCart(null);
+      setData(null);
       console.error("Error fetching cart items:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -129,6 +138,7 @@ const ProductCart = () => {
             <div className="flex">
               <ScrollArea className="h-[450px] rounded-md w-full pr-6">
                 {cart &&
+                  cart.items.length > 0 &&
                   cart.items.map((item) => (
                     <div key={item.id}>
                       <div className="pl-4 py-4 flex items-start justify-start">
