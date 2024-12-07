@@ -61,6 +61,19 @@ const OrderCard = ({ order }: { order: Order }) => {
                 </div>
               </div>
             ))}
+
+            {/* confirm deliver */}
+            <div className="flex justify-end mt-2">
+              <button className="bg-green-500 text-white px-4 py-1 rounded">
+                Confirm Delivery
+              </button>
+            </div>
+
+            <div className="flex justify-end mt-2">
+              <button className="bg-red-500 text-white px-4 py-1 rounded">
+                Cancel Order
+              </button>
+            </div>
           </AccordionContent>
         </AccordionItem>
       </Accordion>
