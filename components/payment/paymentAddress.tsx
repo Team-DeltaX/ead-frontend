@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import AddressBox from "./AddressBox";
 import NewAddressDialog from "./NewAddressDialog";
 import { Button } from "../ui/button";

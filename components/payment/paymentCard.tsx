@@ -5,7 +5,6 @@ import md5 from "crypto-js/md5";
 import Script from "next/script";
 import { Cart } from "@/services/cart.service";
 import {Address} from '../../services/payment.service';
-import { FaShippingFast } from "react-icons/fa";
 import { CreateOrder, orderService } from "@/services/order.service";
 
 declare global {
