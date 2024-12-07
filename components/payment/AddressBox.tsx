@@ -12,7 +12,7 @@ const AddressBox: React.FC<AddressBoxProps> = ({
   customerName,
   addressLine,
   phoneNumber,
-  isSelected = false,
+  isSelected 
 }) => {
   return (
     <div className="flex justify-between p-4 bg-gray-200 w-[300px] md:w-[1000px] rounded-md h-28">
