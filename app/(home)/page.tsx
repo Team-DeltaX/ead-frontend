@@ -60,17 +60,17 @@ const categoryArray = [
   {
     title: "Cameras",
     icon: CiCamera,
-    link: "Camera"
+    link: "Camera",
   },
   {
     title: "Watches",
     icon: BsSmartwatch,
-    link: "Smartwatch"
+    link: "Smartwatch",
   },
   {
     title: "Headphones",
     icon: CiHeadphones,
-    link: "Headphone"
+    link: "Headphone",
   },
 ];
 
@@ -86,7 +86,12 @@ const Home = () => {
   const fetchData = async () => {
     try {
       setIsLoading(true);
-      const response = await productService.getAllProducts("desc", 12, 0, "createdAt");
+      const response = await productService.getAllProducts(
+        "desc",
+        12,
+        0,
+        "createdAt"
+      );
       console.log("Fetched data:", response);
       if (response?.success) {
         setData(response.data.products);
@@ -104,7 +109,7 @@ const Home = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  
+
   return (
     <div>
       <div className="w-full lg:h-[530px] md:h-[430px] sm:h-[330px] h-[230px]  bg-custom-dark">
@@ -120,24 +125,28 @@ const Home = () => {
                 <div className="lg:h-[510px] md:h-[410px] sm:h-[310px] h-[230px]  xl:px-32 lg:px-32 md:px-18 px-5 mb-4 grid grid-flow-col items-center justify-between">
                   {/* Text content */}
                   <div className="text-left">
-                    <h1 data-testid="carousel-item-title" className="font-bold text-white opacity-40 text-[12px] sm:text-[14px] md:text-[16px] lg:text-[18px] font-figtree">
+                    <h1
+                      data-testid="carousel-item-title"
+                      className="font-bold text-white opacity-40 text-[12px] sm:text-[14px] md:text-[16px] lg:text-[18px] font-figtree"
+                    >
                       {content.title}
                     </h1>
 
-                    <h1 data-testid="carousel-item-maintext" className="font-thin text-white sm:text-[30px] md:text-[40px] lg:text-[70px] xl:text-[75px] text-[25px] font-SFPro">
+                    <h1
+                      data-testid="carousel-item-maintext"
+                      className="font-thin text-white sm:text-[30px] md:text-[40px] lg:text-[70px] xl:text-[75px] text-[25px] font-SFPro"
+                    >
                       {content.mainText.split(" ").slice(0, -1).join(" ")}{" "}
                       <span className=" font-extrabold">
                         {content.mainText.split(" ").slice(-1)}
                       </span>
                     </h1>
-                    <p data-testid="carousel-item-description" className="text-[10px] sm:text-[14px] md:text-[14px] lg:text-[16px] font-SFPro font-light text-gray-500">
+                    <p
+                      data-testid="carousel-item-description"
+                      className="text-[10px] sm:text-[14px] md:text-[14px] lg:text-[16px] font-SFPro font-light text-gray-500"
+                    >
                       {content.description}
                     </p>
-                    <div className="text-left xl:pt-6 lg:pt-6 md:pt-4 sm:pt-2 pt-2">
-                      <button className="border border-white rounded-md text-white text-[11px] sm:text-[12px] md:text-[14px] lg:text-[16px] font-SFPro xl:py-2 xl:px-10 lg:py-2 lg:px-10 md:py-1 md:px-6 sm:py-1 sm:px-4 py-1 px-4">
-                        Shop Now
-                      </button>
-                    </div>
                   </div>
                   {/* Responsive image */}
                   <div className="lg:h-[470px] md:h-[370px] sm:h-[270px] h-[190px] md:ml-[200px] ml-[10px] md:pt-[40px] pt-1 items-end">
@@ -153,7 +162,7 @@ const Home = () => {
           </CarouselContent>
         </Carousel>
       </div>
-      
+
       <div className="xl:px-32 lg:px-32 md:px-18 px-5 my-12">
         <div className="text-center grid mb-10">
           <h1 className="font-normal text-black text-[20px] sm:text-[25px] md:text-[30px] lg:text-[35px] xl:text-[35px] font-SFPro">
@@ -163,12 +172,12 @@ const Home = () => {
             Say hello to our newest collection
           </h1>
         </div>
-        <div >
+        <div>
           {isLoading ? (
             <div className="flex items-center justify-center  md:min-h-[450px]">
               <Spinner />
             </div>
-          ) :(
+          ) : (
             <div className="flex flex-wrap justify-center gap-7">
               {data.map((product) => (
                 <ProductCard key={product.id} product={product} />
@@ -178,7 +187,6 @@ const Home = () => {
         </div>
       </div>
       <div className="xl:px-32 lg:px-32 md:px-18 px-5 my-12">
-        
         <div className="text-center grid mb-10">
           <h1 className="font-normal text-black text-[20px] sm:text-[25px] md:text-[30px] lg:text-[35px] xl:text-[35px] font-SFPro">
             Browse By Category
