@@ -85,7 +85,7 @@ const ProductCart = () => {
 
           if (response.success) {
             getCartItems();
-
+              console.log("helloo");
             return "Item removed from cart successfully!";
           }
           return "Error in removing cart item";

@@ -131,23 +131,40 @@ const PaymentCard: React.FC<PaymentAddressProps> = ({
   }, []);
 
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://www.payhere.lk/lib/payhere.js';
+    const script = document.createElement("script");
+    script.src = "https://www.payhere.lk/lib/payhere.js";
     script.async = true;
-    script.onload = () => {
-      if (window.payhere) {
-        window.payhere.onCompleted = function onCompleted(paymentId) {
-          console.log("Payment completed. Payment Id:" + paymentId);
-        };
-      }
-    };
     document.body.appendChild(script);
   
-    // Cleanup function
+    const initializePayHere = () => {
+      if (window.payhere) {
+        window.payhere.onCompleted = async (paymentId) => {
+          try {
+            const orderData: CreateOrder = {
+              totalAmount: finalTotal,
+              shippingAddress: selectedAddress?.addressLine || '',
+              shippingMethod: shippingCost === 0 ? 'Free Shipping' : 'Standard Shipping',
+            };
+  
+            const order = await orderService.addOrder(orderData);
+            console.log('Order created successfully:', order);
+          } catch (error) {
+            console.error('Error creating order:', error);
+          }
+          console.log("Payment completed. Payment Id:", paymentId);
+        };
+      } else {
+        console.log("Waiting for PayHere to initialize...");
+        setTimeout(initializePayHere, 100); 
+      }
+    };
+  
+    script.onload = initializePayHere;
+  
     return () => {
       document.body.removeChild(script);
     };
-  }, []); // Empty dependency array means this runs once on mount
+  }, [finalTotal,selectedAddress,shippingCost]);
 
 
   // const paymentDone = () => {
@@ -158,24 +175,28 @@ const PaymentCard: React.FC<PaymentAddressProps> = ({
   // };
 
   const payment = async () => {
-    window.payhere.onCompleted(async (paymentId: string) => {
-      try {
-        const orderData: CreateOrder = {
-          totalAmount: finalTotal,
-          shippingAddress: selectedAddress?.addressLine || '',
-          shippingMethod: shippingCost === 0 ? 'Free Shipping' : 'Standard Shipping'
-        };
+
+    window.payhere.startPayment(paymentData);
+
+    // window.payhere.onCompleted(async (paymentId: string) => {
+
+    //   console.log("Payment completed. Payment Id:" + paymentId);
+    //  try {
+    //     const orderData: CreateOrder = {
+    //       totalAmount: finalTotal,
+    //       shippingAddress: selectedAddress?.addressLine || '',
+    //       shippingMethod: shippingCost === 0 ? 'Free Shipping' : 'Standard Shipping'
+    //     };
   
-        const order = await orderService.addOrder(orderData);
+    //     const order = await orderService.addOrder(orderData);
         
        
-        console.log('Order created successfully:', order);
-      } catch (error) {
-        console.error('Error creating order:', error);
-      }
-    });
+    //     console.log('Order created successfully:', order);
+    //   } catch (error) {
+    //     console.error('Error creating order:', error);
+    //   }
+    // });
   
-    window.payhere.startPayment(paymentData);
   };
   return (
     <>
